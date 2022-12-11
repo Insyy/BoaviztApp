@@ -12,4 +12,11 @@ public class Configuration{
     public ArrayList<Ram> ram;
     public ArrayList<Disk> disk;
     public PowerSupply power_supply;
+
+    public Configuration(Cpu cpu, ArrayList<Ram> ram, ArrayList<Disk> disk, PowerSupply power_supply) {
+        this.cpu = cpu;
+        this.ram = ram;
+        this.disk = disk;
+        this.power_supply = power_supply;
+    }
 }

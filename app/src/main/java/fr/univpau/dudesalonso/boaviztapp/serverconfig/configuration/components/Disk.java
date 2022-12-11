@@ -5,4 +5,11 @@ public class Disk{
     public String type;
     public int capacity;
     public String manufacturer;
+
+    public Disk(int units, String type, int capacity, String manufacturer) {
+        this.units = units;
+        this.type = type;
+        this.capacity = capacity;
+        this.manufacturer = manufacturer;
+    }
 }
