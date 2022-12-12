@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="cpu_label">CPU</string>
+
+    <string name="cpu_quantity_label">Quantity</string>
+    <string name="cpu_core_units_label">Core Units</string>
+    <string name="cpu_tdp_label">TDP (Watt)</string>
+    <string name="cpu_architecture_label">Architecture</string>
+
+
+</resources>
