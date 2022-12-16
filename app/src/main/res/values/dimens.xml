@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <dimen name="category_label_text_size">22sp</dimen>
+    <dimen name="option_label_text_size">16sp</dimen>
+
+    <dimen name="title_label_text_size">17sp</dimen>
+    <dimen name="input_text_size">17sp</dimen>
+
+    <dimen name="input_element_horizontal_padding">3dp</dimen>
+    <dimen name="input_element_vertical_padding">6dp</dimen>
+
+</resources>

@@ -11,4 +11,8 @@ public class Formulary extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.formulary);
     }
+
+    private void setAutofilledContents(){
+
+    }
 }
