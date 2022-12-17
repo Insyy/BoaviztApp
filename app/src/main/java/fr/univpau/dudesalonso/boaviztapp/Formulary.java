@@ -4,7 +4,9 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.os.Bundle;
 import android.util.Log;
+import android.view.KeyEvent;
 import android.view.View;
+import android.view.WindowManager;
 import android.widget.AdapterView;
 
 import com.google.android.material.textfield.MaterialAutoCompleteTextView;
@@ -32,17 +34,10 @@ public class Formulary extends AppCompatActivity {
     private void setUsageMethodContents() {
         setShowDropDownOnFocusAndClick(R.id.usage_method_input);
         MaterialAutoCompleteTextView methodInput = findViewById(R.id.usage_method_input);
-        methodInput.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+        methodInput.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
-            public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
-                Log.d("TAG", "onItemSelected: " + l);
-                Log.d("TAG", "ITEM String: " + methodInput.getText());
+            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
                 updateMethodDetailContainer((String) adapterView.getItemAtPosition((int) l));
-            }
-
-            @Override
-            public void onNothingSelected(AdapterView<?> adapterView) {
-                updateMethodDetailContainer((String) adapterView.getSelectedItem());
             }
         });
     }
@@ -73,12 +68,12 @@ public class Formulary extends AppCompatActivity {
         TextInputEditText methodDetailsInputEditText = findViewById(R.id.usage_method_details_input);
         if (newMethodString.equals("Load")){
             methodDetailsInputEditText.setText(R.string.usage_server_load_placeholder);
-            methodDetailsInputLayout.setHelperText(getString(R.string.usage_server_load_label));
+            methodDetailsInputLayout.setHint(getString(R.string.usage_server_load_label));
             methodDetailsInputLayout.setSuffixText(getString(R.string.usage_server_load_helper));
             return;
         }
         methodDetailsInputEditText.setText(R.string.usage_average_consumption_placeholder);
-        methodDetailsInputLayout.setHelperText(getString(R.string.usage_average_consumption_label));
+        methodDetailsInputLayout.setHint(getString(R.string.usage_average_consumption_label));
         methodDetailsInputLayout.setSuffixText(getString(R.string.usage_average_consumption_helper));
     }
 

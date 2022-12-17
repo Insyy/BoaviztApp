@@ -15,4 +15,6 @@
     <fraction name="storage_layout_quantity_weight">2.5</fraction>
     <fraction name="storage_layout_capacity_weight">3</fraction>
     <fraction name="storage_layout_manufacturer_weight">5.5</fraction>
+
+    <dimen name="bottom_dropdown_vertical_offset">100dp</dimen>
 </resources>

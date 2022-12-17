@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
-    <integer name="completionThreshHoldForAutocomplete">3</integer>
+    <integer name="completionThreshHoldForAutocomplete">1</integer>
 
     <string name="cpu_label">CPU</string>
 
@@ -65,7 +65,7 @@
     <string name="usage_lifespan_placeholder">4</string>
 
     <string name="usage_method_label">Method</string>
-    <string name="usage_method_placeholder"><!--Select method--></string>
+    <string name="usage_method_placeholder">Electricity</string>
 
 
     <string name="usage_average_consumption_label">Average consumption</string>
