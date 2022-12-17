@@ -1,9 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
-    <integer name="option_label_layout_weight">28</integer>
-    <integer name="option_input_layout_weight">72</integer>
-    <integer name="option_input_total_weight">100</integer>
+    <integer name="completionThreshHoldForAutocomplete">3</integer>
 
     <string name="cpu_label">CPU</string>
 
@@ -18,7 +16,7 @@
     <string name="cpu_tdp_placeholder">150</string>
 
     <string name="cpu_architecture_label">Architecture</string>
-    <string name="cpu_architecture_placeholder">Select architecture</string>
+    <string name="cpu_architecture_placeholder"><!--Select architecture--></string>
 
 
     <string name="ram_label">RAM</string>
@@ -31,7 +29,7 @@
     <string name="ram_capacity_placeholder">32</string>
 
     <string name="ram_manufacturer_label">Manufacturer</string>
-    <string name="ram_manufacturer_placeholder">Select manufacturer</string>
+    <string name="ram_manufacturer_placeholder"><!--Select manufacturer--></string>
 
 
     <string name="ssd_label">SSD</string>
@@ -40,11 +38,11 @@
     <string name="ssd_quantity_placeholder">4</string>
 
     <string name="ssd_capacity_label">Capacity</string>
-    <string name="ssd_capacity_helper">GB</string>
-    <string name="ssd_capacity_placeholder">1000</string>
+    <string name="ssd_capacity_helper">TB</string>
+    <string name="ssd_capacity_placeholder">1</string>
 
     <string name="ssd_manufacturer_label">Manufacturer</string>
-    <string name="ssd_manufacturer_placeholder">Select manufacturer</string>
+    <string name="ssd_manufacturer_placeholder"><!--Select manufacturer--></string>
 
 
     <string name="hdd_label">HDD</string>
@@ -53,21 +51,21 @@
     <string name="hdd_quantity_placeholder">2</string>
 
     <string name="hdd_capacity_label">Capacity</string>
-    <string name="hdd_capacity_helper">GB</string>
-    <string name="hdd_capacity_placeholder">1000</string>
+    <string name="hdd_capacity_helper">TB</string>
+    <string name="hdd_capacity_placeholder">1</string>
 
 
     <string name="usage_label">USAGE</string>
 
     <string name="usage_location_label">Location</string>
-    <string name="usage_location_placeholder">Select location</string>
+    <string name="usage_location_placeholder"><!--Select location--></string>
 
     <string name="usage_lifespan_label">Lifespan</string>
     <string name="usage_lifespan_helper">Years</string>
     <string name="usage_lifespan_placeholder">4</string>
 
     <string name="usage_method_label">Method</string>
-    <string name="usage_method_placeholder">Select method</string>
+    <string name="usage_method_placeholder"><!--Select method--></string>
 
 
     <string name="usage_average_consumption_label">Average consumption</string>
@@ -94,11 +92,4 @@
         <item>Spain</item>
         <item>Lol</item>
     </string-array>
-
-    <integer name="completionThreshHoldForAutocomplete">0</integer>
-
-
-
-
-
 </resources>

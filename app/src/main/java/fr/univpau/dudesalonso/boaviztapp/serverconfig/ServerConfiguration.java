@@ -4,8 +4,8 @@ import fr.univpau.dudesalonso.boaviztapp.serverconfig.configuration.Configuratio
 import fr.univpau.dudesalonso.boaviztapp.serverconfig.model.Model;
 import fr.univpau.dudesalonso.boaviztapp.serverconfig.usage.Usage;
 
-import com.fasterxml.jackson.core.JsonProcessingException;
-import com.fasterxml.jackson.databind.ObjectMapper;
+/*import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;*/
 
 public class ServerConfiguration{
     public Model model;
@@ -18,9 +18,9 @@ public class ServerConfiguration{
         this.usage = usage;
     }
 
-    public String getAsJson() throws JsonProcessingException {
+    /*public String getAsJson() throws JsonProcessingException {
         ObjectMapper mapper = new ObjectMapper();
         return mapper.writeValueAsString(this);
-    }
+    }*/
 }
 

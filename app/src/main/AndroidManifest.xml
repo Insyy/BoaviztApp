@@ -13,7 +13,6 @@
 
         <activity
             android:name=".Formulary"
-            android:theme="@style/AppTheme"
             android:exported="true">
 
             <intent-filter>

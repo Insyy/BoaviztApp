@@ -6,7 +6,13 @@
     <dimen name="title_label_text_size">17sp</dimen>
     <dimen name="input_text_size">17sp</dimen>
 
-    <dimen name="input_element_horizontal_padding">3dp</dimen>
+    <dimen name="input_element_horizontal_padding">7dp</dimen>
     <dimen name="input_element_vertical_padding">6dp</dimen>
 
+    <dimen name="vertical_margin_between_cards">3dp</dimen>
+    <dimen name="padding_inside_cards">8dp</dimen>
+    <integer name="storage_layout_weight_sum">11</integer>
+    <fraction name="storage_layout_quantity_weight">2.5</fraction>
+    <fraction name="storage_layout_capacity_weight">3</fraction>
+    <fraction name="storage_layout_manufacturer_weight">5.5</fraction>
 </resources>
