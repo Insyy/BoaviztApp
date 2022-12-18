@@ -47,8 +47,7 @@
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:text="@string/cpu_label"
-                            android:textSize="@dimen/category_label_text_size"
-                            android:textStyle="bold" />
+                            android:textAppearance="?attr/textAppearanceHeadline6"/>
 
                         <TableRow
                             android:layout_width="match_parent"
@@ -64,7 +63,8 @@
 
                                 android:enabled="true"
                                 android:hint="@string/cpu_quantity_label"
-                                android:paddingHorizontal="@dimen/input_element_horizontal_padding">
+                                android:paddingHorizontal="@dimen/input_element_horizontal_padding"
+                                android:paddingVertical="@dimen/input_element_vertical_padding">
 
                                 <com.google.android.material.textfield.TextInputEditText
                                     android:id="@+id/cpu_quantity_input"
@@ -84,6 +84,7 @@
 
                                 android:hint="@string/cpu_tdp_label"
                                 android:paddingHorizontal="@dimen/input_element_horizontal_padding"
+                                android:paddingVertical="@dimen/input_element_vertical_padding"
 
 
                                 app:suffixText="@string/cpu_tdp_helper">
@@ -113,7 +114,8 @@
                                 android:layout_weight=".5"
 
                                 android:hint="@string/cpu_core_units_label"
-                                android:paddingHorizontal="@dimen/input_element_horizontal_padding">
+                                android:paddingHorizontal="@dimen/input_element_horizontal_padding"
+                                android:paddingVertical="@dimen/input_element_vertical_padding">
 
                                 <com.google.android.material.textfield.TextInputEditText
                                     android:id="@+id/cpu_core_units_input"
@@ -133,6 +135,7 @@
                                 android:layout_weight=".5"
                                 android:hint="@string/cpu_architecture_label"
                                 android:paddingHorizontal="@dimen/input_element_horizontal_padding"
+                                android:paddingVertical="@dimen/input_element_vertical_padding"
                                 app:endIconMode="clear_text">
 
                                 <com.google.android.material.textfield.MaterialAutoCompleteTextView
@@ -163,13 +166,12 @@
                         android:orientation="vertical"
                         android:padding="@dimen/padding_inside_cards">
 
-                        <TextView
+                        <com.google.android.material.textview.MaterialTextView
                             android:id="@+id/ram_label"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:text="@string/ram_label"
-                            android:textSize="@dimen/category_label_text_size"
-                            android:textStyle="bold" />
+                            android:textAppearance="?attr/textAppearanceHeadline6" />
 
                         <TableRow
                             android:layout_width="match_parent"
@@ -183,7 +185,8 @@
                                 android:layout_weight="@fraction/storage_layout_quantity_weight"
                                 android:hint="@string/ram_quantity_label"
 
-                                android:paddingHorizontal="@dimen/input_element_horizontal_padding">
+                                android:paddingHorizontal="@dimen/input_element_horizontal_padding"
+                                android:paddingVertical="@dimen/input_element_vertical_padding">
 
                                 <com.google.android.material.textfield.TextInputEditText
                                     android:id="@+id/ram_quantity_input"
@@ -202,6 +205,7 @@
                                 android:hint="@string/ram_capacity_label"
 
                                 android:paddingHorizontal="@dimen/input_element_horizontal_padding"
+                                android:paddingVertical="@dimen/input_element_vertical_padding"
                                 app:suffixText="@string/ram_capacity_helper">
 
                                 <com.google.android.material.textfield.TextInputEditText
@@ -222,6 +226,7 @@
 
                                 android:hint="@string/ram_manufacturer_label"
                                 android:paddingHorizontal="@dimen/input_element_horizontal_padding"
+                                android:paddingVertical="@dimen/input_element_vertical_padding"
                                 app:endIconMode="clear_text">
 
                                 <com.google.android.material.textfield.MaterialAutoCompleteTextView
@@ -252,13 +257,12 @@
                         android:orientation="vertical"
                         android:padding="@dimen/padding_inside_cards">
 
-                        <TextView
+                        <com.google.android.material.textview.MaterialTextView
                             android:id="@+id/ssd_label"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:text="@string/ssd_label"
-                            android:textSize="@dimen/category_label_text_size"
-                            android:textStyle="bold" />
+                            android:textAppearance="?attr/textAppearanceHeadline6" />
 
                         <TableRow
                             android:layout_width="match_parent"
@@ -272,7 +276,8 @@
                                 android:layout_weight="@fraction/storage_layout_quantity_weight"
                                 android:hint="@string/ssd_quantity_label"
 
-                                android:paddingHorizontal="@dimen/input_element_horizontal_padding">
+                                android:paddingHorizontal="@dimen/input_element_horizontal_padding"
+                                android:paddingVertical="@dimen/input_element_vertical_padding">
 
                                 <com.google.android.material.textfield.TextInputEditText
                                     android:id="@+id/ssd_quantity_input"
@@ -291,6 +296,7 @@
                                 android:hint="@string/ssd_capacity_label"
 
                                 android:paddingHorizontal="@dimen/input_element_horizontal_padding"
+                                android:paddingVertical="@dimen/input_element_vertical_padding"
                                 app:suffixText="@string/ssd_capacity_helper">
 
                                 <com.google.android.material.textfield.TextInputEditText
@@ -311,6 +317,7 @@
                                 android:hint="@string/ssd_manufacturer_label"
                                 android:minHeight="48dp"
                                 android:paddingHorizontal="@dimen/input_element_horizontal_padding"
+                                android:paddingVertical="@dimen/input_element_vertical_padding"
                                 app:endIconMode="clear_text">
 
                                 <com.google.android.material.textfield.MaterialAutoCompleteTextView
@@ -343,8 +350,7 @@
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:text="@string/hdd_label"
-                            android:textSize="@dimen/category_label_text_size"
-                            android:textStyle="bold" />
+                            android:textAppearance="?attr/textAppearanceHeadline6" />
 
                         <TableRow
                             android:layout_width="match_parent"
@@ -359,7 +365,8 @@
                                 android:layout_weight="1"
                                 android:hint="@string/hdd_quantity_label"
 
-                                android:paddingHorizontal="@dimen/input_element_horizontal_padding">
+                                android:paddingHorizontal="@dimen/input_element_horizontal_padding"
+                                android:paddingVertical="@dimen/input_element_vertical_padding">
 
                                 <com.google.android.material.textfield.TextInputEditText
                                     android:id="@+id/hdd_quantity_input"
@@ -377,6 +384,7 @@
                                 android:layout_weight="1"
                                 android:hint="@string/hdd_capacity_label"
                                 android:paddingHorizontal="@dimen/input_element_horizontal_padding"
+                                android:paddingVertical="@dimen/input_element_vertical_padding"
 
                                 app:suffixText="@string/hdd_capacity_helper">
 
@@ -412,8 +420,7 @@
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:text="@string/usage_label"
-                            android:textSize="@dimen/category_label_text_size"
-                            android:textStyle="bold" />
+                            android:textAppearance="?attr/textAppearanceHeadline6"/>
 
                         <TableLayout
                             android:layout_width="match_parent"
@@ -432,6 +439,7 @@
                                     android:layout_weight="1"
                                     android:hint="@string/usage_location_label"
                                     android:paddingHorizontal="@dimen/input_element_horizontal_padding"
+                                    android:paddingVertical="@dimen/input_element_vertical_padding"
                                     app:endIconMode="clear_text">
 
                                     <com.google.android.material.textfield.MaterialAutoCompleteTextView
@@ -450,6 +458,7 @@
                                     android:layout_weight="1"
                                     android:hint="@string/usage_lifespan_label"
                                     android:paddingHorizontal="@dimen/input_element_horizontal_padding"
+                                    android:paddingVertical="@dimen/input_element_vertical_padding"
 
                                     app:suffixText="@string/usage_lifespan_helper">
 
@@ -479,6 +488,7 @@
                                     android:layout_weight="1"
                                     android:hint="@string/usage_method_label"
                                     android:paddingHorizontal="@dimen/input_element_horizontal_padding"
+                                    android:paddingVertical="@dimen/input_element_vertical_padding"
                                     app:endIconMode="clear_text">
 
                                     <com.google.android.material.textfield.MaterialAutoCompleteTextView
@@ -499,7 +509,8 @@
                                     android:layout_width="0dp"
                                     android:layout_height="wrap_content"
                                     android:layout_weight="1"
-                                    android:paddingHorizontal="@dimen/input_element_horizontal_padding">
+                                    android:paddingHorizontal="@dimen/input_element_horizontal_padding"
+                                    android:paddingVertical="@dimen/input_element_vertical_padding">
 
                                     <com.google.android.material.textfield.TextInputEditText
                                         android:id="@+id/usage_method_details_input"
