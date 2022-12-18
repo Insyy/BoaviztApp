@@ -1,6 +1,7 @@
 package fr.univpau.dudesalonso.boaviztapp;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.app.AppCompatDelegate;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -30,10 +31,27 @@ public class ServerConfigurationActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        //setDarkMode();
         setContentView(R.layout.formulary);
         setAutofilledContents();
         setBottomNavigationBar();
         setNavigationIconFocus();
+
+    }
+
+    private void setDarkMode() {
+        AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES);
+        if (AppCompatDelegate.getDefaultNightMode() == AppCompatDelegate.MODE_NIGHT_YES) {
+            setTheme(R.style.DarkTheme); //when dark mode is enabled, we use the dark theme
+        } else {
+            setTheme(R.style.AppTheme);  //default app theme
+        }
+    }
+
+
+    public void populate(ArrayList<String> manufacturers, ArrayList<String> architectures, ArrayList<String> localisations){
+
     }
 
     private void setAutofilledContents() {

@@ -3,6 +3,8 @@
 
     <integer name="completionThreshHoldForAutocomplete">1</integer>
 
+    <string name="server_configuration_label">Server configuration</string>
+
     <string name="cpu_label">CPU</string>
 
     <string name="cpu_quantity_label">Quantity</string>

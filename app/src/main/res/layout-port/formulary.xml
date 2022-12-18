@@ -1,5 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout
+
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/root"
@@ -7,6 +9,40 @@
     android:layout_height="match_parent"
     tools:ignore="MissingDefaultResource"
     android:orientation="vertical">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingHorizontal="@dimen/global_padding">
+
+        <com.google.android.material.textview.MaterialTextView
+            android:layout_width="0dp"
+            android:layout_height="fill_parent"
+            android:layout_marginLeft="@dimen/global_padding"
+            android:layout_weight="1"
+            android:gravity="fill_vertical"
+            android:singleLine="true"
+            android:text="@string/server_configuration_label"
+            android:textAppearance="?attr/textAppearanceHeadlineSmall">
+
+        </com.google.android.material.textview.MaterialTextView>
+
+        <com.google.android.material.imageview.ShapeableImageView
+            android:layout_width="70dp"
+            android:layout_height="70dp"
+            android:layout_gravity="right"
+            app:srcCompat="@mipmap/boaviztapp_icon_transparent_foreground">
+
+        </com.google.android.material.imageview.ShapeableImageView>
+    </LinearLayout>
+
+    <com.google.android.material.divider.MaterialDivider
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:dividerInsetStart="@dimen/divider_padding"
+        app:dividerInsetEnd="@dimen/divider_padding">
+
+    </com.google.android.material.divider.MaterialDivider>
 
     <ScrollView
         android:layout_width="match_parent"
@@ -18,21 +54,28 @@
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:isScrollContainer="true">
+            android:isScrollContainer="true"
+            android:padding="@dimen/global_padding">
 
+            <com.google.android.material.card.MaterialCardView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                style="?attr/materialCardViewFilledStyle"
+
+                >
 
             <LinearLayout
                 android:id="@+id/config_list"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="vertical"
-                android:padding="10dp">
-
+                >
+                
                 <com.google.android.material.card.MaterialCardView
-                    style="?attr/materialCardViewFilledStyle"
+                    style="?attr/materialCardViewElevatedStyle"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginVertical="@dimen/vertical_margin_between_cards">
+                    android:layout_margin="@dimen/card_margin">
 
 
                     <LinearLayout
@@ -47,7 +90,7 @@
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:text="@string/cpu_label"
-                            android:textAppearance="?attr/textAppearanceHeadline6"/>
+                            android:textAppearance="?attr/textAppearanceTitleLarge"/>
 
                         <TableRow
                             android:layout_width="match_parent"
@@ -154,10 +197,10 @@
                 </com.google.android.material.card.MaterialCardView>
 
                 <com.google.android.material.card.MaterialCardView
-                    style="?attr/materialCardViewFilledStyle"
+                    style="?attr/materialCardViewElevatedStyle"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginVertical="@dimen/vertical_margin_between_cards">
+                    android:layout_margin="@dimen/card_margin">
 
                     <LinearLayout
                         android:id="@+id/ram_configuration"
@@ -237,18 +280,15 @@
 
                                 </com.google.android.material.textfield.MaterialAutoCompleteTextView>
                             </com.google.android.material.textfield.TextInputLayout>
-
-
                         </TableRow>
-
                     </LinearLayout>
                 </com.google.android.material.card.MaterialCardView>
 
                 <com.google.android.material.card.MaterialCardView
-                    style="?attr/materialCardViewFilledStyle"
+                    style="?attr/materialCardViewElevatedStyle"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginVertical="@dimen/vertical_margin_between_cards">
+                    android:layout_margin="@dimen/card_margin">
 
                     <LinearLayout
                         android:id="@+id/ssd_configuration"
@@ -333,10 +373,10 @@
                 </com.google.android.material.card.MaterialCardView>
 
                 <com.google.android.material.card.MaterialCardView
-                    style="?attr/materialCardViewFilledStyle"
+                    style="?attr/materialCardViewElevatedStyle"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginVertical="@dimen/vertical_margin_between_cards">
+                    android:layout_margin="@dimen/card_margin">
 
                     <LinearLayout
                         android:id="@+id/hdd_configuration"
@@ -402,10 +442,10 @@
                 </com.google.android.material.card.MaterialCardView>
 
                 <com.google.android.material.card.MaterialCardView
-                    style="?attr/materialCardViewFilledStyle"
+                    style="?attr/materialCardViewElevatedStyle"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginVertical="@dimen/vertical_margin_between_cards">
+                    android:layout_margin="@dimen/card_margin">
 
 
                     <LinearLayout
@@ -521,16 +561,13 @@
 
                                     </com.google.android.material.textfield.TextInputEditText>
                                 </com.google.android.material.textfield.TextInputLayout>
-
                             </TableRow>
-
                         </TableLayout>
                     </LinearLayout>
                 </com.google.android.material.card.MaterialCardView>
             </LinearLayout>
-
+            </com.google.android.material.card.MaterialCardView>
         </RelativeLayout>
-
     </ScrollView>
 
     <com.google.android.material.bottomnavigation.BottomNavigationView
