@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout
-
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
@@ -8,7 +7,9 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:ignore="MissingDefaultResource"
-    android:orientation="vertical">
+    android:orientation="vertical"
+    android:descendantFocusability="beforeDescendants"
+    >
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -36,13 +37,14 @@
         </com.google.android.material.imageview.ShapeableImageView>
     </LinearLayout>
 
-    <com.google.android.material.divider.MaterialDivider
+    <!-- Linear progress indicator -->
+    <com.google.android.material.progressindicator.LinearProgressIndicator
+        android:id="@+id/progress_indicator"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        app:dividerInsetStart="@dimen/divider_padding"
-        app:dividerInsetEnd="@dimen/divider_padding">
-
-    </com.google.android.material.divider.MaterialDivider>
+        android:indeterminate="true"
+        android:layout_marginHorizontal="@dimen/progress_bar_margin"
+        />
 
     <ScrollView
         android:layout_width="match_parent"
@@ -185,8 +187,7 @@
                                     android:id="@+id/cpu_architecture_input"
                                     android:layout_width="match_parent"
                                     android:layout_height="match_parent"
-                                    android:completionThreshold="@integer/completionThreshHoldForAutocomplete"
-                                    android:text="@string/cpu_architecture_placeholder">
+                                    android:completionThreshold="@integer/completionThreshHoldForAutocomplete">
 
                                 </com.google.android.material.textfield.MaterialAutoCompleteTextView>
                             </com.google.android.material.textfield.TextInputLayout>
@@ -486,8 +487,7 @@
                                         android:id="@+id/usage_location_input"
                                         android:layout_width="match_parent"
                                         android:layout_height="match_parent"
-                                        android:completionThreshold="@integer/completionThreshHoldForAutocomplete"
-                                        app:simpleItems="@array/debug_options">
+                                        android:completionThreshold="@integer/completionThreshHoldForAutocomplete">
 
                                     </com.google.android.material.textfield.MaterialAutoCompleteTextView>
                                 </com.google.android.material.textfield.TextInputLayout>

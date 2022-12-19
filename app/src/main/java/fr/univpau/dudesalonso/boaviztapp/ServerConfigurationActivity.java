@@ -8,15 +8,31 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
+import android.widget.LinearLayout;
 
+import com.android.volley.Request;
+import com.android.volley.RequestQueue;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.JsonArrayRequest;
+import com.android.volley.toolbox.JsonObjectRequest;
+import com.android.volley.toolbox.Volley;
 import com.google.android.material.bottomnavigation.BottomNavigationItemView;
-import com.google.android.material.bottomnavigation.BottomNavigationMenuView;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
+import com.google.android.material.progressindicator.LinearProgressIndicator;
 import com.google.android.material.textfield.MaterialAutoCompleteTextView;
 import com.google.android.material.textfield.TextInputEditText;
 import com.google.android.material.textfield.TextInputLayout;
 
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 import fr.univpau.dudesalonso.boaviztapp.serverconfig.ServerConfiguration;
 import fr.univpau.dudesalonso.boaviztapp.serverconfig.configuration.Configuration;
@@ -28,16 +44,46 @@ import fr.univpau.dudesalonso.boaviztapp.serverconfig.usage.Usage;
 
 public class ServerConfigurationActivity extends AppCompatActivity {
 
+    String urlArchitectures = "https://uppa.api.boavizta.org/v1/utils/cpu_family";
+    String urlSsdManufacturers = "https://uppa.api.boavizta.org/v1/utils/ssd_manufacturer";
+    String urlRamManufacturers = "https://uppa.api.boavizta.org/v1/utils/ram_manufacturer";
+    String urlCountries = "https://uppa.api.boavizta.org/v1/utils/country_code";
+
+    Map<String, String> countriesMap = null;
+
+    RequestQueue queue;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        //setDarkMode();
+        queue = Volley.newRequestQueue(this);
+
+        setDarkMode();
+
         setContentView(R.layout.formulary);
-        setAutofilledContents();
+
+        ((LinearLayout) findViewById(R.id.root)).requestFocus();
+
+        setUsageContents();
         setBottomNavigationBar();
         setNavigationIconFocus();
 
+        setDropdownsListeners();
+    }
+
+    private void setDropdownsListeners() {
+        setShowDropDownOnFocusAndClick(R.id.usage_method_input);
+        setShowDropDownOnFocusAndClick(R.id.cpu_architecture_input);
+        setShowDropDownOnFocusAndClick(R.id.ssd_manufacturer_input);
+        setShowDropDownOnFocusAndClick(R.id.ram_manufacturer_input);
+        setShowDropDownOnFocusAndClick(R.id.usage_location_input);
+    }
+
+    @Override
+    protected void onStart() {
+        super.onStart();
+        populate();
     }
 
     private void setDarkMode() {
@@ -49,13 +95,25 @@ public class ServerConfigurationActivity extends AppCompatActivity {
         }
     }
 
+    public void populate() {
 
-    public void populate(ArrayList<String> manufacturers, ArrayList<String> architectures, ArrayList<String> localisations){
+        sendArrayGetRequestsAndPopulate(urlArchitectures, R.id.cpu_architecture_input);
+        sendArrayGetRequestsAndPopulate(urlSsdManufacturers, R.id.ssd_manufacturer_input);
+        sendArrayGetRequestsAndPopulate(urlRamManufacturers, R.id.ram_manufacturer_input);
+        sendMapGetRequestsAndPopulate(urlCountries, R.id.usage_location_input);
 
+        populateAutocompleteDropdownValues(R.id.usage_method_input, Arrays.asList(getResources().getStringArray(R.array.method_options)));
     }
 
-    private void setAutofilledContents() {
-        setUsageContents();
+    private void populateAutocompleteDropdownValues(int id, List<String> values) {
+        MaterialAutoCompleteTextView autoCompleteTextView = findViewById(id);
+        String[] array = new String[values.size()];
+        for (int i = 0; i < values.size(); i++) {
+            array[i] = values.get(i);
+        }
+        autoCompleteTextView.setSimpleItems(array);
+        autoCompleteTextView.setText(array[0]);
+
     }
 
     private void setUsageContents() {
@@ -64,7 +122,6 @@ public class ServerConfigurationActivity extends AppCompatActivity {
     }
 
     private void setUsageMethodContents() {
-        setShowDropDownOnFocusAndClick(R.id.usage_method_input);
         MaterialAutoCompleteTextView methodInput = findViewById(R.id.usage_method_input);
         methodInput.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
@@ -93,11 +150,11 @@ public class ServerConfigurationActivity extends AppCompatActivity {
 
     }
 
-    private void updateMethodDetailContainer(String newMethodString){
+    private void updateMethodDetailContainer(String newMethodString) {
         MaterialAutoCompleteTextView methodInput = findViewById(R.id.usage_method_input);
         TextInputLayout methodDetailsInputLayout = findViewById(R.id.usage_method_details_layout);
         TextInputEditText methodDetailsInputEditText = findViewById(R.id.usage_method_details_input);
-        if (newMethodString.equals("Load")){
+        if (newMethodString.equals("Load")) {
             methodDetailsInputEditText.setText(R.string.usage_server_load_placeholder);
             methodDetailsInputLayout.setHint(getString(R.string.usage_server_load_label));
             methodDetailsInputLayout.setSuffixText(getString(R.string.usage_server_load_helper));
@@ -108,7 +165,7 @@ public class ServerConfigurationActivity extends AppCompatActivity {
         methodDetailsInputLayout.setSuffixText(getString(R.string.usage_average_consumption_helper));
     }
 
-    private void setBottomNavigationBar(){
+    private void setBottomNavigationBar() {
         BottomNavigationItemView assessServerImpactMenuBtn = findViewById(R.id.impact_visualisation_menu_button);
 
         assessServerImpactMenuBtn.setOnClickListener(new View.OnClickListener() {
@@ -132,8 +189,7 @@ public class ServerConfigurationActivity extends AppCompatActivity {
     }
 
 
-
-    ServerConfiguration collectServerConfiguration(){
+    ServerConfiguration collectServerConfiguration() {
         Cpu cpu = new Cpu(
                 getNumberFromAutocompleteTextInput(R.id.cpu_quantity_input, R.string.cpu_quantity_placeholder),
                 getNumberFromAutocompleteTextInput(R.id.cpu_tdp_input, R.string.cpu_tdp_placeholder),
@@ -143,9 +199,9 @@ public class ServerConfigurationActivity extends AppCompatActivity {
 
         ArrayList<Ram> ramArray = new ArrayList<>();
         ramArray.add(new Ram(
-                getNumberFromAutocompleteTextInput(R.id.ram_quantity_input, R.string.ram_quantity_placeholder),
-                getNumberFromAutocompleteTextInput(R.id.ram_capacity_input, R.string.ram_capacity_placeholder),
-                getTextFromAutocompleteTextInput(R.id.ram_manufacturer_input, R.string.ram_manufacturer_placeholder)
+                        getNumberFromAutocompleteTextInput(R.id.ram_quantity_input, R.string.ram_quantity_placeholder),
+                        getNumberFromAutocompleteTextInput(R.id.ram_capacity_input, R.string.ram_capacity_placeholder),
+                        getTextFromAutocompleteTextInput(R.id.ram_manufacturer_input, R.string.ram_manufacturer_placeholder)
                 )
         );
 
@@ -180,18 +236,96 @@ public class ServerConfigurationActivity extends AppCompatActivity {
 
     }
 
-    String getTextFromAutocompleteTextInput(int input_id, int placeholder_value){
+    String getTextFromAutocompleteTextInput(int input_id, int placeholder_value) {
         MaterialAutoCompleteTextView input = findViewById(input_id);
         if (input.getText().toString().equals(""))
             return getString(placeholder_value);
         return input.getText().toString();
     }
 
-    int getNumberFromAutocompleteTextInput(int input_id, int placeholder_value){
+    int getNumberFromAutocompleteTextInput(int input_id, int placeholder_value) {
         TextInputEditText input = findViewById(input_id);
         if (input.getText().toString().equals(""))
             return Integer.parseInt(getString(placeholder_value));
-        return  Integer.parseInt(input.getText().toString());
+        return Integer.parseInt(input.getText().toString());
     }
 
+    public void startProgressIndicator() {
+        LinearProgressIndicator progressIndicator = findViewById(R.id.progress_indicator);
+        progressIndicator.setVisibility(View.VISIBLE);
+
+    }
+
+    public void stopProgressIndicator() {
+        LinearProgressIndicator progressIndicator = findViewById(R.id.progress_indicator);
+        progressIndicator.setVisibility(View.INVISIBLE);
+    }
+
+    public void showRequestError(String errorMessage) {
+        Log.e("Error", errorMessage);
+    }
+
+    private void sendArrayGetRequestsAndPopulate(String url, int materialAutoCompleteId) {
+        startProgressIndicator();
+
+        queue.add(
+                new JsonArrayRequest
+                        (Request.Method.GET, url, null, new Response.Listener<JSONArray>() {
+                            @Override
+                            public void onResponse(JSONArray response) {
+                                ArrayList<String> values = new ArrayList<>();
+                                for (int i = 0; i < response.length(); i++) {
+                                    try {
+                                        values.add(response.getString(i));
+                                    } catch (JSONException e) {
+                                        e.printStackTrace();
+                                        showRequestError(e.toString());
+                                    }
+                                }
+                                populateAutocompleteDropdownValues(materialAutoCompleteId, values);
+                                stopProgressIndicator();
+                            }
+                        }, new Response.ErrorListener() {
+
+                            @Override
+                            public void onErrorResponse(VolleyError error) {
+                                showRequestError(error.networkResponse.toString());
+                            }
+                        })
+        );
+    }
+
+    private void sendMapGetRequestsAndPopulate(String url, int materialAutocompleteId) {
+        startProgressIndicator();
+        queue.add(
+                new JsonObjectRequest
+                        (Request.Method.GET, url, null, new Response.Listener<JSONObject>() {
+
+                            @Override
+                            public void onResponse(JSONObject response) {
+                                Map<String, String> values = new HashMap<>();
+                                response.keys().forEachRemaining
+                                        (s ->
+                                                {
+                                                    try {
+                                                        values.put(s, response.getString(s));
+                                                    } catch (JSONException e) {
+                                                        e.printStackTrace();
+                                                    }
+                                                }
+                                        );
+                                if (countriesMap == null)
+                                    countriesMap = values;
+                                populateAutocompleteDropdownValues(materialAutocompleteId, new ArrayList<>(values.keySet()));
+                                stopProgressIndicator();
+                            }
+                        }, new Response.ErrorListener() {
+
+                            @Override
+                            public void onErrorResponse(VolleyError error) {
+                                showRequestError(error.networkResponse.toString());
+                            }
+                        })
+        );
+    }
 }
