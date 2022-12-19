@@ -111,6 +111,7 @@ public class ServerConfigurationActivity extends AppCompatActivity {
         for (int i = 0; i < values.size(); i++) {
             array[i] = values.get(i);
         }
+        Arrays.sort(array);
         autoCompleteTextView.setSimpleItems(array);
         autoCompleteTextView.setText(array[0]);
 
