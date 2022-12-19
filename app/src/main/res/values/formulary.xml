@@ -3,6 +3,8 @@
 
     <integer name="completionThreshHoldForAutocomplete">1</integer>
 
+    <string name="server_configuration_label">Server configuration</string>
+
     <string name="cpu_label">CPU</string>
 
     <string name="cpu_quantity_label">Quantity</string>
@@ -16,7 +18,7 @@
     <string name="cpu_tdp_placeholder">150</string>
 
     <string name="cpu_architecture_label">Architecture</string>
-    <string name="cpu_architecture_placeholder"><!--Select architecture--></string>
+    <string name="cpu_architecture_placeholder">Architecture</string>
 
 
     <string name="ram_label">RAM</string>
@@ -29,7 +31,7 @@
     <string name="ram_capacity_placeholder">32</string>
 
     <string name="ram_manufacturer_label">Manufacturer</string>
-    <string name="ram_manufacturer_placeholder"><!--Select manufacturer--></string>
+    <string name="ram_manufacturer_placeholder">Manufacturer</string>
 
 
     <string name="ssd_label">SSD</string>
@@ -42,7 +44,7 @@
     <string name="ssd_capacity_placeholder">1</string>
 
     <string name="ssd_manufacturer_label">Manufacturer</string>
-    <string name="ssd_manufacturer_placeholder"><!--Select manufacturer--></string>
+    <string name="ssd_manufacturer_placeholder">Manufacturer</string>
 
 
     <string name="hdd_label">HDD</string>
@@ -54,11 +56,14 @@
     <string name="hdd_capacity_helper">TB</string>
     <string name="hdd_capacity_placeholder">1</string>
 
+    <string name="hdd_manufacturer_label">Manufacturer</string>
+    <string name="hdd_manufacturer_placeholder">Manufacturer</string>
+
 
     <string name="usage_label">USAGE</string>
 
     <string name="usage_location_label">Location</string>
-    <string name="usage_location_placeholder"><!--Select location--></string>
+    <string name="usage_location_placeholder">Location</string>
 
     <string name="usage_lifespan_label">Lifespan</string>
     <string name="usage_lifespan_helper">Years</string>

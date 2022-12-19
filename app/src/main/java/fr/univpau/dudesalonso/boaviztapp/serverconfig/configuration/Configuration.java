@@ -2,21 +2,28 @@ package fr.univpau.dudesalonso.boaviztapp.serverconfig.configuration;
 
 import fr.univpau.dudesalonso.boaviztapp.serverconfig.configuration.components.Cpu;
 import fr.univpau.dudesalonso.boaviztapp.serverconfig.configuration.components.Disk;
-import fr.univpau.dudesalonso.boaviztapp.serverconfig.configuration.components.PowerSupply;
 import fr.univpau.dudesalonso.boaviztapp.serverconfig.configuration.components.Ram;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 
-public class Configuration{
+public class Configuration implements Serializable {
     public Cpu cpu;
     public ArrayList<Ram> ram;
     public ArrayList<Disk> disk;
-    public PowerSupply power_supply;
 
-    public Configuration(Cpu cpu, ArrayList<Ram> ram, ArrayList<Disk> disk, PowerSupply power_supply) {
+    public Configuration(Cpu cpu, ArrayList<Ram> ram, ArrayList<Disk> disk) {
         this.cpu = cpu;
         this.ram = ram;
         this.disk = disk;
-        this.power_supply = power_supply;
+    }
+
+    @Override
+    public String toString() {
+        return "Configuration{" +
+                "cpu=" + cpu +
+                ", ram=" + ram +
+                ", disk=" + disk +
+                '}';
     }
 }

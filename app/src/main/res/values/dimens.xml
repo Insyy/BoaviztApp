@@ -1,20 +1,26 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <dimen name="category_label_text_size">22sp</dimen>
+
+    <dimen name="global_padding">12dp</dimen>
+    <dimen name="main_card_padding">10dp</dimen>
+    <dimen name="card_margin">5dp</dimen>
+
+    <dimen name="category_label_text_size">2sp</dimen>
     <dimen name="option_label_text_size">16sp</dimen>
 
     <dimen name="title_label_text_size">17sp</dimen>
     <dimen name="input_text_size">17sp</dimen>
 
-    <dimen name="input_element_horizontal_padding">7dp</dimen>
-    <dimen name="input_element_vertical_padding">6dp</dimen>
+    <dimen name="input_element_horizontal_padding">4dp</dimen>
+    <dimen name="input_element_vertical_padding">4dp</dimen>
 
-    <dimen name="vertical_margin_between_cards">3dp</dimen>
-    <dimen name="padding_inside_cards">8dp</dimen>
+    <dimen name="vertical_margin_between_cards">5dp</dimen>
+    <dimen name="padding_inside_cards">10dp</dimen>
     <integer name="storage_layout_weight_sum">11</integer>
+
+    <dimen name="progress_bar_margin">14dp</dimen>
+
     <fraction name="storage_layout_quantity_weight">2.5</fraction>
     <fraction name="storage_layout_capacity_weight">3</fraction>
     <fraction name="storage_layout_manufacturer_weight">5.5</fraction>
-
-    <dimen name="bottom_dropdown_vertical_offset">100dp</dimen>
 </resources>
