@@ -2,11 +2,8 @@ package fr.univpau.dudesalonso.boaviztapp;
 
 import androidx.appcompat.app.AppCompatActivity;
 
-import android.graphics.Canvas;
 import android.graphics.Color;
-import android.graphics.RenderEffect;
 import android.os.Bundle;
-import android.util.Log;
 
 import com.github.mikephil.charting.charts.BarChart;
 import com.github.mikephil.charting.charts.HorizontalBarChart;
@@ -19,8 +16,6 @@ import com.github.mikephil.charting.highlight.Highlight;
 import com.github.mikephil.charting.renderer.DataRenderer;
 
 import java.util.ArrayList;
-
-import fr.univpau.dudesalonso.boaviztapp.serverconfig.RoundedBarChart;
 
 public class ServerVisualization extends AppCompatActivity {
 

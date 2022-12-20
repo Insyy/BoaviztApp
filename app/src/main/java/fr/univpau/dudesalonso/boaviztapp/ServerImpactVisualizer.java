@@ -2,6 +2,7 @@ package fr.univpau.dudesalonso.boaviztapp;
 
 import androidx.annotation.LongDef;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.app.AppCompatDelegate;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -11,6 +12,7 @@ import android.view.View;
 
 import com.google.android.material.bottomnavigation.BottomNavigationItemView;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
+import com.google.android.material.progressindicator.LinearProgressIndicator;
 
 import fr.univpau.dudesalonso.boaviztapp.serverconfig.ServerConfiguration;
 
@@ -31,6 +33,21 @@ public class ServerImpactVisualizer extends AppCompatActivity {
             Log.d("ServerImpactVisualizer", "Attempting to write value as string jackson");
             Log.d("ServerImpactVisualizer", config.getAsJson());
 
+    }
+
+    @Override
+    public void onPause() {
+        super.onPause();
+        overridePendingTransition(0, 0);
+    }
+
+    private void setDarkMode() {
+        AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES);
+        if (AppCompatDelegate.getDefaultNightMode() == AppCompatDelegate.MODE_NIGHT_YES) {
+            setTheme(R.style.DarkTheme); //when dark mode is enabled, we use the dark theme
+        } else {
+            setTheme(R.style.AppTheme);  //default app theme
+        }
     }
 
     private void setBottomNavigationBarListener(){
@@ -54,4 +71,22 @@ public class ServerImpactVisualizer extends AppCompatActivity {
         formularyIntent.setClass(getApplicationContext(), ServerConfigurationActivity.class);
         startActivity(formularyIntent);
     }
+
+
+    public void startProgressIndicator() {
+        LinearProgressIndicator progressIndicator = findViewById(R.id.progress_indicator);
+        progressIndicator.setVisibility(View.VISIBLE);
+
+    }
+
+    public void stopProgressIndicator() {
+        LinearProgressIndicator progressIndicator = findViewById(R.id.progress_indicator);
+        progressIndicator.setVisibility(View.INVISIBLE);
+    }
+
+    public void showRequestError(String errorMessage) {
+        Log.e("Error", errorMessage);
+    }
+
+
 }
