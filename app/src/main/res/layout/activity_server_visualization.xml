@@ -1,15 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/root"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:ignore="MissingDefaultResource"
-    android:orientation="vertical"
     android:descendantFocusability="beforeDescendants"
-    >
+    android:orientation="vertical"
+    app:circularflow_defaultRadius="10dp"
+    tools:ignore="MissingDefaultResource">
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -191,9 +190,75 @@
 
                 </com.google.android.material.card.MaterialCardView>
 
+                <com.google.android.material.card.MaterialCardView
+                    style="?attr/materialCardViewFilledStyle"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginVertical="@dimen/vertical_margin_between_cards"
+                    app:cardBackgroundColor="@android:color/darker_gray">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_margin="1dp"
+                        android:background="@drawable/layout_graph_bg"
+                        android:orientation="vertical">
+
+                        <com.google.android.material.textview.MaterialTextView
+                            android:id="@+id/textView8"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginLeft="10dp"
+                            android:layout_marginTop="7dp"
+                            android:text="How are the impacts assessed?"
+                            android:textColor="@color/md_theme_light_onPrimaryContainer"
+                            android:textSize="13dp"
+                            android:textStyle="bold" />
+
+                        <com.google.android.material.textview.MaterialTextView
+                            android:id="@+id/textView9"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginLeft="10dp"
+                            android:layout_marginTop="7dp"
+                            android:text="The impacts related to manufacture are assessed using the methodology detailed by Boavizta in this article. Those related to the use phase are evaluated from the average power consumption or modeled from the estimated server load. The methodology is detailed here: doc.api.boavizta.org.  "
+                            android:textColor="@color/md_theme_light_onPrimaryContainer"
+                            android:textSize="10dp"
+                            android:textStyle="normal" />
+
+                        <com.google.android.material.textview.MaterialTextView
+                            android:id="@+id/textView10"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginLeft="10dp"
+                            android:layout_marginTop="7dp"
+                            android:text="To go further"
+                            android:textColor="@color/md_theme_light_onPrimaryContainer"
+                            android:textSize="13dp"
+                            android:textStyle="bold" />
+
+                        <com.google.android.material.textview.MaterialTextView
+                            android:id="@+id/textView11"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginLeft="10dp"
+                            android:layout_marginTop="7dp"
+                            android:layout_marginBottom="10dp"
+                            android:text="This page uses the BoaviztAPI. An open-source API that uses open data and methods to assess the environmental impacts of digital equipment."
+                            android:textColor="@color/md_theme_light_onPrimaryContainer"
+                            android:textSize="10dp"
+                            android:textStyle="normal" />
+
+                    </LinearLayout>
+
+                </com.google.android.material.card.MaterialCardView>
+                <!--  This is the title label -->
+
 
             </LinearLayout>
+
         </RelativeLayout>
+
     </ScrollView>
 
 </LinearLayout>
