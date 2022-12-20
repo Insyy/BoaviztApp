@@ -2,8 +2,11 @@ package fr.univpau.dudesalonso.boaviztapp;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.graphics.Canvas;
 import android.graphics.Color;
+import android.graphics.RenderEffect;
 import android.os.Bundle;
+import android.util.Log;
 
 import com.github.mikephil.charting.charts.BarChart;
 import com.github.mikephil.charting.charts.HorizontalBarChart;
@@ -12,8 +15,12 @@ import com.github.mikephil.charting.components.Legend;
 import com.github.mikephil.charting.data.BarData;
 import com.github.mikephil.charting.data.BarDataSet;
 import com.github.mikephil.charting.data.BarEntry;
+import com.github.mikephil.charting.highlight.Highlight;
+import com.github.mikephil.charting.renderer.DataRenderer;
 
 import java.util.ArrayList;
+
+import fr.univpau.dudesalonso.boaviztapp.serverconfig.RoundedBarChart;
 
 public class ServerVisualization extends AppCompatActivity {
 
@@ -83,7 +90,7 @@ public class ServerVisualization extends AppCompatActivity {
 
     private void initLayoutChart(BarData barData, BarChart barChart){
         barChart.setData(barData);
-        barChart.setExtraOffsets(5f,5f,5f,15f);
+        barChart.setExtraOffsets(0f,5f,0f,5f);
 
         barChart.getDescription().setEnabled(false);
         //disable axis things
@@ -114,18 +121,19 @@ public class ServerVisualization extends AppCompatActivity {
         legend.setYEntrySpace(4f);
         legend.setTextColor(Color.WHITE);
         legend.setWordWrapEnabled(true);
+        legend.setTextColor(Color.DKGRAY);
 
     }
 
     private ArrayList<BarEntry> dataValuesUp(int index){
         ArrayList<BarEntry> dataVals = new ArrayList<>();
-        dataVals.add(new BarEntry(4.95F + (index * 4.95f), new float[]{1f,6f}));
+        dataVals.add(new BarEntry(4.95F , new float[]{1f,6f}));
         return dataVals;
     }
 
     private ArrayList<BarEntry> dataValuesDown(int index){
         ArrayList<BarEntry> dataVals = new ArrayList<>();
-        dataVals.add(new BarEntry(0 + (index * 5f), new float[]{1f,0.1f,0.8f,1.1f,0.2f,3.8f}));
+        dataVals.add(new BarEntry(0 , new float[]{1f,0.1f,0.8f,1.1f,0.2f,3.8f}));
         return dataVals;
     }
 }
