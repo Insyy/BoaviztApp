@@ -23,12 +23,18 @@
                 android:value="" />
         </activity>
         <activity
-            android:name=".Formulary"
+            android:noHistory="true"
+            android:name=".ServerImpactVisualizer"
+            android:exported="false">
+            <meta-data
+                android:name="android.app.lib_name"
+                android:value="" />
+        </activity>
+        <activity
+            android:name=".ServerConfigurationActivity"
             android:exported="true"
             android:resizeableActivity="true"
-            android:windowSoftInputMode="adjustResize" >
-
-
+            android:windowSoftInputMode="adjustResize">
             <meta-data
                 android:name="android.app.lib_name"
                 android:value="" />
