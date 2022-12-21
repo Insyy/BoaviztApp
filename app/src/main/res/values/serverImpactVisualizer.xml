@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string name="title_global_warming">Potentiel de gaz à effet de serre (kgCO2eq) - Total : </string>
+    <string name="description_global_warming">Impact multicritères sur la durée de vie totale</string>
+
+    <string name="title_primary_energy">Energie Primaire (MJ) - Total : </string>
+    <string name="description_primary_energy">Consommation de ressources énergétiques</string>
+
+    <string name="title_ressource_exhausted">Potentiel d’épuisement des ressources abiotiques (kgSbeq) - Total : </string>
+    <string name="description_ressource_exhausted">Évalue l’utilisation de minéraux et de matières premières fossiles.</string>
+
+    <string name="fielset_title_1">How are the impacts assessed?</string>
+    <string name="fielset_text_1">The impacts related to manufacture are assessed using the methodology detailed by Boavizta in this article.
+        Those related to the use phase are evaluated from the average power consumption or modeled from the estimated server load.
+        The methodology is detailed here: doc.api.boavizta.org.</string>
+    <string name="fieldset_title_2">To go further</string>
+    <string name="fieldset_text_2">This page uses the BoaviztAPI. An open-source API that uses open data and methods to assess the environmental impacts of digital equipment.</string>
+
+
+    <string-array name="label_top_bar">
+        <item>Utilisation :</item>
+        <item>Fabrication :</item>
+    </string-array>
+    <string-array name="label_bottom_bar">
+        <item>Fabrication RAM :</item>
+        <item>Fabrication CPU :</item>
+        <item>Fabrication SSD :</item>
+        <item>Fabrication HDD :</item>
+        <item>Fabrication Autres :</item>
+    </string-array>
+</resources>

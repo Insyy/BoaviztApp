@@ -14,21 +14,22 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme" >
         <activity
-            android:name=".ServerVisualization"
-            android:exported="true" >
+            android:name=".FormularyActivity"
+            android:exported="false"
+            android:resizeableActivity="true"
+            android:windowSoftInputMode="adjustResize">
             <meta-data
                 android:name="android.app.lib_name"
                 android:value="" />
             <!--<intent-filter>
                 <action android:name="android.intent.action.MAIN" />
                 <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>-->
+            </intent-filter> -->
         </activity>
         <activity
-            android:name=".FormularyActivity"
-            android:exported="true"
-            android:resizeableActivity="true"
-            android:windowSoftInputMode="adjustResize">
+            android:noHistory="true"
+            android:name=".ServerImpactVisualizer"
+            android:exported="true">
             <meta-data
                 android:name="android.app.lib_name"
                 android:value="" />
@@ -36,14 +37,6 @@
                 <action android:name="android.intent.action.MAIN" />
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
-        </activity>
-        <activity
-            android:noHistory="true"
-            android:name=".ServerImpactVisualizer"
-            android:exported="false">
-            <meta-data
-                android:name="android.app.lib_name"
-                android:value="" />
         </activity>
         
     </application>
