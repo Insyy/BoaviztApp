@@ -12,6 +12,7 @@ import android.view.View;
 
 import com.github.mikephil.charting.charts.BarChart;
 import com.github.mikephil.charting.components.Legend;
+import com.github.mikephil.charting.components.LegendEntry;
 import com.github.mikephil.charting.data.BarData;
 import com.github.mikephil.charting.data.BarDataSet;
 import com.github.mikephil.charting.data.BarEntry;
@@ -23,6 +24,8 @@ import com.google.android.material.snackbar.Snackbar;
 import java.net.InetAddress;
 import java.net.UnknownHostException;
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 
 import fr.univpau.dudesalonso.boaviztapp.formulary.serverconfig.ServerConfiguration;
 
@@ -191,9 +194,21 @@ public class ServerImpactVisualizer extends AppCompatActivity {
         Legend legend = barChart.getLegend();
         legend.setXEntrySpace(10f);
         legend.setYEntrySpace(4f);
-        legend.setTextColor(Color.WHITE);
         legend.setWordWrapEnabled(true);
         legend.setTextColor(Color.DKGRAY);
+
+        LegendEntry[] legends = barChart.getLegend().getEntries();
+
+        for (LegendEntry l : legends) {
+
+            if(l.label.equals("none")){
+                Log.d("lengendEnt", l.label);
+                l.label = "";
+                l.formColor  = Color.TRANSPARENT;
+            }
+        }
+
+        legend.setCustom(legends);
 
     }
 

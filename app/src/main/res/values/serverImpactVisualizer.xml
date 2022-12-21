@@ -19,14 +19,15 @@
 
 
     <string-array name="label_top_bar">
-        <item>Utilisation :</item>
-        <item>Fabrication :</item>
+        <item>Usage :</item>
+        <item>Manufacturing  :</item>
     </string-array>
     <string-array name="label_bottom_bar">
-        <item>Fabrication RAM :</item>
-        <item>Fabrication CPU :</item>
-        <item>Fabrication SSD :</item>
-        <item>Fabrication HDD :</item>
-        <item>Fabrication Autres :</item>
+        <item>none</item>
+        <item>Manufacturing  RAM :</item>
+        <item>Manufacturing  CPU :</item>
+        <item>Manufacturing  SSD :</item>
+        <item>Manufacturing  HDD :</item>
+        <item>Manufacturing Others Autres :</item>
     </string-array>
 </resources>
