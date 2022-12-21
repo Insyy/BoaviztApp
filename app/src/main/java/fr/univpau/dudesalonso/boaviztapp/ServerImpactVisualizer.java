@@ -13,6 +13,10 @@ import android.view.View;
 import com.google.android.material.bottomnavigation.BottomNavigationItemView;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.progressindicator.LinearProgressIndicator;
+import com.google.android.material.snackbar.Snackbar;
+
+import java.net.InetAddress;
+import java.net.UnknownHostException;
 
 import fr.univpau.dudesalonso.boaviztapp.serverconfig.ServerConfiguration;
 
@@ -23,14 +27,15 @@ public class ServerImpactVisualizer extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.data_visualisation);
 
+        setDarkMode();
+
         setBottomNavigationBarListener();
         setNavigationIconFocus();
 
-        Log.d("ServerImpactVisualizer", "Attempting to deserialize configuration");
         ServerConfiguration config = (ServerConfiguration) getIntent().getSerializableExtra("serverConfiguration");
         Log.d("ServerImpactVisualizer: configuration", config.toString());
 
-            Log.d("ServerImpactVisualizer", "Attempting to write value as string jackson");
+            Log.d("ServerImpactVisualizer", "Attempting to write value as JSON string");
             Log.d("ServerImpactVisualizer", config.getAsJson());
 
     }
@@ -38,6 +43,7 @@ public class ServerImpactVisualizer extends AppCompatActivity {
     @Override
     public void onPause() {
         super.onPause();
+        //POUR DES TRANSITIONS CLEAN
         overridePendingTransition(0, 0);
     }
 
@@ -84,9 +90,27 @@ public class ServerImpactVisualizer extends AppCompatActivity {
         progressIndicator.setVisibility(View.INVISIBLE);
     }
 
-    public void showRequestError(String errorMessage) {
-        Log.e("Error", errorMessage);
+    public boolean isInternetAvailable() {
+        try {
+            InetAddress address = InetAddress.getByName("www.google.com");
+            return !address.equals("");
+        } catch (UnknownHostException e) {
+            showNetworkErrorToast(R.string.internet_connection_not_available);
+        }
+        return false;
     }
 
+    private void showNetworkErrorToast(int resString){
+        Snackbar.make(this.findViewById(R.id.root), getString(resString), Snackbar.LENGTH_SHORT)
+                .setAction(R.string.toast_action_retry, view -> populate())
+                .show();
+    }
+
+    private void populate(){
+        if (!isInternetAvailable())
+            return;
+
+        //TODO FAIRE LES REQUETES PUIS MONTRER LES DONNEES
+    }
 
 }

@@ -1,5 +1,10 @@
 <resources>
     <string name="app_name">BoaviztApp</string>
-    <!-- TODO: Remove or change this placeholder text -->
-    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="network_error_message">
+        There was an error during the API request.
+    </string>
+    <string name="internet_connection_not_available">
+        No internet connection found.
+    </string>
+    <string name="toast_action_retry">Retry</string>
 </resources>

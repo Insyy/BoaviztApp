@@ -19,6 +19,9 @@ public class Disk implements Serializable {
         this.units = units;
         this.type = type;
         this.capacity = capacity;
+
+        if (type.equals("hdd"))
+            this.capacity *= 1000;
     }
 
     @Override

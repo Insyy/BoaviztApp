@@ -3,12 +3,17 @@ package fr.univpau.dudesalonso.boaviztapp;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.app.AppCompatDelegate;
 
+import android.content.Context;
 import android.content.Intent;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 import android.os.Bundle;
+import android.os.Looper;
 import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
@@ -20,6 +25,7 @@ import com.android.volley.toolbox.Volley;
 import com.google.android.material.bottomnavigation.BottomNavigationItemView;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.progressindicator.LinearProgressIndicator;
+import com.google.android.material.snackbar.Snackbar;
 import com.google.android.material.textfield.MaterialAutoCompleteTextView;
 import com.google.android.material.textfield.TextInputEditText;
 import com.google.android.material.textfield.TextInputLayout;
@@ -28,6 +34,8 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.net.InetAddress;
+import java.net.UnknownHostException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
@@ -83,7 +91,7 @@ public class ServerConfigurationActivity extends AppCompatActivity {
     @Override
     protected void onStart() {
         super.onStart();
-        populate();
+        populateIfInternetAvailable();
     }
 
     private void setDarkMode() {
@@ -97,12 +105,45 @@ public class ServerConfigurationActivity extends AppCompatActivity {
 
     public void populate() {
 
+        Log.d("POPULATING", "POPULATING");
+
         sendArrayGetRequestsAndPopulate(urlArchitectures, R.id.cpu_architecture_input);
         sendArrayGetRequestsAndPopulate(urlSsdManufacturers, R.id.ssd_manufacturer_input);
         sendArrayGetRequestsAndPopulate(urlRamManufacturers, R.id.ram_manufacturer_input);
         sendMapGetRequestsAndPopulate(urlCountries, R.id.usage_location_input);
 
         populateAutocompleteDropdownValues(R.id.usage_method_input, Arrays.asList(getResources().getStringArray(R.array.method_options)));
+    }
+
+    boolean isConnected(){
+        //Check if connected to internet, output accordingly
+        ConnectivityManager cm =
+                (ConnectivityManager)this.getSystemService(Context.CONNECTIVITY_SERVICE);
+
+        NetworkInfo activeNetwork = cm.getActiveNetworkInfo();
+        return activeNetwork != null &&
+                ((NetworkInfo) activeNetwork).isConnectedOrConnecting();
+    }
+
+    public void populateIfInternetAvailable() {
+            if (!isConnected()){
+                showNetworkErrorToast(R.string.internet_connection_not_available);
+                return;
+            }
+
+            new Thread(new Runnable() {
+                @Override
+                public void run() {
+                    Looper.prepare();
+                    try {
+                        InetAddress address = InetAddress.getByName("www.google.com");
+                        if( !address.equals(""))
+                            populate();
+                    } catch (UnknownHostException e) {
+                        showNetworkErrorToast(R.string.internet_connection_not_available);
+                    }
+                }
+            }).start();
     }
 
     private void populateAutocompleteDropdownValues(int id, List<String> values) {
@@ -114,7 +155,6 @@ public class ServerConfigurationActivity extends AppCompatActivity {
         Arrays.sort(array);
         autoCompleteTextView.setSimpleItems(array);
         autoCompleteTextView.setText(array[0]);
-
     }
 
     private void setUsageContents() {
@@ -262,11 +302,8 @@ public class ServerConfigurationActivity extends AppCompatActivity {
         progressIndicator.setVisibility(View.INVISIBLE);
     }
 
-    public void showRequestError(String errorMessage) {
-        Log.e("Error", errorMessage);
-    }
 
-    private void sendArrayGetRequestsAndPopulate(String url, int materialAutoCompleteId) {
+    private void sendArrayGetRequestsAndPopulate(String url, int materialAutoCompleteId){
         startProgressIndicator();
 
         queue.add(
@@ -280,7 +317,6 @@ public class ServerConfigurationActivity extends AppCompatActivity {
                                         values.add(response.getString(i));
                                     } catch (JSONException e) {
                                         e.printStackTrace();
-                                        showRequestError(e.toString());
                                     }
                                 }
                                 populateAutocompleteDropdownValues(materialAutoCompleteId, values);
@@ -290,7 +326,8 @@ public class ServerConfigurationActivity extends AppCompatActivity {
 
                             @Override
                             public void onErrorResponse(VolleyError error) {
-                                showRequestError(error.networkResponse.toString());
+                                showNetworkErrorToast(R.string.network_error_message);
+                                stopProgressIndicator();
                             }
                         })
         );
@@ -324,9 +361,24 @@ public class ServerConfigurationActivity extends AppCompatActivity {
 
                             @Override
                             public void onErrorResponse(VolleyError error) {
-                                showRequestError(error.networkResponse.toString());
+                                showNetworkErrorToast(R.string.network_error_message);
+                                stopProgressIndicator();
                             }
                         })
         );
+    }
+
+    private void showNetworkErrorToast(int resString){
+        Snackbar.make(findViewById(R.id.root), getString(resString), Snackbar.LENGTH_LONG)
+                .setAction(R.string.toast_action_retry, view -> populateIfInternetAvailable())
+                .setAnchorView(R.id.bottom_navigation)
+                .show();
+    }
+
+
+    @Override
+    public void onPause() {
+        super.onPause();
+        overridePendingTransition(0, 0);
     }
 }
