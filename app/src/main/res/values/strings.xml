@@ -7,4 +7,8 @@
         No internet connection found.
     </string>
     <string name="toast_action_retry">Retry</string>
+    <string name="url_cpu_architectures">https://uppa.api.boavizta.org/v1/utils/cpu_family</string>
+    <string name="url_ssd_manufacturers">https://uppa.api.boavizta.org/v1/utils/ssd_manufacturer</string>
+    <string name="url_hdd_manufacturers">https://uppa.api.boavizta.org/v1/utils/ram_manufacturer</string>
+    <string name="url_countries">https://uppa.api.boavizta.org/v1/utils/country_code</string>
 </resources>

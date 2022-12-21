@@ -1,6 +1,5 @@
 package fr.univpau.dudesalonso.boaviztapp;
 
-import androidx.annotation.LongDef;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.app.AppCompatDelegate;
 
@@ -18,7 +17,7 @@ import com.google.android.material.snackbar.Snackbar;
 import java.net.InetAddress;
 import java.net.UnknownHostException;
 
-import fr.univpau.dudesalonso.boaviztapp.serverconfig.ServerConfiguration;
+import fr.univpau.dudesalonso.boaviztapp.formulary.serverconfig.ServerConfiguration;
 
 public class ServerImpactVisualizer extends AppCompatActivity {
 
@@ -74,7 +73,7 @@ public class ServerImpactVisualizer extends AppCompatActivity {
 
     private void launchServerConfigurationActivity() {
         Intent formularyIntent = new Intent();
-        formularyIntent.setClass(getApplicationContext(), ServerConfigurationActivity.class);
+        formularyIntent.setClass(getApplicationContext(), FormularyActivity.class);
         startActivity(formularyIntent);
     }
 

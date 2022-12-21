@@ -1,12 +1,12 @@
-package fr.univpau.dudesalonso.boaviztapp.serverconfig;
+package fr.univpau.dudesalonso.boaviztapp.formulary.serverconfig;
 
 import com.google.gson.Gson;
 
 import java.io.Serializable;
 
-import fr.univpau.dudesalonso.boaviztapp.serverconfig.configuration.Configuration;
-import fr.univpau.dudesalonso.boaviztapp.serverconfig.model.Model;
-import fr.univpau.dudesalonso.boaviztapp.serverconfig.usage.Usage;
+import fr.univpau.dudesalonso.boaviztapp.formulary.serverconfig.configuration.Configuration;
+import fr.univpau.dudesalonso.boaviztapp.formulary.serverconfig.model.Model;
+import fr.univpau.dudesalonso.boaviztapp.formulary.serverconfig.usage.Usage;
 
 public class ServerConfiguration implements Serializable {
     public Model model;

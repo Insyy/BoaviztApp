@@ -25,7 +25,7 @@
             </intent-filter>-->
         </activity>
         <activity
-            android:name=".ServerConfigurationActivity"
+            android:name=".FormularyActivity"
             android:exported="true"
             android:resizeableActivity="true"
             android:windowSoftInputMode="adjustResize">

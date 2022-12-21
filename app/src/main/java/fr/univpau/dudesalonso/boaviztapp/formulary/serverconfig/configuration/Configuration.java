@@ -1,8 +1,8 @@
-package fr.univpau.dudesalonso.boaviztapp.serverconfig.configuration;
+package fr.univpau.dudesalonso.boaviztapp.formulary.serverconfig.configuration;
 
-import fr.univpau.dudesalonso.boaviztapp.serverconfig.configuration.components.Cpu;
-import fr.univpau.dudesalonso.boaviztapp.serverconfig.configuration.components.Disk;
-import fr.univpau.dudesalonso.boaviztapp.serverconfig.configuration.components.Ram;
+import fr.univpau.dudesalonso.boaviztapp.formulary.serverconfig.configuration.components.Cpu;
+import fr.univpau.dudesalonso.boaviztapp.formulary.serverconfig.configuration.components.Disk;
+import fr.univpau.dudesalonso.boaviztapp.formulary.serverconfig.configuration.components.Ram;
 
 import java.io.Serializable;
 import java.util.ArrayList;
