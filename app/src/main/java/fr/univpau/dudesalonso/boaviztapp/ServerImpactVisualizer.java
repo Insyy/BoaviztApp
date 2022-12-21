@@ -24,10 +24,8 @@ import com.google.android.material.snackbar.Snackbar;
 import java.net.InetAddress;
 import java.net.UnknownHostException;
 import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
 
-import fr.univpau.dudesalonso.boaviztapp.formulary.serverconfig.ServerConfiguration;
+import fr.univpau.dudesalonso.boaviztapp.ImpactVisualizer.CustomMarkerView;
 
 public class ServerImpactVisualizer extends AppCompatActivity {
 
@@ -72,6 +70,11 @@ public class ServerImpactVisualizer extends AppCompatActivity {
             initLayoutChart(createBarData(i), barChartList.get(i));
             initLayoutLegend(barChartList.get(i));
         }
+
+        CustomMarkerView mv = new CustomMarkerView(this, R.layout.tv_content);
+        layoutGlobalWarming.setMarker(mv);
+        layoutPrimaryEnergy.setMarker(mv);
+        layoutRessExhausted.setMarker(mv);
 
     }
 
@@ -156,6 +159,12 @@ public class ServerImpactVisualizer extends AppCompatActivity {
         barDataDown.setColors(colorClassArray2);
         barDataDown.setStackLabels(getResources().getStringArray(R.array.label_bottom_bar));
 
+       // barDataDown.setHighlightEnabled(true);
+        barDataUp.setHighLightColor(Color.WHITE); // color for highlight indicator
+        barDataUp.setDrawValues(true);
+        barDataDown.setHighLightColor(Color.WHITE); // color for highlight indicator
+        barDataDown.setDrawValues(true);
+
         BarData barData = new BarData(barDataUp,barDataDown);
         barData.setBarWidth(5f);
         barData.setDrawValues(false);
@@ -182,7 +191,7 @@ public class ServerImpactVisualizer extends AppCompatActivity {
         barChart.getAxisLeft().setDrawAxisLine(false);
 
         //disable interaction
-        barChart.setTouchEnabled(false);
+        barChart.setTouchEnabled(true);
         barChart.setScaleEnabled(false);
         barChart.setDoubleTapToZoomEnabled(false);
 
@@ -214,6 +223,7 @@ public class ServerImpactVisualizer extends AppCompatActivity {
 
     private ArrayList<BarEntry> dataValuesUp(int index){
         ArrayList<BarEntry> dataVals = new ArrayList<>();
+        dataVals.add(new BarEntry(4.95F , new float[]{1f,6f}));
         dataVals.add(new BarEntry(4.95F , new float[]{1f,6f}));
         return dataVals;
     }
