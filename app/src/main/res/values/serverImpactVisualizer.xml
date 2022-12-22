@@ -1,14 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
-    <string name="title_global_warming">Potentiel de gaz à effet de serre (kgCO2eq) - Total : </string>
-    <string name="description_global_warming">Impact multicritères sur la durée de vie totale</string>
+    <string name="title_global_warming">Global Warming Potential (kgCO2eq) - Total : </string>
+    <string name="description_global_warming">Evaluates the effect on global warming</string>
 
-    <string name="title_primary_energy">Energie Primaire (MJ) - Total : </string>
-    <string name="description_primary_energy">Consommation de ressources énergétiques</string>
+    <string name="title_primary_energy">Primary energy (MJ) - Total : </string>
+    <string name="description_primary_energy">Consumption of energy resources</string>
 
-    <string name="title_ressource_exhausted">Potentiel d’épuisement des ressources abiotiques (kgSbeq) - Total : </string>
-    <string name="description_ressource_exhausted">Évalue l’utilisation de minéraux et de matières premières fossiles.</string>
+    <string name="title_ressource_exhausted">Abiotic Depletion Potential (kgSbeq) - Total : </string>
+    <string name="description_ressource_exhausted">Evaluates the use of minerals and fossil ressources</string>
 
     <string name="fielset_title_1">How are the impacts assessed?</string>
     <string name="fielset_text_1">The impacts related to manufacture are assessed using the methodology detailed by Boavizta in this article.

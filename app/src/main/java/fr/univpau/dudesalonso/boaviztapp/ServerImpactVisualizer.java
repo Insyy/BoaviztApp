@@ -10,6 +10,7 @@ import android.util.Log;
 import android.view.View;
 
 
+import com.github.mikephil.charting.animation.Easing;
 import com.github.mikephil.charting.charts.BarChart;
 import com.github.mikephil.charting.components.Legend;
 import com.github.mikephil.charting.components.LegendEntry;
@@ -75,6 +76,10 @@ public class ServerImpactVisualizer extends AppCompatActivity {
         layoutGlobalWarming.setMarker(mv);
         layoutPrimaryEnergy.setMarker(mv);
         layoutRessExhausted.setMarker(mv);
+
+        layoutGlobalWarming.animateY(400);
+        layoutPrimaryEnergy.animateY(400);
+        layoutRessExhausted.animateY(400);
 
     }
 
