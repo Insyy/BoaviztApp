@@ -108,7 +108,6 @@ public class ComponentManager {
     }
 
     private void updateMethodDetailContainer(String newMethodString) {
-        MaterialAutoCompleteTextView methodInput = formularyActivity.findViewById(R.id.usage_method_input);
         TextInputLayout methodDetailsInputLayout = formularyActivity.findViewById(R.id.usage_method_details_layout);
         TextInputEditText methodDetailsInputEditText = formularyActivity.findViewById(R.id.usage_method_details_input);
         if (newMethodString.equals("Load")) {
