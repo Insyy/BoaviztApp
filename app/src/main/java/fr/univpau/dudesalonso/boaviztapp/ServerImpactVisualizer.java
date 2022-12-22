@@ -47,11 +47,13 @@ public class ServerImpactVisualizer extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.data_visualisation);
 
         setDarkMode();
+        setContentView(R.layout.data_visualisation);
+
         setBottomNavigationBarListener();
         setNavigationIconFocus();
+        stopProgressIndicator();
 
        // ServerConfiguration config = (ServerConfiguration) getIntent().getSerializableExtra("serverConfiguration");
       /*  Log.d("ServerImpactVisualizer: configuration", config.toString());
