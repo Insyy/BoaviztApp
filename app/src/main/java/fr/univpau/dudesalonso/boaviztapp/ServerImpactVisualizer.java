@@ -3,6 +3,7 @@ package fr.univpau.dudesalonso.boaviztapp;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.app.AppCompatDelegate;
 
+import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
@@ -10,7 +11,13 @@ import android.util.Log;
 import android.view.View;
 
 
-import com.github.mikephil.charting.animation.Easing;
+import com.android.volley.Request;
+import com.android.volley.RequestQueue;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.JsonObjectRequest;
+import com.android.volley.toolbox.RequestFuture;
+import com.android.volley.toolbox.Volley;
 import com.github.mikephil.charting.charts.BarChart;
 import com.github.mikephil.charting.components.Legend;
 import com.github.mikephil.charting.components.LegendEntry;
@@ -21,16 +28,30 @@ import com.google.android.material.bottomnavigation.BottomNavigationItemView;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.progressindicator.LinearProgressIndicator;
 import com.google.android.material.snackbar.Snackbar;
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import java.net.InetAddress;
 import java.net.UnknownHostException;
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collections;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 import fr.univpau.dudesalonso.boaviztapp.ImpactVisualizer.CustomMarkerView;
+import fr.univpau.dudesalonso.boaviztapp.ImpactVisualizer.GrapheDataSet;
+import fr.univpau.dudesalonso.boaviztapp.formulary.serverconfig.ServerConfiguration;
 
 public class ServerImpactVisualizer extends AppCompatActivity {
 
     ArrayList<BarChart> barChartList = new ArrayList<>();
+    RequestQueue queue;
+    String url = "https://uppa.api.boavizta.org/v1/server/?verbose=true&allocation=TOTAL";
+    ServerConfiguration config;
+    CustomMarkerView mv;
+    List<GrapheDataSet> listGds = new ArrayList<>();
 
     int[] colorClassArray1 = new int[]{
             Color.rgb(1,139,140),
@@ -48,41 +69,35 @@ public class ServerImpactVisualizer extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        setDarkMode();
         setContentView(R.layout.data_visualisation);
 
-        setBottomNavigationBarListener();
-        setNavigationIconFocus();
-        stopProgressIndicator();
-
-       // ServerConfiguration config = (ServerConfiguration) getIntent().getSerializableExtra("serverConfiguration");
-      /*  Log.d("ServerImpactVisualizer: configuration", config.toString());
-        Log.d("ServerImpactVisualizer", "Attempting to write value as JSON string");
-        Log.d("ServerImpactVisualizer", config.getAsJson());*/
-
+        //Initialisation des graphiques
         BarChart layoutGlobalWarming = findViewById(R.id.global_warming);
         BarChart layoutPrimaryEnergy = findViewById(R.id.primary_energy);
         BarChart layoutRessExhausted = findViewById(R.id.ressource_exhausted);
 
+        //Ajout des graphiques à la liste
         barChartList.add(layoutGlobalWarming);
         barChartList.add(layoutPrimaryEnergy);
         barChartList.add(layoutRessExhausted);
 
-        int arraySize = barChartList.size();
-        for (int i = 0; i < arraySize; i ++) {
-            initLayoutChart(createBarData(i), barChartList.get(i));
-            initLayoutLegend(barChartList.get(i));
-        }
+        mv = new CustomMarkerView(this, R.layout.tv_content);
 
-        CustomMarkerView mv = new CustomMarkerView(this, R.layout.tv_content);
-        layoutGlobalWarming.setMarker(mv);
-        layoutPrimaryEnergy.setMarker(mv);
-        layoutRessExhausted.setMarker(mv);
+        setDarkMode();
+        setBottomNavigationBarListener();
+        setNavigationIconFocus();
+        stopProgressIndicator();
 
-        layoutGlobalWarming.animateY(400);
-        layoutPrimaryEnergy.animateY(400);
-        layoutRessExhausted.animateY(400);
+        queue = Volley.newRequestQueue(this);
+        config = (ServerConfiguration) getIntent().getSerializableExtra("serverConfiguration");
 
+        sendRequestServer();
+    }
+
+    @Override
+    public void onStart() {
+        super.onStart();
+        sendRequestServer();
     }
 
     @Override
@@ -90,6 +105,158 @@ public class ServerImpactVisualizer extends AppCompatActivity {
         super.onPause();
         //POUR DES TRANSITIONS CLEAN
         overridePendingTransition(0, 0);
+    }
+
+    private void sendRequestServer(){
+        try {
+            JSONObject jsonObject= new JSONObject(config.getAsJson());
+            queue.add(new JsonObjectRequest(
+                    Request.Method.POST,url,jsonObject,
+                    response -> {
+                        try {
+                            JSONObject impacts = response.getJSONObject("impacts");
+                            JSONObject verbose = response.getJSONObject("verbose");
+
+
+                            listGds.add(new GrapheDataSet(impacts,verbose,"gwp"));
+                            listGds.add(new GrapheDataSet(impacts,verbose,"pe"));
+                            listGds.add(new GrapheDataSet(impacts,verbose,"adp"));
+
+                            initCharts(barChartList,listGds);
+                            setCustomMarker(barChartList,mv);
+                            animateCharts(barChartList);
+
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                        }
+
+                    },
+                    error-> {
+
+                    }));
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+    }
+
+    private void initCharts(List<BarChart> charts, List<GrapheDataSet> listGds) {
+        initLayoutChart(createBarData(listGds.get(0)), charts.get(0));
+        initLayoutChart(createBarData(listGds.get(1)), charts.get(1));
+        initLayoutChart(createBarData(listGds.get(2)), charts.get(2));
+        for (int i = 0; i < charts.size(); i ++) {
+            initLayoutLegend(charts.get(i),i);
+        }
+    }
+
+    public void animateCharts(List<BarChart> barChart){
+        for(BarChart chart : barChart){
+            chart.animateY(400);
+        }
+    }
+
+    public void setCustomMarker(List<BarChart> charts,CustomMarkerView mv){
+        for(BarChart chart : charts){
+            chart.setMarker(mv);
+        }
+    }
+
+    private BarData createBarData(GrapheDataSet gds){
+        BarDataSet barDataUp = new BarDataSet(dataValuesUp(gds),"");
+        barDataUp.setColors(colorClassArray1);
+        barDataUp.setStackLabels(getResources().getStringArray(R.array.label_top_bar));
+        BarDataSet barDataDown = new BarDataSet(dataValuesDown(gds),"");
+        barDataDown.setColors(colorClassArray2);
+        barDataDown.setStackLabels(getResources().getStringArray(R.array.label_bottom_bar));
+
+        // barDataDown.setHighlightEnabled(true);
+        barDataUp.setHighLightColor(Color.WHITE); // color for highlight indicator
+        barDataUp.setDrawValues(true);
+        barDataDown.setHighLightColor(Color.WHITE); // color for highlight indicator
+        barDataDown.setDrawValues(true);
+
+        BarData barData = new BarData(barDataUp,barDataDown);
+        barData.setBarWidth(5f);
+        barData.setDrawValues(false);
+
+        return barData;
+    }
+
+    private void initLayoutChart(BarData barData, BarChart barChart){
+        barChart.setData(barData);
+        barChart.setExtraOffsets(0f,5f,0f,5f);
+
+        barChart.getDescription().setEnabled(false);
+        //disable axis things
+        barChart.getXAxis().setDrawGridLines(false);
+        barChart.getXAxis().setDrawLabels(false);
+        barChart.getXAxis().setDrawAxisLine(false);
+
+        barChart.getAxisRight().setDrawGridLines(false);
+        barChart.getAxisRight().setDrawLabels(false);
+        barChart.getAxisRight().setDrawAxisLine(false);
+
+        barChart.getAxisLeft().setDrawGridLines(false);
+        barChart.getAxisLeft().setDrawLabels(false);
+        barChart.getAxisLeft().setDrawAxisLine(false);
+
+        //disable interaction
+        barChart.setTouchEnabled(true);
+        barChart.setScaleEnabled(false);
+        barChart.setDoubleTapToZoomEnabled(false);
+
+        //refresh
+        barChart.invalidate();
+    }
+
+    private void initLayoutLegend(BarChart barChart, int index){
+
+        Legend legend = barChart.getLegend();
+        LegendEntry[] legends = barChart.getLegend().getEntries();
+        List<LegendEntry> nonEmptyLegend = new ArrayList<>();
+
+        String[] label_bottom_bar = getResources().getStringArray(R.array.label_bottom_bar);
+        String[] label_top_bar = getResources().getStringArray(R.array.label_top_bar);
+
+        legend.setXEntrySpace(10f);
+        legend.setYEntrySpace(4f);
+        legend.setWordWrapEnabled(true);
+        legend.setTextColor(Color.DKGRAY);
+
+        for (LegendEntry legendEntry : legends) {
+            if (legendEntry.label != null && !legendEntry.label.isEmpty()) {
+                nonEmptyLegend.add(legendEntry);
+            }
+        }
+
+        for (int i = 0; i < label_top_bar.length; i++) {
+                Log.d("initLayoutLegend", label_top_bar[i] + listGds.get(index).get_topDataSet().get(i));
+                nonEmptyLegend.get(i).label =  label_top_bar[i] + listGds.get(index).get_topDataSet().get(i);
+        }
+        
+        for (int i = 0; i < label_bottom_bar.length - 1; i++) {
+            if(nonEmptyLegend.get(i).label.substring(0,4).equals("none")) {
+                nonEmptyLegend.get(i).label = "";
+                nonEmptyLegend.get(i).formColor = Color.TRANSPARENT;
+
+            }else{
+                nonEmptyLegend.get(i + 2).label =  label_bottom_bar[i] + listGds.get(index).get_bottomDataSet().get(i);
+            }
+        }
+
+        legend.setCustom(nonEmptyLegend);
+
+    }
+
+    private ArrayList<BarEntry> dataValuesUp(GrapheDataSet gds){
+        ArrayList<BarEntry> dataVals = new ArrayList<>();
+        dataVals.add(new BarEntry(4.95F , new float[]{gds.get_usage(),gds.get_manufacturing()}));
+        return dataVals;
+    }
+
+    private ArrayList<BarEntry> dataValuesDown(GrapheDataSet gds){
+        ArrayList<BarEntry> dataVals = new ArrayList<>();
+        dataVals.add(new BarEntry(0f , new float[]{gds.get_usage(),gds.get_mRAM(),gds.get_mCPU(),gds.get_mSDD(),gds.get_mHDD(),gds.get_mOther()}));
+        return dataVals;
     }
 
     private void setDarkMode() {
@@ -154,91 +321,6 @@ public class ServerImpactVisualizer extends AppCompatActivity {
     private void populate(){
         if (!isInternetAvailable())
             return;
-
-        //TODO FAIRE LES REQUETES PUIS MONTRER LES DONNEES
-    }
-
-    private BarData createBarData(int index){
-        BarDataSet barDataUp = new BarDataSet(dataValuesUp(index),"");
-        barDataUp.setColors(colorClassArray1);
-        barDataUp.setStackLabels(getResources().getStringArray(R.array.label_top_bar));
-        BarDataSet barDataDown = new BarDataSet(dataValuesDown(index),"");
-        barDataDown.setColors(colorClassArray2);
-        barDataDown.setStackLabels(getResources().getStringArray(R.array.label_bottom_bar));
-
-       // barDataDown.setHighlightEnabled(true);
-        barDataUp.setHighLightColor(Color.WHITE); // color for highlight indicator
-        barDataUp.setDrawValues(true);
-        barDataDown.setHighLightColor(Color.WHITE); // color for highlight indicator
-        barDataDown.setDrawValues(true);
-
-        BarData barData = new BarData(barDataUp,barDataDown);
-        barData.setBarWidth(5f);
-        barData.setDrawValues(false);
-
-        return barData;
-    }
-
-    private void initLayoutChart(BarData barData, BarChart barChart){
-        barChart.setData(barData);
-        barChart.setExtraOffsets(0f,5f,0f,5f);
-
-        barChart.getDescription().setEnabled(false);
-        //disable axis things
-        barChart.getXAxis().setDrawGridLines(false);
-        barChart.getXAxis().setDrawLabels(false);
-        barChart.getXAxis().setDrawAxisLine(false);
-
-        barChart.getAxisRight().setDrawGridLines(false);
-        barChart.getAxisRight().setDrawLabels(false);
-        barChart.getAxisRight().setDrawAxisLine(false);
-
-        barChart.getAxisLeft().setDrawGridLines(false);
-        barChart.getAxisLeft().setDrawLabels(false);
-        barChart.getAxisLeft().setDrawAxisLine(false);
-
-        //disable interaction
-        barChart.setTouchEnabled(true);
-        barChart.setScaleEnabled(false);
-        barChart.setDoubleTapToZoomEnabled(false);
-
-        //refresh
-        barChart.invalidate();
-    }
-
-    private void initLayoutLegend(BarChart barChart){
-        Legend legend = barChart.getLegend();
-        legend.setXEntrySpace(10f);
-        legend.setYEntrySpace(4f);
-        legend.setWordWrapEnabled(true);
-        legend.setTextColor(Color.DKGRAY);
-
-        LegendEntry[] legends = barChart.getLegend().getEntries();
-
-        for (LegendEntry l : legends) {
-
-            if(l.label.equals("none")){
-                Log.d("lengendEnt", l.label);
-                l.label = "";
-                l.formColor  = Color.TRANSPARENT;
-            }
-        }
-
-        legend.setCustom(legends);
-
-    }
-
-    private ArrayList<BarEntry> dataValuesUp(int index){
-        ArrayList<BarEntry> dataVals = new ArrayList<>();
-        dataVals.add(new BarEntry(4.95F , new float[]{1f,6f}));
-        dataVals.add(new BarEntry(4.95F , new float[]{1f,6f}));
-        return dataVals;
-    }
-
-    private ArrayList<BarEntry> dataValuesDown(int index){
-        ArrayList<BarEntry> dataVals = new ArrayList<>();
-        dataVals.add(new BarEntry(0 , new float[]{1f,0.1f,0.8f,1.1f,0.2f,3.8f}));
-        return dataVals;
     }
 
 }

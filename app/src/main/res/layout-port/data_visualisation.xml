@@ -62,50 +62,46 @@
             <com.google.android.material.card.MaterialCardView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                style="?attr/materialCardViewFilledStyle">
+                style="?attr/materialCardViewFilledStyle"
+                >
 
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:background="@color/cardview_light_background"
-                    android:orientation="vertical"
-                    android:padding="10dp">
+                    android:orientation="vertical">
 
 
                     <com.google.android.material.card.MaterialCardView
-                        style="?attr/materialCardViewFilledStyle"
+                        style="?attr/materialCardViewElevatedStyle"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_marginVertical="@dimen/vertical_margin_between_cards"
-                        app:cardBackgroundColor="@color/md_theme_dark_onSurface"
                         app:cardElevation="3dp"
-                        app:cardUseCompatPadding="true">
+                        android:layout_margin="@dimen/card_margin">
 
                         <LinearLayout
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:orientation="vertical">
+                            android:orientation="vertical"
+                            android:padding="@dimen/global_padding"
+                            >
 
                             <com.google.android.material.textview.MaterialTextView
                                 android:id="@+id/textView2"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:layout_marginLeft="10dp"
-                                android:layout_marginTop="7dp"
                                 android:text="@string/title_global_warming"
-                                android:textColor="@color/md_theme_light_onPrimaryContainer"
-                                android:textSize="15dp"
-                                android:textStyle="bold" />
+                                android:textAppearance="?attr/textAppearanceBodyLarge"
+                                android:textStyle="bold"
+                                android:layout_margin="@dimen/card_margin"/>
 
                             <com.google.android.material.textview.MaterialTextView
                                 android:id="@+id/textView3"
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
-                                android:layout_marginLeft="10dp"
-                                android:layout_marginTop="5dp"
                                 android:text="@string/description_global_warming"
-                                android:textSize="13dp"
-                                android:textStyle="italic" />
+                                android:textStyle="italic"
+                                android:textAppearance="?attr/textAppearanceBodyMedium"
+                                android:layout_margin="@dimen/card_margin"/>
 
                             <com.github.mikephil.charting.charts.HorizontalBarChart
                                 android:id="@+id/global_warming"
@@ -118,39 +114,35 @@
                     </com.google.android.material.card.MaterialCardView>
 
                     <com.google.android.material.card.MaterialCardView
-                        style="?attr/materialCardViewFilledStyle"
+                        style="?attr/materialCardViewElevatedStyle"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_marginVertical="@dimen/vertical_margin_between_cards"
-                        app:cardBackgroundColor="@color/md_theme_dark_onSurface"
                         app:cardElevation="3dp"
-                        app:cardUseCompatPadding="true">
+                        android:layout_margin="@dimen/card_margin">
 
                         <LinearLayout
                             android:layout_width="match_parent"
                             android:layout_height="match_parent"
-                            android:orientation="vertical">
+                            android:orientation="vertical"
+                            android:padding="@dimen/global_padding">
 
                             <com.google.android.material.textview.MaterialTextView
                                 android:id="@+id/textView4"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:layout_marginLeft="10dp"
-                                android:layout_marginTop="7dp"
                                 android:text="@string/title_primary_energy"
-                                android:textColor="@color/md_theme_light_onPrimaryContainer"
-                                android:textSize="15dp"
-                                android:textStyle="bold" />
+                                android:textAppearance="?attr/textAppearanceBodyLarge"
+                                android:textStyle="bold"
+                                android:layout_margin="@dimen/card_margin"/>
 
                             <com.google.android.material.textview.MaterialTextView
                                 android:id="@+id/textView5"
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
-                                android:layout_marginLeft="10dp"
-                                android:layout_marginTop="5dp"
                                 android:text="@string/description_primary_energy"
-                                android:textSize="13dp"
-                                android:textStyle="italic" />
+                                android:textStyle="italic"
+                                android:textAppearance="?attr/textAppearanceBodyMedium"
+                                android:layout_margin="@dimen/card_margin"/>
 
                             <com.github.mikephil.charting.charts.HorizontalBarChart
                                 android:id="@+id/primary_energy"
@@ -163,39 +155,34 @@
                     </com.google.android.material.card.MaterialCardView>
 
                     <com.google.android.material.card.MaterialCardView
-                        style="?attr/materialCardViewFilledStyle"
+                        style="?attr/materialCardViewElevatedStyle"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_marginVertical="@dimen/vertical_margin_between_cards"
-                        app:cardBackgroundColor="@color/md_theme_dark_onSurface"
                         app:cardElevation="3dp"
-                        app:cardUseCompatPadding="true">
+                        android:layout_margin="@dimen/card_margin">
 
                         <LinearLayout
                             android:layout_width="match_parent"
                             android:layout_height="match_parent"
-                            android:orientation="vertical">
+                            android:orientation="vertical"
+                            android:padding="@dimen/global_padding">
 
                             <com.google.android.material.textview.MaterialTextView
                                 android:id="@+id/textView6"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:layout_marginLeft="10dp"
-                                android:layout_marginTop="7dp"
                                 android:text="@string/title_ressource_exhausted"
-                                android:textColor="@color/md_theme_light_onPrimaryContainer"
-                                android:textSize="15dp"
-                                android:textStyle="bold" />
+                                android:textAppearance="?attr/textAppearanceBodyLarge"
+                                android:textStyle="bold"
+                                android:layout_margin="@dimen/card_margin"/>
 
                             <com.google.android.material.textview.MaterialTextView
-                                android:id="@+id/textView7"
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
-                                android:layout_marginLeft="10dp"
-                                android:layout_marginTop="5dp"
                                 android:text="@string/description_ressource_exhausted"
-                                android:textSize="13dp"
-                                android:textStyle="italic" />
+                                android:textStyle="italic"
+                                android:textAppearance="?attr/textAppearanceBodyMedium"
+                                android:layout_margin="@dimen/card_margin"/>
 
                             <com.github.mikephil.charting.charts.HorizontalBarChart
                                 android:id="@+id/ressource_exhausted"
@@ -208,63 +195,51 @@
                     </com.google.android.material.card.MaterialCardView>
 
                     <com.google.android.material.card.MaterialCardView
-                        style="?attr/materialCardViewFilledStyle"
+                        style="?attr/materialCardViewElevatedStyle"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_marginVertical="@dimen/vertical_margin_between_cards"
-                        app:cardBackgroundColor="@android:color/darker_gray">
+                        app:cardElevation="3dp"
+                        android:layout_margin="@dimen/card_margin">
 
                         <LinearLayout
                             android:layout_width="match_parent"
                             android:layout_height="match_parent"
-                            android:layout_margin="1dp"
-                            android:background="@drawable/layout_graph_bg"
-                            android:orientation="vertical">
+                            android:orientation="vertical"
+                            android:padding="@dimen/global_padding">
 
                             <com.google.android.material.textview.MaterialTextView
                                 android:id="@+id/textView8"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:layout_marginLeft="10dp"
-                                android:layout_marginTop="7dp"
                                 android:text="@string/fielset_title_1"
-                                android:textColor="@color/md_theme_light_onPrimaryContainer"
-                                android:textSize="13dp"
-                                android:textStyle="bold" />
+                                android:textAppearance="?attr/textAppearanceBodyMedium"
+                                android:layout_margin="@dimen/card_margin"
+                                android:textStyle="bold"/>
 
                             <com.google.android.material.textview.MaterialTextView
                                 android:id="@+id/textView9"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:layout_marginLeft="10dp"
-                                android:layout_marginTop="7dp"
                                 android:text="@string/fielset_text_1"
-                                android:textColor="@color/md_theme_light_onPrimaryContainer"
-                                android:textSize="10dp"
-                                android:textStyle="normal" />
+                                android:textAppearance="?attr/textAppearanceBodySmall"
+                                android:layout_margin="@dimen/card_margin"/>
 
                             <com.google.android.material.textview.MaterialTextView
                                 android:id="@+id/textView10"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:layout_marginLeft="10dp"
-                                android:layout_marginTop="7dp"
                                 android:text="@string/fieldset_title_2"
-                                android:textColor="@color/md_theme_light_onPrimaryContainer"
-                                android:textSize="13dp"
-                                android:textStyle="bold" />
+                                android:textAppearance="?attr/textAppearanceBodyMedium"
+                                android:layout_margin="@dimen/card_margin"
+                                android:textStyle="bold"/>
 
                             <com.google.android.material.textview.MaterialTextView
                                 android:id="@+id/textView11"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:layout_marginLeft="10dp"
-                                android:layout_marginTop="7dp"
-                                android:layout_marginBottom="10dp"
                                 android:text="@string/fieldset_text_2"
-                                android:textColor="@color/md_theme_light_onPrimaryContainer"
-                                android:textSize="10dp"
-                                android:textStyle="normal" />
+                                android:textAppearance="?attr/textAppearanceBodySmall"
+                                android:layout_margin="@dimen/card_margin" />
 
                         </LinearLayout>
 
