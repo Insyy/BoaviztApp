@@ -1,12 +1,14 @@
 package fr.univpau.dudesalonso.boaviztapp.formulary;
 
 import android.content.Intent;
+import android.net.Uri;
 import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 
 import com.google.android.material.bottomnavigation.BottomNavigationItemView;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
+import com.google.android.material.imageview.ShapeableImageView;
 import com.google.android.material.progressindicator.LinearProgressIndicator;
 import com.google.android.material.snackbar.Snackbar;
 import com.google.android.material.textfield.MaterialAutoCompleteTextView;
@@ -16,6 +18,7 @@ import com.google.android.material.textfield.TextInputLayout;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
+import java.util.Objects;
 
 import fr.univpau.dudesalonso.boaviztapp.FormularyActivity;
 import fr.univpau.dudesalonso.boaviztapp.R;
@@ -43,12 +46,54 @@ public class ComponentManager {
         setShowDropDownOnFocusAndClick(R.id.usage_location_input);
     }
 
+    private void setClearOnClickListeners(){
+        setClearInputOnClick(R.id.cpu_quantity_input, R.string.cpu_quantity_placeholder);
+        setClearInputOnClick(R.id.cpu_core_units_input, R.string.cpu_core_units_placeholder);
+        setClearInputOnClick(R.id.cpu_tdp_input, R.string.cpu_tdp_placeholder);
+
+        setClearInputOnClick(R.id.ssd_capacity_input, R.string.ssd_capacity_placeholder);
+        setClearInputOnClick(R.id.ssd_quantity_input, R.string.ssd_quantity_placeholder);
+
+        setClearInputOnClick(R.id.hdd_capacity_input, R.string.hdd_capacity_placeholder);
+        setClearInputOnClick(R.id.hdd_quantity_input, R.string.hdd_quantity_placeholder);
+
+        setClearInputOnClick(R.id.ram_quantity_input, R.string.ram_quantity_placeholder);
+        setClearInputOnClick(R.id.ram_capacity_input, R.string.ram_capacity_placeholder);
+
+        setClearInputOnClick(R.id.usage_lifespan_input, R.string.usage_lifespan_placeholder);
+    }
+
+    private void setClearInputOnClick(int inputId, int defaultValue){
+        TextInputEditText inputView = formularyActivity.findViewById(inputId);
+        inputView.setOnFocusChangeListener(new View.OnFocusChangeListener() {
+            @Override
+            public void onFocusChange(View view, boolean b) {
+                if (b && Objects.requireNonNull(inputView.getText()).length() > 0)
+                    inputView.getText().clear();
+                else if (Objects.requireNonNull(inputView.getText()).length() == 0){
+                    inputView.setText(defaultValue);
+                }
+            }
+        });
+    }
+
     public void prepareUI(){
         setUsageContents();
         setBottomNavigationBar();
         setNavigationIconFocus();
-
+        setClearOnClickListeners();
         setDropdownsListeners();
+        setLogoOnClickListener();
+    }
+
+    private void setLogoOnClickListener() {
+        ShapeableImageView logo = formularyActivity.findViewById(R.id.boavizta_logo);
+        logo.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                formularyActivity.startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse(formularyActivity.getString(R.string.url_boavizta))));
+            }
+        });
     }
 
     public void populate() {
@@ -93,8 +138,12 @@ public class ComponentManager {
         textView.setOnFocusChangeListener(new View.OnFocusChangeListener() {
             @Override
             public void onFocusChange(View view, boolean hasFocus) {
-                if (hasFocus)
+                if (hasFocus){
                     textView.showDropDown();
+                    if (textView.getText().length() > 0)
+                        textView.getText().clear();
+
+                }
             }
         });
         textView.setOnClickListener(new View.OnClickListener() {
