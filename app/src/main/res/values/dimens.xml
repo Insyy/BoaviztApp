@@ -16,11 +16,11 @@
 
     <dimen name="vertical_margin_between_cards">5dp</dimen>
     <dimen name="padding_inside_cards">10dp</dimen>
-    <integer name="storage_layout_weight_sum">11</integer>
+
 
     <dimen name="progress_bar_margin">14dp</dimen>
-
-    <fraction name="storage_layout_quantity_weight">2.5</fraction>
-    <fraction name="storage_layout_capacity_weight">3</fraction>
-    <fraction name="storage_layout_manufacturer_weight">5.5</fraction>
+    <dimen name="storage_layout_weight_sum">11</dimen>
+    <dimen name="storage_layout_quantity_weight">2.5</dimen>
+    <dimen name="storage_layout_capacity_weight">3</dimen>
+    <dimen name="storage_layout_manufacturer_weight">5.5</dimen>
 </resources>

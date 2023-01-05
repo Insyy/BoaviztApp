@@ -5,6 +5,8 @@
 
     <string name="server_configuration_label">Server configuration</string>
 
+
+
     <string name="cpu_label">CPU</string>
 
     <string name="cpu_quantity_label">Quantity</string>
@@ -56,8 +58,8 @@
     <string name="hdd_capacity_helper">TB</string>
     <string name="hdd_capacity_placeholder">1</string>
 
-    <string name="hdd_manufacturer_label">Manufacturer</string>
-    <string name="hdd_manufacturer_placeholder">Manufacturer</string>
+    <string name="hdd_type_label">Type</string>
+    <string name="hdd_type_placeholder">Type</string>
 
 
     <string name="usage_label">USAGE</string>
