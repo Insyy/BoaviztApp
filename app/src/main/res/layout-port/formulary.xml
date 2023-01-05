@@ -19,7 +19,7 @@
         <com.google.android.material.textview.MaterialTextView
             android:layout_width="0dp"
             android:layout_height="fill_parent"
-            android:layout_marginLeft="@dimen/global_padding"
+            android:layout_marginStart="@dimen/global_padding"
             android:layout_weight="1"
             android:gravity="fill_vertical"
             android:singleLine="true"
@@ -29,9 +29,11 @@
         </com.google.android.material.textview.MaterialTextView>
 
         <com.google.android.material.imageview.ShapeableImageView
+            android:id="@+id/boavizta_logo"
             android:layout_width="70dp"
             android:layout_height="70dp"
-            android:layout_gravity="right"
+
+            android:layout_gravity="end"
             app:srcCompat="@mipmap/boaviztapp_icon_transparent_foreground">
 
         </com.google.android.material.imageview.ShapeableImageView>
@@ -71,7 +73,7 @@
                 android:layout_height="wrap_content"
                 android:orientation="vertical"
                 >
-                
+
                 <com.google.android.material.card.MaterialCardView
                     style="?attr/materialCardViewElevatedStyle"
                     android:layout_width="match_parent"
@@ -115,7 +117,8 @@
                                     android:layout_width="match_parent"
                                     android:layout_height="wrap_content"
                                     android:inputType="number"
-                                    android:text="@string/cpu_quantity_placeholder">
+                                    android:text="@string/cpu_quantity_placeholder"
+                                    tools:ignore="TooDeepLayout">
 
                                 </com.google.android.material.textfield.TextInputEditText>
                             </com.google.android.material.textfield.TextInputLayout>
@@ -186,7 +189,8 @@
                                     android:id="@+id/cpu_architecture_input"
                                     android:layout_width="match_parent"
                                     android:layout_height="match_parent"
-                                    android:completionThreshold="@integer/completionThreshHoldForAutocomplete">
+                                    android:completionThreshold="@integer/completionThreshHoldForAutocomplete"
+                                    android:inputType="text">
 
                                 </com.google.android.material.textfield.MaterialAutoCompleteTextView>
                             </com.google.android.material.textfield.TextInputLayout>
@@ -220,12 +224,12 @@
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:orientation="horizontal"
-                            android:weightSum="@integer/storage_layout_weight_sum">
+                            android:weightSum="@dimen/storage_layout_weight_sum">
 
                             <com.google.android.material.textfield.TextInputLayout
                                 android:layout_width="0dp"
                                 android:layout_height="wrap_content"
-                                android:layout_weight="@fraction/storage_layout_quantity_weight"
+                                android:layout_weight="@dimen/storage_layout_quantity_weight"
                                 android:hint="@string/ram_quantity_label"
 
                                 android:paddingHorizontal="@dimen/input_element_horizontal_padding"
@@ -244,7 +248,7 @@
                             <com.google.android.material.textfield.TextInputLayout
                                 android:layout_width="0dp"
                                 android:layout_height="wrap_content"
-                                android:layout_weight="@fraction/storage_layout_capacity_weight"
+                                android:layout_weight="@dimen/storage_layout_capacity_weight"
                                 android:hint="@string/ram_capacity_label"
 
                                 android:paddingHorizontal="@dimen/input_element_horizontal_padding"
@@ -265,7 +269,7 @@
                                 style="?attr/textInputOutlinedExposedDropdownMenuStyle"
                                 android:layout_width="0dp"
                                 android:layout_height="match_parent"
-                                android:layout_weight="@fraction/storage_layout_manufacturer_weight"
+                                android:layout_weight="@dimen/storage_layout_manufacturer_weight"
 
                                 android:hint="@string/ram_manufacturer_label"
                                 android:paddingHorizontal="@dimen/input_element_horizontal_padding"
@@ -276,7 +280,8 @@
                                     android:id="@+id/ram_manufacturer_input"
                                     android:layout_width="match_parent"
                                     android:layout_height="match_parent"
-                                    android:completionThreshold="@integer/completionThreshHoldForAutocomplete">
+                                    android:completionThreshold="@integer/completionThreshHoldForAutocomplete"
+                                    android:inputType="text">
 
                                 </com.google.android.material.textfield.MaterialAutoCompleteTextView>
                             </com.google.android.material.textfield.TextInputLayout>
@@ -308,12 +313,12 @@
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:orientation="horizontal"
-                            android:weightSum="@integer/storage_layout_weight_sum">
+                            android:weightSum="@dimen/storage_layout_weight_sum">
 
                             <com.google.android.material.textfield.TextInputLayout
                                 android:layout_width="0dp"
                                 android:layout_height="wrap_content"
-                                android:layout_weight="@fraction/storage_layout_quantity_weight"
+                                android:layout_weight="@dimen/storage_layout_quantity_weight"
                                 android:hint="@string/ssd_quantity_label"
 
                                 android:paddingHorizontal="@dimen/input_element_horizontal_padding"
@@ -332,7 +337,7 @@
                             <com.google.android.material.textfield.TextInputLayout
                                 android:layout_width="0dp"
                                 android:layout_height="wrap_content"
-                                android:layout_weight="@fraction/storage_layout_capacity_weight"
+                                android:layout_weight="@dimen/storage_layout_capacity_weight"
                                 android:hint="@string/ssd_capacity_label"
 
                                 android:paddingHorizontal="@dimen/input_element_horizontal_padding"
@@ -353,7 +358,7 @@
                                 style="?attr/textInputOutlinedExposedDropdownMenuStyle"
                                 android:layout_width="0dp"
                                 android:layout_height="match_parent"
-                                android:layout_weight="@fraction/storage_layout_manufacturer_weight"
+                                android:layout_weight="@dimen/storage_layout_manufacturer_weight"
                                 android:hint="@string/ssd_manufacturer_label"
                                 android:minHeight="48dp"
                                 android:paddingHorizontal="@dimen/input_element_horizontal_padding"
@@ -396,13 +401,13 @@
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:orientation="horizontal"
-                            android:weightSum="2">
+                            android:weightSum="@dimen/storage_layout_weight_sum">
 
 
                             <com.google.android.material.textfield.TextInputLayout
-                                android:layout_width="match_parent"
+                                android:layout_width="0dp"
                                 android:layout_height="wrap_content"
-                                android:layout_weight="1"
+                                android:layout_weight="@dimen/storage_layout_quantity_weight"
                                 android:hint="@string/hdd_quantity_label"
 
                                 android:paddingHorizontal="@dimen/input_element_horizontal_padding"
@@ -418,10 +423,11 @@
                                 </com.google.android.material.textfield.TextInputEditText>
                             </com.google.android.material.textfield.TextInputLayout>
 
+
                             <com.google.android.material.textfield.TextInputLayout
-                                android:layout_width="match_parent"
+                                android:layout_width="0dp"
                                 android:layout_height="wrap_content"
-                                android:layout_weight="1"
+                                android:layout_weight="@dimen/storage_layout_capacity_weight"
                                 android:hint="@string/hdd_capacity_label"
                                 android:paddingHorizontal="@dimen/input_element_horizontal_padding"
                                 android:paddingVertical="@dimen/input_element_vertical_padding"
@@ -436,6 +442,26 @@
                                     android:text="@string/hdd_capacity_placeholder">
 
                                 </com.google.android.material.textfield.TextInputEditText>
+                            </com.google.android.material.textfield.TextInputLayout>
+
+                            <com.google.android.material.textfield.TextInputLayout
+                                style="?attr/textInputOutlinedExposedDropdownMenuStyle"
+                                android:layout_width="0dp"
+                                android:layout_height="match_parent"
+                                android:layout_weight="@dimen/storage_layout_manufacturer_weight"
+                                android:hint="@string/ssd_manufacturer_label"
+                                android:minHeight="48dp"
+                                android:paddingHorizontal="@dimen/input_element_horizontal_padding"
+                                android:paddingVertical="@dimen/input_element_vertical_padding"
+                                app:endIconMode="clear_text">
+
+                                <com.google.android.material.textfield.MaterialAutoCompleteTextView
+                                    android:id="@+id/hdd_input"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="match_parent"
+                                    android:completionThreshold="@integer/completionThreshHoldForAutocomplete">
+
+                                </com.google.android.material.textfield.MaterialAutoCompleteTextView>
                             </com.google.android.material.textfield.TextInputLayout>
                         </TableRow>
                     </LinearLayout>
@@ -486,7 +512,8 @@
                                         android:id="@+id/usage_location_input"
                                         android:layout_width="match_parent"
                                         android:layout_height="match_parent"
-                                        android:completionThreshold="@integer/completionThreshHoldForAutocomplete">
+                                        android:completionThreshold="@integer/completionThreshHoldForAutocomplete"
+                                        android:inputType="text">
 
                                     </com.google.android.material.textfield.MaterialAutoCompleteTextView>
                                 </com.google.android.material.textfield.TextInputLayout>
@@ -504,7 +531,7 @@
                                     <com.google.android.material.textfield.TextInputEditText
                                         android:id="@+id/usage_lifespan_input"
                                         android:layout_width="match_parent"
-                                        android:layout_height="wrap_content"
+                                        android:layout_height="match_parent"
                                         android:inputType="number"
                                         android:text="@string/usage_lifespan_placeholder">
 
@@ -533,7 +560,7 @@
                                     <com.google.android.material.textfield.MaterialAutoCompleteTextView
                                         android:id="@+id/usage_method_input"
                                         android:layout_width="match_parent"
-                                        android:layout_height="wrap_content"
+                                        android:layout_height="match_parent"
                                         android:completionThreshold="@integer/completionThreshHoldForAutocomplete"
                                         android:dropDownAnchor="@id/usage_method_layout"
                                         android:inputType="text"
@@ -555,8 +582,9 @@
                                         android:id="@+id/usage_method_details_input"
 
                                         android:layout_width="match_parent"
-                                        android:layout_height="wrap_content"
-                                        android:inputType="number">
+                                        android:layout_height="match_parent"
+                                        android:inputType="number"
+                                        tools:ignore="SpeakableTextPresentCheck">
 
                                     </com.google.android.material.textfield.TextInputEditText>
                                 </com.google.android.material.textfield.TextInputLayout>

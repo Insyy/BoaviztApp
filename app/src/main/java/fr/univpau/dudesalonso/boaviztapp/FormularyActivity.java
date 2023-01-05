@@ -21,9 +21,13 @@ public class FormularyActivity extends AppCompatActivity {;
         setDarkMode();
         setContentView(R.layout.formulary);
 
-        ((LinearLayout) findViewById(R.id.root)).requestFocus();
+        focusRootWindow();
 
         componentManager.prepareUI();
+    }
+
+    public void focusRootWindow() {
+        ((LinearLayout) findViewById(R.id.root)).requestFocus();
     }
 
     @Override

@@ -61,7 +61,12 @@ public class RequestManager {
     }
 
     public void sendGetArrayRequestAndPopulate(String url, int materialAutoCompleteId) {
-        formularyActivity.componentManager.startProgressIndicator();
+        formularyActivity.runOnUiThread(new Runnable() {
+            @Override
+            public void run() {
+                formularyActivity.componentManager.startProgressIndicator();
+            }
+        });
 
         queue.add(
                 new JsonArrayRequest
@@ -77,18 +82,33 @@ public class RequestManager {
                                             e.printStackTrace();
                                         }
                                     }
-                                    formularyActivity.componentManager.populateAutocompleteDropdownValues(materialAutoCompleteId, values);
-                                    formularyActivity.componentManager.stopProgressIndicator();
+                                    formularyActivity.runOnUiThread(new Runnable() {
+                                        @Override
+                                        public void run() {
+                                            formularyActivity.componentManager.populateAutocompleteDropdownValues(materialAutoCompleteId, values);
+                                            formularyActivity.componentManager.stopProgressIndicator();
+                                        }
+                                    });
                                 },
                                 error -> {
-                                    formularyActivity.componentManager.showNetworkErrorToast(R.string.network_error_message);
-                                    formularyActivity.componentManager.stopProgressIndicator();
+                                    formularyActivity.runOnUiThread(new Runnable() {
+                                        @Override
+                                        public void run() {
+                                            formularyActivity.componentManager.showNetworkErrorToast(R.string.network_error_message);
+                                            formularyActivity.componentManager.stopProgressIndicator();
+                                        }
+                                    });
                                 })
         );
     }
 
     public void sendGetObjectRequestAndPopulate(String url, int materialAutocompleteId) {
-        formularyActivity.componentManager.startProgressIndicator();
+        formularyActivity.runOnUiThread(new Runnable() {
+            @Override
+            public void run() {
+                formularyActivity.componentManager.startProgressIndicator();
+            }
+        });
         queue.add(
                 new JsonObjectRequest
                         (Request.Method.GET,
@@ -108,12 +128,22 @@ public class RequestManager {
                                             );
                                     if (formularyActivity.componentManager.countriesMap == null)
                                         formularyActivity.componentManager.countriesMap = values;
-                                    formularyActivity.componentManager.populateAutocompleteDropdownValues(materialAutocompleteId, new ArrayList<>(values.keySet()));
-                                    formularyActivity.componentManager.stopProgressIndicator();
+                                    formularyActivity.runOnUiThread(new Runnable() {
+                                        @Override
+                                        public void run() {
+                                            formularyActivity.componentManager.populateAutocompleteDropdownValues(materialAutocompleteId, new ArrayList<>(values.keySet()));
+                                            formularyActivity.componentManager.stopProgressIndicator();
+                                        }
+                                    });
                                 },
                                 error -> {
-                                    formularyActivity.componentManager.showNetworkErrorToast(R.string.network_error_message);
-                                    formularyActivity.componentManager.stopProgressIndicator();
+                                    formularyActivity.runOnUiThread(new Runnable() {
+                                        @Override
+                                        public void run() {
+                                            formularyActivity.componentManager.showNetworkErrorToast(R.string.network_error_message);
+                                            formularyActivity.componentManager.stopProgressIndicator();
+                                        }
+                                    });
                                 })
         );
     }
