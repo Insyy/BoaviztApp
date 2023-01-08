@@ -24,7 +24,7 @@
             android:gravity="fill_vertical"
             android:singleLine="true"
             android:text="@string/server_configuration_label"
-            android:textAppearance="?attr/textAppearanceHeadlineSmall">
+            android:textAppearance="?attr/textAppearanceHeadlineMedium">
 
         </com.google.android.material.textview.MaterialTextView>
 
@@ -61,11 +61,11 @@
             android:isScrollContainer="true"
             android:padding="@dimen/global_padding">
 
-            <com.google.android.material.card.MaterialCardView
+            <!--<com.google.android.material.card.MaterialCardView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 style="?attr/materialCardViewFilledStyle"
-                >
+                >-->
 
             <LinearLayout
                 android:id="@+id/config_list"
@@ -74,15 +74,16 @@
                 android:orientation="vertical"
                 >
 
-
-
-
-
                 <com.google.android.material.card.MaterialCardView
                     style="?attr/materialCardViewElevatedStyle"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_margin="@dimen/card_margin">
+                    android:layout_marginStart="@dimen/card_margin"
+                    android:layout_marginTop="@dimen/card_margin"
+                    android:layout_marginEnd="@dimen/card_margin"
+                    android:layout_marginBottom="@dimen/card_margin"
+                    app:cardElevation="@dimen/card_elevation"
+                    app:contentPadding="@dimen/card_padding">
 
                     <LinearLayout
                         android:id="@+id/hdd_configuration"
@@ -96,7 +97,7 @@
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:text="@string/hdd_label"
-                            android:textAppearance="?attr/textAppearanceHeadline6" />
+                            android:textAppearance="?attr/textAppearanceTitleLarge" />
 
                         <TableRow
                             android:layout_width="match_parent"
@@ -172,7 +173,12 @@
                     style="?attr/materialCardViewElevatedStyle"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_margin="@dimen/card_margin">
+                    android:layout_marginStart="@dimen/card_margin"
+                    android:layout_marginTop="@dimen/card_margin"
+                    android:layout_marginEnd="@dimen/card_margin"
+                    android:layout_marginBottom="@dimen/card_margin"
+                    app:cardElevation="@dimen/card_elevation"
+                    app:contentPadding="@dimen/card_padding">
 
 
                     <LinearLayout
@@ -187,7 +193,7 @@
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:text="@string/usage_label"
-                            android:textAppearance="?attr/textAppearanceHeadline6"/>
+                            android:textAppearance="?attr/textAppearanceTitleLarge" />
 
                         <TableLayout
                             android:layout_width="match_parent"
@@ -294,7 +300,12 @@
                     style="?attr/materialCardViewElevatedStyle"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_margin="@dimen/card_margin">
+                    android:layout_marginStart="@dimen/card_margin"
+                    android:layout_marginTop="@dimen/card_margin"
+                    android:layout_marginEnd="@dimen/card_margin"
+                    android:layout_marginBottom="@dimen/card_margin"
+                    app:cardElevation="@dimen/card_elevation"
+                    app:contentPadding="@dimen/card_padding">
 
 
                     <LinearLayout
@@ -309,7 +320,7 @@
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:text="@string/cpu_label"
-                            android:textAppearance="?attr/textAppearanceTitleLarge"/>
+                            android:textAppearance="?attr/textAppearanceTitleLarge" />
 
                         <TableRow
                             android:layout_width="match_parent"
@@ -420,7 +431,12 @@
                     style="?attr/materialCardViewElevatedStyle"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_margin="@dimen/card_margin">
+                    android:layout_marginStart="@dimen/card_margin"
+                    android:layout_marginTop="@dimen/card_margin"
+                    android:layout_marginEnd="@dimen/card_margin"
+                    android:layout_marginBottom="@dimen/card_margin"
+                    app:cardElevation="@dimen/card_elevation"
+                    app:contentPadding="@dimen/card_padding">
 
                     <LinearLayout
                         android:id="@+id/ram_configuration"
@@ -434,7 +450,7 @@
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:text="@string/ram_label"
-                            android:textAppearance="?attr/textAppearanceHeadline6" />
+                            android:textAppearance="?attr/textAppearanceTitleLarge" />
 
                         <TableRow
                             android:layout_width="match_parent"
@@ -509,7 +525,12 @@
                     style="?attr/materialCardViewElevatedStyle"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_margin="@dimen/card_margin">
+                    android:layout_marginStart="@dimen/card_margin"
+                    android:layout_marginTop="@dimen/card_margin"
+                    android:layout_marginEnd="@dimen/card_margin"
+                    android:layout_marginBottom="@dimen/card_margin"
+                    app:cardElevation="@dimen/card_elevation"
+                    app:contentPadding="@dimen/card_padding">
 
                     <LinearLayout
                         android:id="@+id/ssd_configuration"
@@ -523,7 +544,7 @@
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:text="@string/ssd_label"
-                            android:textAppearance="?attr/textAppearanceHeadline6" />
+                            android:textAppearance="?attr/textAppearanceTitleLarge" />
 
                         <TableRow
                             android:layout_width="match_parent"
@@ -593,7 +614,7 @@
                     </LinearLayout>
                 </com.google.android.material.card.MaterialCardView>
             </LinearLayout>
-            </com.google.android.material.card.MaterialCardView>
+<!--            </com.google.android.material.card.MaterialCardView>-->
         </RelativeLayout>
     </ScrollView>
 

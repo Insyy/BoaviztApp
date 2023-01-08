@@ -55,7 +55,7 @@ public class Graphe extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
+        setDarkMode();
         setContentView(R.layout.data_visualisation);
 
 

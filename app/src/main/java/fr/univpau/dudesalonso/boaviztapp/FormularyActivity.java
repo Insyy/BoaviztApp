@@ -1,8 +1,12 @@
 package fr.univpau.dudesalonso.boaviztapp;
 
+import android.content.res.Configuration;
 import android.os.Bundle;
+import android.util.Log;
+import android.view.OrientationEventListener;
 import android.widget.LinearLayout;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.app.AppCompatDelegate;
 
@@ -23,7 +27,25 @@ public class FormularyActivity extends AppCompatActivity {
 
         focusRootWindow();
 
+        //setOnOrientationChangeListener();
+
         componentManager.prepareUI();
+    }
+
+    private void setOnOrientationChangeListener() {
+        OrientationEventListener orientationEventListener = new OrientationEventListener(this) {
+            @Override
+            public void onOrientationChanged(int i) {
+                Log.d("FORMULARYACTIITY", "onOrientationChanged: ");
+                if (isPortrait(i)) ;
+                else componentManager.launchImpactAssessmentActivity();
+            }
+        };
+        orientationEventListener.enable();
+    }
+
+    private boolean isPortrait(int orientation) {
+        return (orientation >= (360 - 90) && orientation <= 360) || (orientation >= 0 && orientation <= 90);
     }
 
     public void focusRootWindow() {
@@ -44,6 +66,7 @@ public class FormularyActivity extends AppCompatActivity {
             setTheme(R.style.AppTheme);  //default app theme
         }
     }
+
 
     @Override
     public void onPause() {

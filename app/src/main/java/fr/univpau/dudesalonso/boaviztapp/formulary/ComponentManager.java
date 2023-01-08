@@ -189,7 +189,7 @@ public class ComponentManager {
         assessServerImpactMenu.setSelectedItemId(R.id.server_configuration_menu_button);
     }
 
-    private void launchImpactAssessmentActivity() {
+    public void launchImpactAssessmentActivity() {
         Intent formularyIntent = new Intent(formularyActivity.getApplicationContext(), Graphe.class);
         Log.d("SERVER CONFIG", fieldDataRetriever.collectServerConfiguration().toString());
         formularyIntent.putExtra("serverConfiguration", fieldDataRetriever.collectServerConfiguration());
