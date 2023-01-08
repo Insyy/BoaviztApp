@@ -79,15 +79,14 @@ public class Graphe extends AppCompatActivity {
         PostServerRequest psr = new PostServerRequest(this);
         psr.sendRequestServer(config);
 
-        /*setCustomMarker(barChartList, mv);
-        animateCharts(barChartList);*/
+        setCustomMarker(barChartList, mv);
+        animateCharts(barChartList);
 
     }
 
     @Override
     public void onStart() {
         super.onStart();
-      //  sendRequestServer();
     }
 
     @Override
@@ -104,11 +103,8 @@ public class Graphe extends AppCompatActivity {
         initLayoutChart(createBarData(listGds.get(2)), barChartList.get(2));
         for (int i = 0; i < barChartList.size(); i ++) {
             initLayoutLegend(listGds, barChartList.get(i),i);
+            barChartList.get(i).notifyDataSetChanged();
         }
-
-        barChartList.forEach( e -> {
-            e.invalidate();
-        });
 
     }
 
@@ -171,6 +167,7 @@ public class Graphe extends AppCompatActivity {
 
         //refresh
         barChart.invalidate();
+
     }
 
     private void initLayoutLegend(List<GrapheDataSet> listGds, BarChart barChart, int index){
@@ -206,7 +203,9 @@ public class Graphe extends AppCompatActivity {
                 nonEmptyLegend.get(i + 2).label =  label_bottom_bar[i] + listGds.get(index).get_bottomDataSet().get(i);
             }
         }
+
         legend.setCustom(nonEmptyLegend);
+        //legend.resetCustom();
 
     }
 
