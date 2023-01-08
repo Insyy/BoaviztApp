@@ -6,6 +6,7 @@ import androidx.appcompat.app.AppCompatDelegate;
 import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.graphics.Color;
+import android.net.Uri;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -26,6 +27,7 @@ import com.github.mikephil.charting.data.BarDataSet;
 import com.github.mikephil.charting.data.BarEntry;
 import com.google.android.material.bottomnavigation.BottomNavigationItemView;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
+import com.google.android.material.imageview.ShapeableImageView;
 import com.google.android.material.progressindicator.LinearProgressIndicator;
 import com.google.android.material.snackbar.Snackbar;
 import org.json.JSONException;
@@ -71,6 +73,8 @@ public class ServerImpactVisualizer extends AppCompatActivity {
 
         setContentView(R.layout.data_visualisation);
 
+
+
         //Initialisation des graphiques
         BarChart layoutGlobalWarming = findViewById(R.id.global_warming);
         BarChart layoutPrimaryEnergy = findViewById(R.id.primary_energy);
@@ -83,6 +87,7 @@ public class ServerImpactVisualizer extends AppCompatActivity {
 
         mv = new CustomMarkerView(this, R.layout.tv_content);
 
+        setLogoOnClickListener();
         setDarkMode();
         setBottomNavigationBarListener();
         setNavigationIconFocus();
@@ -274,7 +279,8 @@ public class ServerImpactVisualizer extends AppCompatActivity {
         serverConfigurationMenuBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                new Thread(() -> launchServerConfigurationActivity()).run();
+                //new Thread(() -> launchServerConfigurationActivity()).run();
+                finish();
             }
         });
     }
@@ -321,6 +327,16 @@ public class ServerImpactVisualizer extends AppCompatActivity {
     private void populate(){
         if (!isInternetAvailable())
             return;
+    }
+
+    private void setLogoOnClickListener() {
+        ShapeableImageView logo = findViewById(R.id.boavizta_logo);
+        logo.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse(getString(R.string.url_boavizta))));
+            }
+        });
     }
 
 }

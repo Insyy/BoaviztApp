@@ -90,13 +90,4 @@
         <item>Load</item>
     </string-array>
 
-    <string-array name="debug_options">
-        <item>Electricity</item>
-        <item>Load</item>
-        <item>AAA</item>
-        <item>AA</item>
-        <item>E</item>
-        <item>Spain</item>
-        <item>Lol</item>
-    </string-array>
 </resources>

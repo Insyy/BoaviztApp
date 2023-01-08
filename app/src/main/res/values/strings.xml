@@ -10,6 +10,7 @@
     <string name="url_cpu_architectures">https://uppa.api.boavizta.org/v1/utils/cpu_family</string>
     <string name="url_ssd_manufacturers">https://uppa.api.boavizta.org/v1/utils/ssd_manufacturer</string>
     <string name="url_hdd_manufacturers">https://uppa.api.boavizta.org/v1/utils/ram_manufacturer</string>
+    <string name="url_case_type">https://uppa.api.boavizta.org/v1/utils/case_type</string>
     <string name="url_countries">https://uppa.api.boavizta.org/v1/utils/country_code</string>
     <string name="url_boavizta">https://boavizta.org/</string>
 </resources>

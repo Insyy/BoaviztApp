@@ -44,6 +44,8 @@ public class ComponentManager {
         setShowDropDownOnFocusAndClick(R.id.ssd_manufacturer_input);
         setShowDropDownOnFocusAndClick(R.id.ram_manufacturer_input);
         setShowDropDownOnFocusAndClick(R.id.usage_location_input);
+        setShowDropDownOnFocusAndClick(R.id.server_type_input);
+
     }
 
     private void setClearOnClickListeners(){
@@ -102,6 +104,7 @@ public class ComponentManager {
         requestManager.sendGetArrayRequestAndPopulate(formularyActivity.getString(R.string.url_ssd_manufacturers), R.id.ssd_manufacturer_input);
         requestManager.sendGetArrayRequestAndPopulate(formularyActivity.getString(R.string.url_hdd_manufacturers), R.id.ram_manufacturer_input);
         requestManager.sendGetObjectRequestAndPopulate(formularyActivity.getString(R.string.url_countries), R.id.usage_location_input);
+        requestManager.sendGetArrayRequestAndPopulate(formularyActivity.getString(R.string.url_case_type), R.id.server_type_input);
 
         populateAutocompleteDropdownValues(R.id.usage_method_input, Arrays.asList(formularyActivity.getResources().getStringArray(R.array.method_options)));
     }

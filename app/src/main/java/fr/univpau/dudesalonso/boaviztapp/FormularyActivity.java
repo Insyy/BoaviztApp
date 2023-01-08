@@ -8,7 +8,7 @@ import androidx.appcompat.app.AppCompatDelegate;
 
 import fr.univpau.dudesalonso.boaviztapp.formulary.ComponentManager;
 
-public class FormularyActivity extends AppCompatActivity {;
+public class FormularyActivity extends AppCompatActivity {
 
     public ComponentManager componentManager;
 
