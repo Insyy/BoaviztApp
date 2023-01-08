@@ -22,7 +22,7 @@ import java.util.Objects;
 
 import fr.univpau.dudesalonso.boaviztapp.FormularyActivity;
 import fr.univpau.dudesalonso.boaviztapp.R;
-import fr.univpau.dudesalonso.boaviztapp.ServerImpactVisualizer;
+import fr.univpau.dudesalonso.boaviztapp.Graphe;
 
 public class ComponentManager {
 
@@ -190,7 +190,7 @@ public class ComponentManager {
     }
 
     private void launchImpactAssessmentActivity() {
-        Intent formularyIntent = new Intent(formularyActivity.getApplicationContext(), ServerImpactVisualizer.class);
+        Intent formularyIntent = new Intent(formularyActivity.getApplicationContext(), Graphe.class);
         Log.d("SERVER CONFIG", fieldDataRetriever.collectServerConfiguration().toString());
         formularyIntent.putExtra("serverConfiguration", fieldDataRetriever.collectServerConfiguration());
         formularyActivity.startActivity(formularyIntent);

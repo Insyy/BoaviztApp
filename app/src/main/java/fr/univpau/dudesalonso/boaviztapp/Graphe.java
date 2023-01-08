@@ -3,22 +3,15 @@ package fr.univpau.dudesalonso.boaviztapp;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.app.AppCompatDelegate;
 
-import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.graphics.Color;
 import android.net.Uri;
 import android.os.Bundle;
+import android.os.Handler;
 import android.util.Log;
 import android.view.View;
 
 
-import com.android.volley.Request;
-import com.android.volley.RequestQueue;
-import com.android.volley.Response;
-import com.android.volley.VolleyError;
-import com.android.volley.toolbox.JsonObjectRequest;
-import com.android.volley.toolbox.RequestFuture;
-import com.android.volley.toolbox.Volley;
 import com.github.mikephil.charting.charts.BarChart;
 import com.github.mikephil.charting.components.Legend;
 import com.github.mikephil.charting.components.LegendEntry;
@@ -30,30 +23,22 @@ import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.imageview.ShapeableImageView;
 import com.google.android.material.progressindicator.LinearProgressIndicator;
 import com.google.android.material.snackbar.Snackbar;
-import org.json.JSONException;
-import org.json.JSONObject;
 
 import java.net.InetAddress;
 import java.net.UnknownHostException;
 import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Collections;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 import fr.univpau.dudesalonso.boaviztapp.ImpactVisualizer.CustomMarkerView;
 import fr.univpau.dudesalonso.boaviztapp.ImpactVisualizer.GrapheDataSet;
+import fr.univpau.dudesalonso.boaviztapp.ImpactVisualizer.PostServerRequest;
 import fr.univpau.dudesalonso.boaviztapp.formulary.serverconfig.ServerConfiguration;
 
-public class ServerImpactVisualizer extends AppCompatActivity {
+public class Graphe extends AppCompatActivity {
 
     ArrayList<BarChart> barChartList = new ArrayList<>();
-    RequestQueue queue;
-    String url = "https://uppa.api.boavizta.org/v1/server/?verbose=true&allocation=TOTAL";
     ServerConfiguration config;
     CustomMarkerView mv;
-    List<GrapheDataSet> listGds = new ArrayList<>();
 
     int[] colorClassArray1 = new int[]{
             Color.rgb(1,139,140),
@@ -93,16 +78,21 @@ public class ServerImpactVisualizer extends AppCompatActivity {
         setNavigationIconFocus();
         stopProgressIndicator();
 
-        queue = Volley.newRequestQueue(this);
+
         config = (ServerConfiguration) getIntent().getSerializableExtra("serverConfiguration");
 
-        sendRequestServer();
+        PostServerRequest psr = new PostServerRequest(this);
+        psr.sendRequestServer(config);
+
+        /*setCustomMarker(barChartList, mv);
+        animateCharts(barChartList);*/
+
     }
 
     @Override
     public void onStart() {
         super.onStart();
-        sendRequestServer();
+      //  sendRequestServer();
     }
 
     @Override
@@ -112,45 +102,19 @@ public class ServerImpactVisualizer extends AppCompatActivity {
         overridePendingTransition(0, 0);
     }
 
-    private void sendRequestServer(){
-        try {
-            JSONObject jsonObject= new JSONObject(config.getAsJson());
-            queue.add(new JsonObjectRequest(
-                    Request.Method.POST,url,jsonObject,
-                    response -> {
-                        try {
-                            JSONObject impacts = response.getJSONObject("impacts");
-                            JSONObject verbose = response.getJSONObject("verbose");
 
-
-                            listGds.add(new GrapheDataSet(impacts,verbose,"gwp"));
-                            listGds.add(new GrapheDataSet(impacts,verbose,"pe"));
-                            listGds.add(new GrapheDataSet(impacts,verbose,"adp"));
-
-                            initCharts(barChartList,listGds);
-                            setCustomMarker(barChartList,mv);
-                            animateCharts(barChartList);
-
-                        } catch (JSONException e) {
-                            e.printStackTrace();
-                        }
-
-                    },
-                    error-> {
-
-                    }));
-        } catch (JSONException e) {
-            e.printStackTrace();
+    public void initCharts(List<GrapheDataSet> listGds) {
+        initLayoutChart(createBarData(listGds.get(0)), barChartList.get(0));
+        initLayoutChart(createBarData(listGds.get(1)), barChartList.get(1));
+        initLayoutChart(createBarData(listGds.get(2)), barChartList.get(2));
+        for (int i = 0; i < barChartList.size(); i ++) {
+            initLayoutLegend(listGds, barChartList.get(i),i);
         }
-    }
 
-    private void initCharts(List<BarChart> charts, List<GrapheDataSet> listGds) {
-        initLayoutChart(createBarData(listGds.get(0)), charts.get(0));
-        initLayoutChart(createBarData(listGds.get(1)), charts.get(1));
-        initLayoutChart(createBarData(listGds.get(2)), charts.get(2));
-        for (int i = 0; i < charts.size(); i ++) {
-            initLayoutLegend(charts.get(i),i);
-        }
+        barChartList.forEach( e -> {
+            e.invalidate();
+        });
+
     }
 
     public void animateCharts(List<BarChart> barChart){
@@ -183,6 +147,7 @@ public class ServerImpactVisualizer extends AppCompatActivity {
         barData.setBarWidth(5f);
         barData.setDrawValues(false);
 
+
         return barData;
     }
 
@@ -213,7 +178,7 @@ public class ServerImpactVisualizer extends AppCompatActivity {
         barChart.invalidate();
     }
 
-    private void initLayoutLegend(BarChart barChart, int index){
+    private void initLayoutLegend(List<GrapheDataSet> listGds, BarChart barChart, int index){
 
         Legend legend = barChart.getLegend();
         LegendEntry[] legends = barChart.getLegend().getEntries();
@@ -234,10 +199,9 @@ public class ServerImpactVisualizer extends AppCompatActivity {
         }
 
         for (int i = 0; i < label_top_bar.length; i++) {
-                Log.d("initLayoutLegend", label_top_bar[i] + listGds.get(index).get_topDataSet().get(i));
                 nonEmptyLegend.get(i).label =  label_top_bar[i] + listGds.get(index).get_topDataSet().get(i);
         }
-        
+
         for (int i = 0; i < label_bottom_bar.length - 1; i++) {
             if(nonEmptyLegend.get(i).label.substring(0,4).equals("none")) {
                 nonEmptyLegend.get(i).label = "";
@@ -247,7 +211,6 @@ public class ServerImpactVisualizer extends AppCompatActivity {
                 nonEmptyLegend.get(i + 2).label =  label_bottom_bar[i] + listGds.get(index).get_bottomDataSet().get(i);
             }
         }
-
         legend.setCustom(nonEmptyLegend);
 
     }
