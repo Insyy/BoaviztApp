@@ -1,6 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
+    <string name="server_impact_title">Server impact</string>
+
     <string name="title_global_warming">Global Warming Potential (kgCO2eq) - Total : </string>
     <string name="description_global_warming">Evaluates the effect on global warming</string>
 
