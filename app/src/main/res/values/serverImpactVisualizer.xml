@@ -26,10 +26,10 @@
     </string-array>
     <string-array name="label_bottom_bar">
         <item>none</item>
-        <item>Manufacturing  RAM :</item>
-        <item>Manufacturing  CPU :</item>
-        <item>Manufacturing  SSD :</item>
-        <item>Manufacturing  HDD :</item>
-        <item>Manufacturing Others Autres :</item>
+        <item>Manufacturing  RAM : </item>
+        <item>Manufacturing  CPU : </item>
+        <item>Manufacturing  SSD : </item>
+        <item>Manufacturing  HDD : </item>
+        <item>Manufacturing Others Autres : </item>
     </string-array>
 </resources>

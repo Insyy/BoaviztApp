@@ -187,30 +187,23 @@ public class Graphe extends AppCompatActivity {
         legend.setXEntrySpace(10f);
         legend.setYEntrySpace(4f);
         legend.setWordWrapEnabled(true);
-        legend.setTextColor(Color.DKGRAY);
+        legend.setTextColor(Color.WHITE);
 
         for (LegendEntry legendEntry : legends) {
-            if (legendEntry.label != null && !legendEntry.label.isEmpty()) {
+            if (legendEntry.label != null && !legendEntry.label.isEmpty() && !legendEntry.label.equals("none")) {
                 nonEmptyLegend.add(legendEntry);
             }
         }
 
         for (int i = 0; i < label_top_bar.length; i++) {
-                nonEmptyLegend.get(i).label =  label_top_bar[i] + listGds.get(index).get_topDataSet().get(i);
+                nonEmptyLegend.get(i).label =  label_top_bar[i] + " " + listGds.get(index).get_topDataSet().get(i);
         }
 
         for (int i = 0; i < label_bottom_bar.length - 1; i++) {
-            if(nonEmptyLegend.get(i).label.substring(0,4).equals("none")) {
-                nonEmptyLegend.get(i).label = "";
-                nonEmptyLegend.get(i).formColor = Color.TRANSPARENT;
-
-            }else{
-                nonEmptyLegend.get(i + 2).label =  label_bottom_bar[i] + listGds.get(index).get_bottomDataSet().get(i);
-            }
+            nonEmptyLegend.get(i + 2).label =  label_bottom_bar[i + 1] + " " +listGds.get(index).get_bottomDataSet().get(i);
         }
 
         legend.setCustom(nonEmptyLegend);
-        //legend.resetCustom();
 
     }
 

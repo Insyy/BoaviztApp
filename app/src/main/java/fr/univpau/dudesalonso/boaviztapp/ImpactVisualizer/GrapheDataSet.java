@@ -32,9 +32,8 @@ public class GrapheDataSet {
 
         _topDataSet.add(_usage);
         _topDataSet.add(_manufacturing);
-
-        _mRAM = Float.parseFloat(verbose.getJSONObject("CPU-1").getJSONObject("manufacture_impacts").getJSONObject(_grapheName).get("value").toString());
-        _mCPU = Float.parseFloat(verbose.getJSONObject("RAM-1").getJSONObject("manufacture_impacts").getJSONObject(_grapheName).get("value").toString());
+        _mRAM = Float.parseFloat(verbose.getJSONObject("RAM-1").getJSONObject("manufacture_impacts").getJSONObject(_grapheName).get("value").toString());
+        _mCPU = Float.parseFloat(verbose.getJSONObject("CPU-1").getJSONObject("manufacture_impacts").getJSONObject(_grapheName).get("value").toString());
         _mSDD = Float.parseFloat(verbose.getJSONObject("SSD-1").getJSONObject("manufacture_impacts").getJSONObject(_grapheName).get("value").toString());
         _mHDD =Float.parseFloat(verbose.getJSONObject("CASE-1").getJSONObject("manufacture_impacts").getJSONObject(_grapheName).get("value").toString());
         _mOther = get_manufacturing() - (get_mRAM() + get_mCPU() + get_mSDD() + get_mHDD());
