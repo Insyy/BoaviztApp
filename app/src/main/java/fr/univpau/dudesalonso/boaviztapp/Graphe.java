@@ -140,7 +140,7 @@ public class Graphe extends AppCompatActivity {
         barDataDown.setDrawValues(true);
 
         BarData barData = new BarData(barDataUp,barDataDown);
-        barData.setBarWidth(5f);
+        barData.setBarWidth(5.0f);
         barData.setDrawValues(false);
 
 
@@ -167,8 +167,8 @@ public class Graphe extends AppCompatActivity {
 
         //disable interaction
         barChart.setTouchEnabled(true);
-        barChart.setScaleEnabled(false);
-        barChart.setDoubleTapToZoomEnabled(false);
+        barChart.setScaleEnabled(true);
+        barChart.setDoubleTapToZoomEnabled(true);
 
         //refresh
         barChart.invalidate();

@@ -109,7 +109,7 @@
                         <com.github.mikephil.charting.charts.HorizontalBarChart
                             android:id="@+id/global_warming"
                             android:layout_width="match_parent"
-                            android:layout_height="150dp">
+                            android:layout_height="200dp">
 
                         </com.github.mikephil.charting.charts.HorizontalBarChart>
                     </LinearLayout>
@@ -154,7 +154,7 @@
                         <com.github.mikephil.charting.charts.HorizontalBarChart
                             android:id="@+id/primary_energy"
                             android:layout_width="match_parent"
-                            android:layout_height="150dp">
+                            android:layout_height="200dp">
 
                         </com.github.mikephil.charting.charts.HorizontalBarChart>
                     </LinearLayout>
@@ -198,7 +198,7 @@
                         <com.github.mikephil.charting.charts.HorizontalBarChart
                             android:id="@+id/ressource_exhausted"
                             android:layout_width="match_parent"
-                            android:layout_height="150dp">
+                            android:layout_height="200dp">
 
                         </com.github.mikephil.charting.charts.HorizontalBarChart>
                     </LinearLayout>
