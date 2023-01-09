@@ -39,6 +39,7 @@ public class Graphe extends AppCompatActivity {
     ArrayList<BarChart> barChartList = new ArrayList<>();
     ServerConfiguration config;
     CustomMarkerView mv;
+    PostServerRequest psr;
 
     int[] colorClassArray1 = new int[]{
             Color.rgb(1,139,140),
@@ -58,8 +59,6 @@ public class Graphe extends AppCompatActivity {
         setDarkMode();
         setContentView(R.layout.data_visualisation);
 
-
-
         //Initialisation des graphiques
         BarChart layoutGlobalWarming = findViewById(R.id.global_warming);
         BarChart layoutPrimaryEnergy = findViewById(R.id.primary_energy);
@@ -78,10 +77,9 @@ public class Graphe extends AppCompatActivity {
         setNavigationIconFocus();
         stopProgressIndicator();
 
-
         config = (ServerConfiguration) getIntent().getSerializableExtra("serverConfiguration");
 
-        PostServerRequest psr = new PostServerRequest(this);
+        psr = new PostServerRequest(this);
         psr.sendRequestServer(config);
 
         setCustomMarker(barChartList, mv);
@@ -275,8 +273,16 @@ public class Graphe extends AppCompatActivity {
 
     private void showNetworkErrorToast(int resString){
         Snackbar.make(this.findViewById(R.id.root), getString(resString), Snackbar.LENGTH_SHORT)
-                .setAction(R.string.toast_action_retry, view -> populate())
+                .setAction(R.string.toast_action_retry,  view -> psr.sendRequestServer(config))
                 .show();
+    }
+
+    public void handleErrorRequest(){
+        Snackbar.make(findViewById(R.id.rootVisu),R.string.internet_connection_not_available,Snackbar.LENGTH_SHORT)
+                .setAction(R.string.toast_action_retry, view -> psr.sendRequestServer(config))
+                .setAnchorView(R.id.bottom_navigation)
+                .show();
+
     }
 
     private void populate(){

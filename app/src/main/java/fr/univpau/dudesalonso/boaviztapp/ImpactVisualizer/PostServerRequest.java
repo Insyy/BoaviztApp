@@ -54,7 +54,7 @@ public class PostServerRequest {
 
                     },
                     error -> {
-
+                        _c.handleErrorRequest();
                     }));
         } catch (JSONException e) {
             e.printStackTrace();
