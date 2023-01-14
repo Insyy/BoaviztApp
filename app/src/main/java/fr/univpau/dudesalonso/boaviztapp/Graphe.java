@@ -198,7 +198,6 @@ public class Graphe extends AppCompatActivity {
         legend.setXEntrySpace(10f);
         legend.setYEntrySpace(4f);
         legend.setWordWrapEnabled(true);
-        legend.setTextColor(Color.WHITE);
 
         for (LegendEntry legendEntry : legends) {
             if (legendEntry.label != null && !legendEntry.label.isEmpty() && !legendEntry.label.equals("none")) {
