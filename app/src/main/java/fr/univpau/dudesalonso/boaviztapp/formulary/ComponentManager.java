@@ -32,6 +32,8 @@ public class ComponentManager {
 
     Map<String, String> countriesMap = null;
 
+    public boolean grapheDialog = true;
+
     public ComponentManager(FormularyActivity activity) {
         formularyActivity = activity;
         requestManager = new RequestManager(formularyActivity);
@@ -190,6 +192,7 @@ public class ComponentManager {
     }
 
     public void launchImpactAssessmentActivity() {
+
         Intent formularyIntent = new Intent(formularyActivity.getApplicationContext(), Graphe.class);
         Log.d("SERVER CONFIG", fieldDataRetriever.collectServerConfiguration().toString());
         formularyIntent.putExtra("serverConfiguration", fieldDataRetriever.collectServerConfiguration());

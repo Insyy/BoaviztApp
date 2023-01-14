@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="neutral_title">Information</string>
+    <string name="zoom_message">You can pinch to zoom in on the bar graph</string>
+    <string name="neutral_action">Got it!</string>
+</resources>
