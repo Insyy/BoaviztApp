@@ -22,7 +22,6 @@ public class FormularyActivity extends AppCompatActivity {
 
         componentManager = new ComponentManager(this);
 
-        setDarkMode();
         setContentView(R.layout.formulary);
 
         focusRootWindow();
@@ -57,16 +56,6 @@ public class FormularyActivity extends AppCompatActivity {
         super.onStart();
         componentManager.requestManager.populateIfInternetAvailable();
     }
-
-    private void setDarkMode() {
-        AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES);
-        if (AppCompatDelegate.getDefaultNightMode() == AppCompatDelegate.MODE_NIGHT_YES) {
-            setTheme(R.style.DarkTheme); //when dark mode is enabled, we use the dark theme
-        } else {
-            setTheme(R.style.AppTheme);  //default app theme
-        }
-    }
-
 
     @Override
     public void onPause() {

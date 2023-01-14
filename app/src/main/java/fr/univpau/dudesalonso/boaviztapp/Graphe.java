@@ -55,7 +55,6 @@ public class Graphe extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setDarkMode();
         setContentView(R.layout.data_visualisation);
 
 
@@ -73,7 +72,6 @@ public class Graphe extends AppCompatActivity {
         mv = new CustomMarkerView(this, R.layout.tv_content);
 
         setLogoOnClickListener();
-        setDarkMode();
         setBottomNavigationBarListener();
         setNavigationIconFocus();
         stopProgressIndicator();
@@ -219,14 +217,6 @@ public class Graphe extends AppCompatActivity {
         return dataVals;
     }
 
-    private void setDarkMode() {
-        AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES);
-        if (AppCompatDelegate.getDefaultNightMode() == AppCompatDelegate.MODE_NIGHT_YES) {
-            setTheme(R.style.DarkTheme); //when dark mode is enabled, we use the dark theme
-        } else {
-            setTheme(R.style.AppTheme);  //default app theme
-        }
-    }
 
     private void setBottomNavigationBarListener(){
         BottomNavigationItemView serverConfigurationMenuBtn = findViewById(R.id.server_configuration_menu_button);

@@ -12,13 +12,12 @@
         android:label="@string/app_name"
         android:roundIcon="@mipmap/boaviztapp_icon_round"
         android:supportsRtl="true"
-        android:theme="@style/Theme.MaterialComponents.DayNight">
+        android:theme="@style/AppTheme">
 
         <activity
             android:name=".FormularyActivity"
             android:exported="true"
             android:resizeableActivity="true"
-            android:theme="@style/Theme.MaterialComponents.DayNight"
             android:windowSoftInputMode="adjustResize"
             android:screenOrientation="portrait">
             <meta-data
@@ -34,8 +33,7 @@
         <activity
             android:name=".Graphe"
             android:exported="false"
-            android:noHistory="true"
-            android:theme="@style/Theme.MaterialComponents.DayNight">
+            android:noHistory="true">
             <meta-data
                 android:name="android.app.lib_name"
                 android:value="" />
