@@ -14,10 +14,8 @@ public class GrapheDataSet {
     private List<Float> _bottomDataSet = new ArrayList<>();;
 
     private String _grapheName;
-
     private Float _usage;
     private Float _manufacturing;
-
     private Float _mRAM;
     private Float _mCPU;
     private Float _mSDD;
@@ -26,10 +24,8 @@ public class GrapheDataSet {
 
     public GrapheDataSet(JSONObject impacts, JSONObject verbose, String grapheName) throws JSONException {
         _grapheName = grapheName;
-
         _usage = Float.parseFloat(impacts.getJSONObject(_grapheName).get("use").toString());
         _manufacturing = Float.parseFloat(impacts.getJSONObject(_grapheName).get("manufacture").toString());
-
         _topDataSet.add(_usage);
         _topDataSet.add(_manufacturing);
         _mRAM = Float.parseFloat(verbose.getJSONObject("RAM-1").getJSONObject("manufacture_impacts").getJSONObject(_grapheName).get("value").toString());

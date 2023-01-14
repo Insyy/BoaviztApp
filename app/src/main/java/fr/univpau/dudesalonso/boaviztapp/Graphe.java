@@ -1,8 +1,10 @@
 package fr.univpau.dudesalonso.boaviztapp;
 
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.app.AppCompatDelegate;
 
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Color;
 import android.net.Uri;
@@ -20,6 +22,7 @@ import com.github.mikephil.charting.data.BarDataSet;
 import com.github.mikephil.charting.data.BarEntry;
 import com.google.android.material.bottomnavigation.BottomNavigationItemView;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
+import com.google.android.material.dialog.MaterialAlertDialogBuilder;
 import com.google.android.material.imageview.ShapeableImageView;
 import com.google.android.material.progressindicator.LinearProgressIndicator;
 import com.google.android.material.snackbar.Snackbar;
@@ -30,8 +33,10 @@ import java.util.ArrayList;
 import java.util.List;
 
 import fr.univpau.dudesalonso.boaviztapp.ImpactVisualizer.CustomMarkerView;
+import fr.univpau.dudesalonso.boaviztapp.ImpactVisualizer.DialogGrapheManager;
 import fr.univpau.dudesalonso.boaviztapp.ImpactVisualizer.GrapheDataSet;
 import fr.univpau.dudesalonso.boaviztapp.ImpactVisualizer.PostServerRequest;
+import fr.univpau.dudesalonso.boaviztapp.formulary.ComponentManager;
 import fr.univpau.dudesalonso.boaviztapp.formulary.serverconfig.ServerConfiguration;
 
 public class Graphe extends AppCompatActivity {
@@ -39,6 +44,7 @@ public class Graphe extends AppCompatActivity {
     ArrayList<BarChart> barChartList = new ArrayList<>();
     ServerConfiguration config;
     CustomMarkerView mv;
+    PostServerRequest psr;
 
     int[] colorClassArray1 = new int[]{
             Color.rgb(1,139,140),
@@ -52,12 +58,15 @@ public class Graphe extends AppCompatActivity {
             Color.rgb(203,163,124),
             Color.rgb(157,181,183)};
 
+     boolean dialogZoom;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.data_visualisation);
 
-
+        //Barre de chargement
+        startProgressIndicator();
 
         //Initialisation des graphiques
         BarChart layoutGlobalWarming = findViewById(R.id.global_warming);
@@ -76,14 +85,18 @@ public class Graphe extends AppCompatActivity {
         setNavigationIconFocus();
         stopProgressIndicator();
 
-
         config = (ServerConfiguration) getIntent().getSerializableExtra("serverConfiguration");
 
-        PostServerRequest psr = new PostServerRequest(this);
+        psr = new PostServerRequest(this);
         psr.sendRequestServer(config);
 
         setCustomMarker(barChartList, mv);
         animateCharts(barChartList);
+
+        if(!DialogGrapheManager.dialogZoom) return;
+
+        DialogGrapheManager.dialogZoom = false;
+        DialogGrapheManager.showDialogZoom(this);
 
     }
 
@@ -265,8 +278,16 @@ public class Graphe extends AppCompatActivity {
 
     private void showNetworkErrorToast(int resString){
         Snackbar.make(this.findViewById(R.id.root), getString(resString), Snackbar.LENGTH_SHORT)
-                .setAction(R.string.toast_action_retry, view -> populate())
+                .setAction(R.string.toast_action_retry,  view -> psr.sendRequestServer(config))
                 .show();
+    }
+
+    public void handleErrorRequest(){
+        Snackbar.make(findViewById(R.id.rootVisu),R.string.internet_connection_not_available,Snackbar.LENGTH_SHORT)
+                .setAction(R.string.toast_action_retry, view -> psr.sendRequestServer(config))
+                .setAnchorView(R.id.bottom_navigation)
+                .show();
+
     }
 
     private void populate(){
@@ -276,12 +297,7 @@ public class Graphe extends AppCompatActivity {
 
     private void setLogoOnClickListener() {
         ShapeableImageView logo = findViewById(R.id.boavizta_logo);
-        logo.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse(getString(R.string.url_boavizta))));
-            }
-        });
+        logo.setOnClickListener(view -> startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse(getString(R.string.url_boavizta)))));
     }
 
 }
