@@ -7,20 +7,23 @@
         No internet connection found.
     </string>
     <string name="toast_action_retry">Retry</string>
+
     <string name="url_cpu_architectures">https://uppa.api.boavizta.org/v1/utils/cpu_family</string>
     <string name="url_ssd_manufacturers">https://uppa.api.boavizta.org/v1/utils/ssd_manufacturer</string>
     <string name="url_hdd_manufacturers">https://uppa.api.boavizta.org/v1/utils/ram_manufacturer</string>
     <string name="url_case_type">https://uppa.api.boavizta.org/v1/utils/case_type</string>
     <string name="url_countries">https://uppa.api.boavizta.org/v1/utils/country_code</string>
+
     <string name="url_boavizta">https://boavizta.org/</string>
     <string name="url_github">https://github.com/Insyy/BoaviztApp</string>
+
     <string name="app_icon_content_description">BoazivtApp logo</string>
     <string name="is_connected_icon">Shows wether internet is available</string>
     <string name="server_configuration_label_mini">Configuration</string>
     <string name="boavizta_title">Go to Boavizta main page</string>
 
     <string name="credits_title">Credits</string>
-    <string name="credits">This app was made by AI and DA @UPPA</string>
+    <string name="credits">This app was made by AI and DA at University of Pau.</string>
     <string name="learn_more_message">Learn more…</string>
     <string name="ok_message">OK</string>
 </resources>
