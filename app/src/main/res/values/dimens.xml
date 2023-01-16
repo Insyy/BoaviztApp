@@ -21,9 +21,13 @@
     <dimen name="padding_inside_cards">10dp</dimen>
 
 
-    <dimen name="progress_bar_margin">14dp</dimen>
+    <dimen name="progress_bar_margin">20dp</dimen>
     <dimen name="storage_layout_weight_sum">11</dimen>
     <dimen name="storage_layout_quantity_weight">2.5</dimen>
     <dimen name="storage_layout_capacity_weight">3</dimen>
     <dimen name="storage_layout_manufacturer_weight">5.5</dimen>
+
+    <dimen name="menu_item_icon_size">24dp</dimen>
+
+    <dimen name="toolbar_right_margin">35dp</dimen>
 </resources>

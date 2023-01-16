@@ -22,7 +22,7 @@ import fr.univpau.dudesalonso.boaviztapp.formulary.serverconfig.ServerConfigurat
 public class PostServerRequest {
 
     RequestQueue queue;
-    Graphe _c;;
+    Graphe _c;
     String url = "https://uppa.api.boavizta.org/v1/server/?verbose=true&allocation=TOTAL";
 
 
@@ -46,18 +46,23 @@ public class PostServerRequest {
                             listGds.add(new GrapheDataSet(impacts, verbose, "pe"));
                             listGds.add(new GrapheDataSet(impacts, verbose, "adp"));
 
-                           // _c.stopProgressIndicator();
                             _c.initCharts(listGds);
 
                         } catch (JSONException e) {
+                            _c.setOfflineIcon();
                             e.printStackTrace();
                         }
-
+                        _c.setOnlineIcon();
+                        _c.stopProgressIndicator();
                     },
                     error -> {
+                        _c.setOfflineIcon();
+                        _c.stopProgressIndicator();
                         _c.handleErrorRequest();
                     }));
         } catch (JSONException e) {
+            _c.stopProgressIndicator();
+            _c.setOfflineIcon();
             e.printStackTrace();
         }
 

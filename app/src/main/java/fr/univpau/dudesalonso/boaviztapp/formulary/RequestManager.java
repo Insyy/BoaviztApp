@@ -32,19 +32,20 @@ public class RequestManager {
         queue = Volley.newRequestQueue(formularyActivity);
     }
 
-    boolean isConnected() {
+    boolean isNotConnected() {
         //Check if connected to internet, output accordingly
         ConnectivityManager cm =
                 (ConnectivityManager) formularyActivity.getSystemService(Context.CONNECTIVITY_SERVICE);
 
         NetworkInfo activeNetwork = cm.getActiveNetworkInfo();
-        return activeNetwork != null &&
-                activeNetwork.isConnectedOrConnecting();
+        return activeNetwork == null ||
+                !activeNetwork.isConnectedOrConnecting();
     }
 
     public void populateIfInternetAvailable() {
-        if (!isConnected()) {
-            formularyActivity.componentManager.showNetworkErrorToast(R.string.internet_connection_not_available);
+        if (isNotConnected()) {
+            formularyActivity.componentManager.showNetworkErrorToast(R.string.internet_connection_not_available, true);
+            formularyActivity.componentManager.setOfflineIcon();
             return;
         }
 
@@ -52,10 +53,14 @@ public class RequestManager {
             Looper.prepare();
             try {
                 InetAddress address = InetAddress.getByName("www.google.com");
-                if (!address.equals(""))
+                if (!address.equals("")){
+                    formularyActivity.componentManager.setOnlineIcon();
                     formularyActivity.componentManager.populate();
+                }
+
             } catch (UnknownHostException e) {
-                formularyActivity.componentManager.showNetworkErrorToast(R.string.internet_connection_not_available);
+                formularyActivity.componentManager.setOfflineIcon();
+                formularyActivity.componentManager.showNetworkErrorToast(R.string.internet_connection_not_available, true);
             }
         }).start();
     }
@@ -85,6 +90,7 @@ public class RequestManager {
                                     formularyActivity.runOnUiThread(new Runnable() {
                                         @Override
                                         public void run() {
+                                            formularyActivity.componentManager.setOnlineIcon();
                                             formularyActivity.componentManager.populateAutocompleteDropdownValues(materialAutoCompleteId, values);
                                             formularyActivity.componentManager.stopProgressIndicator();
                                         }
@@ -94,7 +100,8 @@ public class RequestManager {
                                     formularyActivity.runOnUiThread(new Runnable() {
                                         @Override
                                         public void run() {
-                                            formularyActivity.componentManager.showNetworkErrorToast(R.string.network_error_message);
+                                            formularyActivity.componentManager.setOfflineIcon();
+                                            formularyActivity.componentManager.showNetworkErrorToast(R.string.network_error_message, true);
                                             formularyActivity.componentManager.stopProgressIndicator();
                                         }
                                     });
@@ -131,6 +138,7 @@ public class RequestManager {
                                     formularyActivity.runOnUiThread(new Runnable() {
                                         @Override
                                         public void run() {
+                                            formularyActivity.componentManager.setOnlineIcon();
                                             formularyActivity.componentManager.populateAutocompleteDropdownValues(materialAutocompleteId, new ArrayList<>(values.keySet()));
                                             formularyActivity.componentManager.stopProgressIndicator();
                                         }
@@ -140,7 +148,8 @@ public class RequestManager {
                                     formularyActivity.runOnUiThread(new Runnable() {
                                         @Override
                                         public void run() {
-                                            formularyActivity.componentManager.showNetworkErrorToast(R.string.network_error_message);
+                                            formularyActivity.componentManager.setOfflineIcon();
+                                            formularyActivity.componentManager.showNetworkErrorToast(R.string.network_error_message, true);
                                             formularyActivity.componentManager.stopProgressIndicator();
                                         }
                                     });

@@ -11,61 +11,66 @@
     android:descendantFocusability="beforeDescendants"
     >
 
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:paddingHorizontal="@dimen/global_padding">
+    <androidx.coordinatorlayout.widget.CoordinatorLayout
 
-        <com.google.android.material.textview.MaterialTextView
-            android:layout_width="0dp"
-            android:layout_height="fill_parent"
-            android:layout_marginStart="@dimen/global_padding"
-            android:layout_weight="1"
-            android:gravity="fill_vertical"
-            android:singleLine="true"
-            android:text="@string/server_configuration_label"
-            android:textAppearance="?attr/textAppearanceHeadlineMedium">
-
-        </com.google.android.material.textview.MaterialTextView>
-
-        <com.google.android.material.imageview.ShapeableImageView
-            android:id="@+id/boavizta_logo"
-            android:layout_width="70dp"
-            android:layout_height="70dp"
-
-            android:layout_gravity="end"
-            app:srcCompat="@mipmap/boaviztapp_icon_transparent_foreground">
-
-        </com.google.android.material.imageview.ShapeableImageView>
-    </LinearLayout>
-
-    <!-- Linear progress indicator -->
-    <com.google.android.material.progressindicator.LinearProgressIndicator
-        android:id="@+id/progress_indicator"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:indeterminate="true"
-        android:layout_marginHorizontal="@dimen/progress_bar_margin"
-        />
-
-    <ScrollView
-        android:layout_width="match_parent"
-        android:layout_height="0dp"
+    android:layout_width="match_parent"
+    android:layout_height="0dp"
         android:layout_weight="1"
         >
+
+    <com.google.android.material.appbar.AppBarLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:liftOnScroll="true"
+        android:fitsSystemWindows="true">
+
+        <com.google.android.material.appbar.MaterialToolbar
+            android:id="@+id/topAppBar"
+            android:layout_width="match_parent"
+            android:layout_height="?attr/actionBarSize"
+
+            app:menu="@menu/top_app_bar"
+            app:layout_scrollFlags="scroll|enterAlways|snap"
+
+            app:subtitle="@string/server_configuration_label_mini"
+            app:subtitleTextAppearance="?attr/textAppearanceTitleLarge"
+            app:subtitleCentered="true"
+
+            app:title="@string/app_name"
+            app:titleTextAppearance="?attr/textAppearanceTitleSmall"
+            app:titleCentered="true"
+
+            app:navigationIcon="@drawable/ic_round_info_24"
+            />
+<!--            app:navigationIcon="@drawable/arrow_back_icon" -->
+
+        <!-- Linear progress indicator -->
+        <com.google.android.material.progressindicator.LinearProgressIndicator
+            android:id="@+id/progress_indicator"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:indeterminate="true"
+            android:layout_marginHorizontal="@dimen/progress_bar_margin"
+            />
+    </com.google.android.material.appbar.AppBarLayout>
+
+    <!-- Note: A RecyclerView can also be used -->
+    <androidx.core.widget.NestedScrollView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+
+        app:layout_behavior="@string/appbar_scrolling_view_behavior">
+
+        <!-- Scrollable content -->
+
 
         <!--Necessary for scrollview-->
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+
             android:isScrollContainer="true"
             android:padding="@dimen/global_padding">
-
-            <!--<com.google.android.material.card.MaterialCardView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                style="?attr/materialCardViewFilledStyle"
-                >-->
 
             <LinearLayout
                 android:id="@+id/config_list"
@@ -614,9 +619,9 @@
                     </LinearLayout>
                 </com.google.android.material.card.MaterialCardView>
             </LinearLayout>
-<!--            </com.google.android.material.card.MaterialCardView>-->
         </RelativeLayout>
-    </ScrollView>
+    </androidx.core.widget.NestedScrollView>
+</androidx.coordinatorlayout.widget.CoordinatorLayout>
 
     <com.google.android.material.bottomnavigation.BottomNavigationView
         android:id="@+id/bottom_navigation"
@@ -625,5 +630,6 @@
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:menu="@menu/bottom_navigation_menu" />
+        app:menu="@menu/bottom_navigation_menu"
+        android:layout_gravity="bottom"/>
 </LinearLayout>

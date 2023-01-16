@@ -3,6 +3,7 @@ package fr.univpau.dudesalonso.boaviztapp;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.app.AppCompatDelegate;
+import androidx.appcompat.widget.Toolbar;
 
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -11,6 +12,7 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.os.Handler;
 import android.util.Log;
+import android.view.MenuItem;
 import android.view.View;
 
 
@@ -20,6 +22,7 @@ import com.github.mikephil.charting.components.LegendEntry;
 import com.github.mikephil.charting.data.BarData;
 import com.github.mikephil.charting.data.BarDataSet;
 import com.github.mikephil.charting.data.BarEntry;
+import com.google.android.material.appbar.MaterialToolbar;
 import com.google.android.material.bottomnavigation.BottomNavigationItemView;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.dialog.MaterialAlertDialogBuilder;
@@ -68,6 +71,8 @@ public class Graphe extends AppCompatActivity {
         //Barre de chargement
         startProgressIndicator();
 
+        setTopAppBarListeners();
+
         //Initialisation des graphiques
         BarChart layoutGlobalWarming = findViewById(R.id.global_warming);
         BarChart layoutPrimaryEnergy = findViewById(R.id.primary_energy);
@@ -79,11 +84,6 @@ public class Graphe extends AppCompatActivity {
         barChartList.add(layoutRessExhausted);
 
         mv = new CustomMarkerView(this, R.layout.tv_content);
-
-        setLogoOnClickListener();
-        setBottomNavigationBarListener();
-        setNavigationIconFocus();
-        stopProgressIndicator();
 
         config = (ServerConfiguration) getIntent().getSerializableExtra("serverConfiguration");
 
@@ -98,6 +98,28 @@ public class Graphe extends AppCompatActivity {
         DialogGrapheManager.dialogZoom = false;
         DialogGrapheManager.showDialogZoom(this);
 
+    }
+
+    private void setTopAppBarListeners() {
+        MaterialToolbar topAppBar = findViewById(R.id.topAppBar);
+
+        topAppBar.setNavigationOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                finish();
+            }
+        });
+
+        topAppBar.setOnMenuItemClickListener(new Toolbar.OnMenuItemClickListener() {
+            @Override
+            public boolean onMenuItemClick(MenuItem item) {
+                if (item.getItemId() == R.id.boazvitapp_logo_toolbar) {
+                    visitMainPage();
+                    return true;
+                }
+                return false;
+            }
+        });
     }
 
     @Override
@@ -229,31 +251,6 @@ public class Graphe extends AppCompatActivity {
         return dataVals;
     }
 
-
-    private void setBottomNavigationBarListener(){
-        BottomNavigationItemView serverConfigurationMenuBtn = findViewById(R.id.server_configuration_menu_button);
-
-        serverConfigurationMenuBtn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                //new Thread(() -> launchServerConfigurationActivity()).run();
-                finish();
-            }
-        });
-    }
-
-    private void setNavigationIconFocus() {
-        BottomNavigationView menu = findViewById(R.id.bottom_navigation);
-        menu.setSelectedItemId(R.id.impact_visualisation_menu_button);
-    }
-
-    private void launchServerConfigurationActivity() {
-        Intent formularyIntent = new Intent();
-        formularyIntent.setClass(getApplicationContext(), FormularyActivity.class);
-        startActivity(formularyIntent);
-    }
-
-
     public void startProgressIndicator() {
         LinearProgressIndicator progressIndicator = findViewById(R.id.progress_indicator);
         progressIndicator.setVisibility(View.VISIBLE);
@@ -289,14 +286,28 @@ public class Graphe extends AppCompatActivity {
 
     }
 
-    private void populate(){
-        if (!isInternetAvailable())
-            return;
+    private void visitMainPage() {
+        startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse(getString(R.string.url_boavizta))));
     }
 
-    private void setLogoOnClickListener() {
-        ShapeableImageView logo = findViewById(R.id.boavizta_logo);
-        logo.setOnClickListener(view -> startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse(getString(R.string.url_boavizta)))));
+    public void setOnlineIcon() {
+        MaterialToolbar topAppBar = findViewById(R.id.topAppBar);
+        for (int i = 0; i < topAppBar.getMenu().size(); i++) {
+            MenuItem item = topAppBar.getMenu().getItem(i);
+            if (item.getItemId() == R.id.boazvitapp_logo_toolbar)
+                continue;
+            item.setVisible(item.getItemId() == R.id.online_icon);
+        }
+    }
+
+    public void setOfflineIcon() {
+        MaterialToolbar topAppBar = findViewById(R.id.topAppBar);
+        for (int i = 0; i < topAppBar.getMenu().size(); i++) {
+            MenuItem item = topAppBar.getMenu().getItem(i);
+            if (item.getItemId() == R.id.boazvitapp_logo_toolbar)
+                continue;
+            item.setVisible(item.getItemId() == R.id.offline_icon);
+        }
     }
 
 }

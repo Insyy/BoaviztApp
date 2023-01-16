@@ -3,26 +3,32 @@ package fr.univpau.dudesalonso.boaviztapp.formulary;
 import android.content.Intent;
 import android.net.Uri;
 import android.util.Log;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 
+import androidx.appcompat.widget.Toolbar;
+
+import com.google.android.material.appbar.MaterialToolbar;
 import com.google.android.material.bottomnavigation.BottomNavigationItemView;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
-import com.google.android.material.imageview.ShapeableImageView;
+import com.google.android.material.dialog.MaterialAlertDialogBuilder;
 import com.google.android.material.progressindicator.LinearProgressIndicator;
 import com.google.android.material.snackbar.Snackbar;
 import com.google.android.material.textfield.MaterialAutoCompleteTextView;
 import com.google.android.material.textfield.TextInputEditText;
 import com.google.android.material.textfield.TextInputLayout;
 
+import java.net.InetAddress;
+import java.net.UnknownHostException;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
 
 import fr.univpau.dudesalonso.boaviztapp.FormularyActivity;
-import fr.univpau.dudesalonso.boaviztapp.R;
 import fr.univpau.dudesalonso.boaviztapp.Graphe;
+import fr.univpau.dudesalonso.boaviztapp.R;
 
 public class ComponentManager {
 
@@ -31,8 +37,6 @@ public class ComponentManager {
     private final FieldDataRetriever fieldDataRetriever;
 
     Map<String, String> countriesMap = null;
-
-    public boolean grapheDialog = true;
 
     public ComponentManager(FormularyActivity activity) {
         formularyActivity = activity;
@@ -50,7 +54,7 @@ public class ComponentManager {
 
     }
 
-    private void setClearOnClickListeners(){
+    private void setClearOnClickListeners() {
         setClearInputOnClick(R.id.cpu_quantity_input, R.string.cpu_quantity_placeholder);
         setClearInputOnClick(R.id.cpu_core_units_input, R.string.cpu_core_units_placeholder);
         setClearInputOnClick(R.id.cpu_tdp_input, R.string.cpu_tdp_placeholder);
@@ -67,37 +71,83 @@ public class ComponentManager {
         setClearInputOnClick(R.id.usage_lifespan_input, R.string.usage_lifespan_placeholder);
     }
 
-    private void setClearInputOnClick(int inputId, int defaultValue){
+    private void setClearInputOnClick(int inputId, int defaultValue) {
         TextInputEditText inputView = formularyActivity.findViewById(inputId);
         inputView.setOnFocusChangeListener(new View.OnFocusChangeListener() {
             @Override
             public void onFocusChange(View view, boolean b) {
                 if (b && Objects.requireNonNull(inputView.getText()).length() > 0)
                     inputView.getText().clear();
-                else if (Objects.requireNonNull(inputView.getText()).length() == 0){
+                else if (Objects.requireNonNull(inputView.getText()).length() == 0) {
                     inputView.setText(defaultValue);
                 }
             }
         });
     }
 
-    public void prepareUI(){
+    public void prepareUI() {
         setUsageContents();
         setBottomNavigationBar();
-        setNavigationIconFocus();
         setClearOnClickListeners();
         setDropdownsListeners();
-        setLogoOnClickListener();
+        setTopAppBarListeners();
     }
 
-    private void setLogoOnClickListener() {
-        ShapeableImageView logo = formularyActivity.findViewById(R.id.boavizta_logo);
-        logo.setOnClickListener(new View.OnClickListener() {
+    private void setTopAppBarListeners() {
+        MaterialToolbar topAppBar = formularyActivity.findViewById(R.id.topAppBar);
+
+        topAppBar.setNavigationOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                formularyActivity.startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse(formularyActivity.getString(R.string.url_boavizta))));
+                new MaterialAlertDialogBuilder(formularyActivity)
+                        .setTitle(formularyActivity.getString(R.string.credits_title))
+                        .setMessage(formularyActivity.getString(R.string.credits))
+                        .setNeutralButton(formularyActivity.getString(R.string.ok_message), null)
+                        .setPositiveButton(formularyActivity.getString(R.string.learn_more_message), (dialogInterface, i) -> {
+                            visitGithubPage();
+                        })
+                        .show();
             }
         });
+
+        topAppBar.setOnMenuItemClickListener(new Toolbar.OnMenuItemClickListener() {
+            @Override
+            public boolean onMenuItemClick(MenuItem item) {
+                if (item.getItemId() == R.id.boazvitapp_logo_toolbar) {
+                    visitMainPage();
+                    return true;
+                }
+                return false;
+            }
+        });
+    }
+
+    private void visitGithubPage() {
+        formularyActivity.startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse(formularyActivity.getString(R.string.url_github))));
+    }
+
+    private void visitMainPage() {
+        formularyActivity.startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse(formularyActivity.getString(R.string.url_boavizta))));
+    }
+
+    public void setOnlineIcon() {
+        MaterialToolbar topAppBar = formularyActivity.findViewById(R.id.topAppBar);
+        for (int i = 0; i < topAppBar.getMenu().size(); i++) {
+            MenuItem item = topAppBar.getMenu().getItem(i);
+            if (item.getItemId() == R.id.boazvitapp_logo_toolbar)
+                continue;
+            item.setVisible(item.getItemId() == R.id.online_icon);
+        }
+    }
+
+    public void setOfflineIcon() {
+        MaterialToolbar topAppBar = formularyActivity.findViewById(R.id.topAppBar);
+        for (int i = 0; i < topAppBar.getMenu().size(); i++) {
+            MenuItem item = topAppBar.getMenu().getItem(i);
+            if (item.getItemId() == R.id.boazvitapp_logo_toolbar)
+                continue;
+            item.setVisible(item.getItemId() == R.id.offline_icon);
+        }
     }
 
     public void populate() {
@@ -143,7 +193,7 @@ public class ComponentManager {
         textView.setOnFocusChangeListener(new View.OnFocusChangeListener() {
             @Override
             public void onFocusChange(View view, boolean hasFocus) {
-                if (hasFocus){
+                if (hasFocus) {
                     textView.showDropDown();
                     if (textView.getText().length() > 0)
                         textView.getText().clear();
@@ -176,30 +226,44 @@ public class ComponentManager {
     }
 
     private void setBottomNavigationBar() {
+
+        BottomNavigationView bottom = formularyActivity.findViewById(R.id.bottom_navigation);
+        bottom.setSelectedItemId(R.id.invisible_menu_button);
         BottomNavigationItemView assessServerImpactMenuBtn = formularyActivity.findViewById(R.id.impact_visualisation_menu_button);
 
         assessServerImpactMenuBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                new Thread(() -> launchImpactAssessmentActivity()).start();
+                new Thread(() ->
+                        launchImpactAssessmentActivity()).start();
             }
         });
     }
 
-    private void setNavigationIconFocus() {
-        BottomNavigationView assessServerImpactMenu = formularyActivity.findViewById(R.id.bottom_navigation);
-        assessServerImpactMenu.setSelectedItemId(R.id.server_configuration_menu_button);
-    }
-
     public void launchImpactAssessmentActivity() {
+        if (requestManager.isNotConnected()) {
+            showNetworkErrorToast(R.string.internet_connection_not_available, false);
+            return;
+        }
+
+        InetAddress address = null;
+        try {
+            address = InetAddress.getByName("www.google.com");
+        } catch (UnknownHostException e) {
+            showNetworkErrorToast(R.string.internet_connection_not_available, false);
+            return;
+        }
+        if (address.equals("")) {
+            showNetworkErrorToast(R.string.internet_connection_not_available, false);
+            return;
+        }
+
 
         Intent formularyIntent = new Intent(formularyActivity.getApplicationContext(), Graphe.class);
         Log.d("SERVER CONFIG", fieldDataRetriever.collectServerConfiguration().toString());
         formularyIntent.putExtra("serverConfiguration", fieldDataRetriever.collectServerConfiguration());
         formularyActivity.startActivity(formularyIntent);
     }
-
-
 
 
     public void startProgressIndicator() {
@@ -214,11 +278,12 @@ public class ComponentManager {
     }
 
 
+    void showNetworkErrorToast(int resString, boolean populating) {
 
-
-    void showNetworkErrorToast(int resString) {
         Snackbar.make(formularyActivity.findViewById(R.id.root), formularyActivity.getString(resString), Snackbar.LENGTH_LONG)
-                .setAction(R.string.toast_action_retry, view -> requestManager.populateIfInternetAvailable())
+                .setAction(R.string.toast_action_retry, view -> {
+                    if (populating) requestManager.populateIfInternetAvailable();
+                })
                 .setAnchorView(R.id.bottom_navigation)
                 .show();
     }

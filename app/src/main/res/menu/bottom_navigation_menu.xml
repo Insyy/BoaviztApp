@@ -1,13 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
     <item
-        android:id="@+id/server_configuration_menu_button"
-        android:enabled="true"
-        android:icon="@drawable/settings_application"
-        android:title="Server configuration" />
-    <item
         android:id="@+id/impact_visualisation_menu_button"
-        android:enabled="true"
-        android:icon="@drawable/energy_savings_leaf"
-        android:title="Assess server impact" />
+        android:icon="@drawable/ic_baseline_energy_savings_leaf_24"
+        android:title="@string/assess_server_impact"
+        />
+    <item
+        android:id="@+id/invisible_menu_button"
+        android:title="@string/assess_server_impact"
+        android:visible="false"
+        />
 </menu>

@@ -82,7 +82,7 @@
     <string name="usage_server_load_label">Server load</string>
     <string name="usage_server_load_helper">%</string>
     <string name="usage_server_load_placeholder">50</string>
-
+    <string name="assess_server_impact">Assess server impact</string>
 
 
     <string-array name="method_options">
