@@ -7,6 +7,7 @@ import androidx.appcompat.widget.Toolbar;
 
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.res.Configuration;
 import android.graphics.Color;
 import android.net.Uri;
 import android.os.Bundle;
@@ -203,6 +204,8 @@ public class Graphe extends AppCompatActivity {
         barChart.setScaleEnabled(true);
         barChart.setDoubleTapToZoomEnabled(true);
 
+        barChart.getLegend().setTextColor(getLegendColor());
+
         //refresh
         barChart.invalidate();
 
@@ -217,9 +220,13 @@ public class Graphe extends AppCompatActivity {
         String[] label_bottom_bar = getResources().getStringArray(R.array.label_bottom_bar);
         String[] label_top_bar = getResources().getStringArray(R.array.label_top_bar);
 
+        int colorLegend;
+
         legend.setXEntrySpace(10f);
         legend.setYEntrySpace(4f);
         legend.setWordWrapEnabled(true);
+
+        colorLegend = getLegendColor();
 
         for (LegendEntry legendEntry : legends) {
             if (legendEntry.label != null && !legendEntry.label.isEmpty() && !legendEntry.label.equals("none")) {
@@ -237,6 +244,17 @@ public class Graphe extends AppCompatActivity {
 
         legend.setCustom(nonEmptyLegend);
 
+    }
+
+    private int getLegendColor(){
+        int currentNightMode = getResources().getConfiguration().uiMode & Configuration.UI_MODE_NIGHT_MASK;
+        switch (currentNightMode) {
+            case Configuration.UI_MODE_NIGHT_NO:
+                return Color.DKGRAY;
+            case Configuration.UI_MODE_NIGHT_YES:
+                return Color.WHITE;
+            default: return Color.DKGRAY;
+        }
     }
 
     private ArrayList<BarEntry> dataValuesUp(GrapheDataSet gds){
