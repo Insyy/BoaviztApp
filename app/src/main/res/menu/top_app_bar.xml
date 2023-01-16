@@ -6,7 +6,6 @@
         android:icon="@drawable/ic_baseline_offline_bolt_24"
         app:showAsAction="ifRoom"
         android:title="@string/is_connected_icon"
-        android:iconTint="?attr/colorError"
         android:visible="false"/>
 
     <item
@@ -14,7 +13,7 @@
         android:icon="@drawable/ic_baseline_offline_pin_24"
         app:showAsAction="ifRoom"
         android:title="@string/is_connected_icon"
-        android:iconTint="?attr/colorPrimary"/>
+        />
 
     <item
         android:id="@+id/boazvitapp_logo_toolbar"

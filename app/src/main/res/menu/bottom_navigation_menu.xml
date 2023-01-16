@@ -9,5 +9,6 @@
         android:id="@+id/invisible_menu_button"
         android:title="@string/assess_server_impact"
         android:visible="false"
+
         />
 </menu>
