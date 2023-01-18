@@ -5,7 +5,7 @@
         android:id="@+id/offline_icon"
         android:icon="@drawable/ic_baseline_offline_bolt_24"
         app:showAsAction="ifRoom"
-        android:title="@string/is_connected_icon"
+        android:title="@string/is_disconnected_icon"
         android:visible="false"/>
 
     <item

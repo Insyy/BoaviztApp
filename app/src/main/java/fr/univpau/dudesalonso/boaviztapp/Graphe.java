@@ -299,7 +299,7 @@ public class Graphe extends AppCompatActivity {
     public void handleErrorRequest(){
         Snackbar.make(findViewById(R.id.rootVisu),R.string.internet_connection_not_available,Snackbar.LENGTH_SHORT)
                 .setAction(R.string.toast_action_retry, view -> psr.sendRequestServer(config))
-                .setAnchorView(R.id.bottom_navigation)
+                .setAnchorView(R.id.rootVisu)
                 .show();
 
     }

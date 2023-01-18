@@ -1,6 +1,10 @@
 package fr.univpau.dudesalonso.boaviztapp.formulary;
 
+import android.annotation.SuppressLint;
 import android.content.Intent;
+import android.content.res.ColorStateList;
+import android.graphics.ColorFilter;
+import android.graphics.PorterDuff;
 import android.net.Uri;
 import android.util.Log;
 import android.view.MenuItem;
@@ -12,6 +16,7 @@ import androidx.appcompat.widget.Toolbar;
 import com.google.android.material.appbar.MaterialToolbar;
 import com.google.android.material.bottomnavigation.BottomNavigationItemView;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
+import com.google.android.material.color.MaterialColors;
 import com.google.android.material.dialog.MaterialAlertDialogBuilder;
 import com.google.android.material.progressindicator.LinearProgressIndicator;
 import com.google.android.material.snackbar.Snackbar;
@@ -19,8 +24,6 @@ import com.google.android.material.textfield.MaterialAutoCompleteTextView;
 import com.google.android.material.textfield.TextInputEditText;
 import com.google.android.material.textfield.TextInputLayout;
 
-import java.net.InetAddress;
-import java.net.UnknownHostException;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
@@ -99,14 +102,9 @@ public class ComponentManager {
         topAppBar.setNavigationOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                new MaterialAlertDialogBuilder(formularyActivity)
-                        .setTitle(formularyActivity.getString(R.string.credits_title))
-                        .setMessage(formularyActivity.getString(R.string.credits))
-                        .setNeutralButton(formularyActivity.getString(R.string.ok_message), null)
-                        .setPositiveButton(formularyActivity.getString(R.string.learn_more_message), (dialogInterface, i) -> {
-                            visitGithubPage();
-                        })
-                        .show();
+                new MaterialAlertDialogBuilder(formularyActivity).setTitle(formularyActivity.getString(R.string.credits_title)).setMessage(formularyActivity.getString(R.string.credits)).setNeutralButton(formularyActivity.getString(R.string.ok_message), null).setPositiveButton(formularyActivity.getString(R.string.learn_more_message), (dialogInterface, i) -> {
+                    visitGithubPage();
+                }).show();
             }
         });
 
@@ -134,8 +132,7 @@ public class ComponentManager {
         MaterialToolbar topAppBar = formularyActivity.findViewById(R.id.topAppBar);
         for (int i = 0; i < topAppBar.getMenu().size(); i++) {
             MenuItem item = topAppBar.getMenu().getItem(i);
-            if (item.getItemId() == R.id.boazvitapp_logo_toolbar)
-                continue;
+            if (item.getItemId() == R.id.boazvitapp_logo_toolbar) continue;
             item.setVisible(item.getItemId() == R.id.online_icon);
         }
     }
@@ -144,8 +141,7 @@ public class ComponentManager {
         MaterialToolbar topAppBar = formularyActivity.findViewById(R.id.topAppBar);
         for (int i = 0; i < topAppBar.getMenu().size(); i++) {
             MenuItem item = topAppBar.getMenu().getItem(i);
-            if (item.getItemId() == R.id.boazvitapp_logo_toolbar)
-                continue;
+            if (item.getItemId() == R.id.boazvitapp_logo_toolbar) continue;
             item.setVisible(item.getItemId() == R.id.offline_icon);
         }
     }
@@ -194,9 +190,8 @@ public class ComponentManager {
             @Override
             public void onFocusChange(View view, boolean hasFocus) {
                 if (hasFocus) {
-                    textView.showDropDown();
-                    if (textView.getText().length() > 0)
-                        textView.getText().clear();
+                    //textView.showDropDown();
+                    if (textView.getText().length() > 0) textView.getText().clear();
 
                 }
             }
@@ -229,36 +224,21 @@ public class ComponentManager {
 
         BottomNavigationView bottom = formularyActivity.findViewById(R.id.bottom_navigation);
         bottom.setSelectedItemId(R.id.invisible_menu_button);
+
         BottomNavigationItemView assessServerImpactMenuBtn = formularyActivity.findViewById(R.id.impact_visualisation_menu_button);
 
-        assessServerImpactMenuBtn.setOnClickListener(new View.OnClickListener() {
+        assessServerImpactMenuBtn.setOnClickListener(new View.OnClickListener()     {
             @Override
             public void onClick(View view) {
-                new Thread(() ->
-                        launchImpactAssessmentActivity()).start();
+                new Thread(() -> launchImpactAssessmentActivity()).start();
             }
         });
     }
 
     public void launchImpactAssessmentActivity() {
         if (requestManager.isNotConnected()) {
-            showNetworkErrorToast(R.string.internet_connection_not_available, false);
             return;
         }
-
-        InetAddress address = null;
-        try {
-            address = InetAddress.getByName("www.google.com");
-        } catch (UnknownHostException e) {
-            showNetworkErrorToast(R.string.internet_connection_not_available, false);
-            return;
-        }
-        if (address.equals("")) {
-            showNetworkErrorToast(R.string.internet_connection_not_available, false);
-            return;
-        }
-
-
         Intent formularyIntent = new Intent(formularyActivity.getApplicationContext(), Graphe.class);
         Log.d("SERVER CONFIG", fieldDataRetriever.collectServerConfiguration().toString());
         formularyIntent.putExtra("serverConfiguration", fieldDataRetriever.collectServerConfiguration());
@@ -277,14 +257,42 @@ public class ComponentManager {
         progressIndicator.setVisibility(View.INVISIBLE);
     }
 
+    @SuppressLint("RestrictedApi")
+    public void refreshConnectionStatusLayout(boolean networkActive) {
+        BottomNavigationView bottom = formularyActivity.findViewById(R.id.bottom_navigation);
+        BottomNavigationItemView bottomNavigationItemView = bottom.findViewById(R.id.impact_visualisation_menu_button);
 
-    void showNetworkErrorToast(int resString, boolean populating) {
+        formularyActivity.runOnUiThread(() -> {
+            if (networkActive) {
+                setOnlineIcon();
+                bottom.setItemIconTintList(null);
+                bottom.setItemIconTintList(ColorStateList.valueOf(MaterialColors.getColor(bottom, androidx.appcompat.R.attr.colorPrimary)));
+                //bottomNavigationItemView.setEnabled(true);
+                return;
+            }
+            setOfflineIcon();
+            bottom.setItemIconTintList(null);
+            bottom.setItemIconTintList(ColorStateList.valueOf(MaterialColors.getColor(bottom, androidx.appcompat.R.attr.colorError)));
+            //bottomNavigationItemView.setEnabled(false);
+            showNoInternetErrorToast();
+        });
 
-        Snackbar.make(formularyActivity.findViewById(R.id.root), formularyActivity.getString(resString), Snackbar.LENGTH_LONG)
-                .setAction(R.string.toast_action_retry, view -> {
-                    if (populating) requestManager.populateIfInternetAvailable();
-                })
-                .setAnchorView(R.id.bottom_navigation)
-                .show();
+    }
+
+
+    void showNetworkErrorToast() {
+
+        Snackbar.make(formularyActivity.findViewById(R.id.root), formularyActivity.getString(R.string.network_error_message), Snackbar.LENGTH_INDEFINITE).setAction(R.string.toast_action_retry, view -> {
+            requestManager.populateIfInternetAvailable();
+        }).setAnchorView(R.id.bottom_navigation).show();
+    }
+
+    void showNoInternetErrorToast() {
+
+        Snackbar.make(formularyActivity.findViewById(R.id.root), formularyActivity.getString(R.string.internet_connection_not_available), Snackbar.LENGTH_INDEFINITE).setAction(R.string.toast_action_retry, view -> {
+            new Thread(requestManager::isNotConnected).start();
+
+
+        }).setAnchorView(R.id.bottom_navigation).show();
     }
 }

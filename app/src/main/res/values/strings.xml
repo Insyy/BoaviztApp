@@ -18,12 +18,13 @@
     <string name="url_github">https://github.com/Insyy/BoaviztApp</string>
 
     <string name="app_icon_content_description">BoazivtApp logo</string>
-    <string name="is_connected_icon">Shows wether internet is available</string>
+    <string name="is_connected_icon">Internet connection available</string>
     <string name="server_configuration_label_mini">Configuration</string>
     <string name="boavizta_title">Go to Boavizta main page</string>
 
     <string name="credits_title">Credits</string>
-    <string name="credits">This app was made by AI and DA at University of Pau.</string>
+    <string name="credits">This app was made by AI and DA at the University of Pau.</string>
     <string name="learn_more_message">Learn more…</string>
     <string name="ok_message">OK</string>
+    <string name="is_disconnected_icon">No internet connection available</string>
 </resources>

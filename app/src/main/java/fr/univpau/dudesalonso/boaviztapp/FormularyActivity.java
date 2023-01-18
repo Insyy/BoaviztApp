@@ -38,6 +38,7 @@ public class FormularyActivity extends AppCompatActivity {
         componentManager.prepareUI();
 
         componentManager.requestManager.populateIfInternetAvailable();
+
     }
 
     public void focusRootWindow() {

@@ -68,7 +68,6 @@
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-
             android:isScrollContainer="true"
             android:padding="@dimen/global_padding">
 
@@ -166,6 +165,7 @@
                                     android:id="@+id/server_type_input"
                                     android:layout_width="match_parent"
                                     android:layout_height="match_parent"
+                                    android:inputType="textNoSuggestions"
                                     android:completionThreshold="@integer/completionThreshHoldForAutocomplete">
 
                                 </com.google.android.material.textfield.MaterialAutoCompleteTextView>
@@ -225,7 +225,7 @@
                                         android:layout_width="match_parent"
                                         android:layout_height="match_parent"
                                         android:completionThreshold="@integer/completionThreshHoldForAutocomplete"
-                                        android:inputType="text">
+                                        android:inputType="textNoSuggestions">
 
                                     </com.google.android.material.textfield.MaterialAutoCompleteTextView>
                                 </com.google.android.material.textfield.TextInputLayout>
@@ -273,7 +273,7 @@
                                         android:layout_width="match_parent"
                                         android:layout_height="match_parent"
                                         android:completionThreshold="@integer/completionThreshHoldForAutocomplete"
-                                        android:inputType="text"
+                                        android:inputType="textNoSuggestions"
                                         android:text="@string/usage_method_placeholder"
                                         app:simpleItems="@array/method_options">
 
@@ -422,7 +422,7 @@
                                     android:layout_width="match_parent"
                                     android:layout_height="match_parent"
                                     android:completionThreshold="@integer/completionThreshHoldForAutocomplete"
-                                    android:inputType="text">
+                                    android:inputType="textNoSuggestions">
 
                                 </com.google.android.material.textfield.MaterialAutoCompleteTextView>
                             </com.google.android.material.textfield.TextInputLayout>
@@ -518,7 +518,7 @@
                                     android:layout_width="match_parent"
                                     android:layout_height="match_parent"
                                     android:completionThreshold="@integer/completionThreshHoldForAutocomplete"
-                                    android:inputType="text">
+                                    android:inputType="textNoSuggestions">
 
                                 </com.google.android.material.textfield.MaterialAutoCompleteTextView>
                             </com.google.android.material.textfield.TextInputLayout>
@@ -611,7 +611,8 @@
                                     android:id="@+id/ssd_manufacturer_input"
                                     android:layout_width="match_parent"
                                     android:layout_height="match_parent"
-                                    android:completionThreshold="@integer/completionThreshHoldForAutocomplete">
+                                    android:completionThreshold="@integer/completionThreshHoldForAutocomplete"
+                                    android:inputType="textNoSuggestions">
 
                                 </com.google.android.material.textfield.MaterialAutoCompleteTextView>
                             </com.google.android.material.textfield.TextInputLayout>

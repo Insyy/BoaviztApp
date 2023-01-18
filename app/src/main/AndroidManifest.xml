@@ -18,8 +18,7 @@
             android:name=".FormularyActivity"
             android:exported="true"
             android:resizeableActivity="true"
-            android:windowSoftInputMode="adjustResize"
-            android:screenOrientation="portrait">
+            android:windowSoftInputMode="adjustResize">
             <meta-data
                 android:name="android.app.lib_name"
                 android:value="" />
