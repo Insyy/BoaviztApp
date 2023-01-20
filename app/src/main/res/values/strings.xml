@@ -27,4 +27,5 @@
     <string name="learn_more_message">Learn more…</string>
     <string name="ok_message">OK</string>
     <string name="is_disconnected_icon">No internet connection available</string>
+    <string name="download_icon_title">Save charts to phone memory</string>
 </resources>

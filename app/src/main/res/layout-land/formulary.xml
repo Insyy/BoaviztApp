@@ -29,7 +29,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="?attr/actionBarSize"
 
-                app:menu="@menu/top_app_bar"
+                app:menu="@menu/top_app_bar_formulary"
                 app:layout_scrollFlags="scroll|enterAlways|snap"
 
                 app:subtitle="@string/server_configuration_label_mini"
@@ -633,5 +633,6 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:menu="@menu/bottom_navigation_menu"
         android:layout_gravity="bottom"
+        app:itemIconTint="?attr/colorPrimary"
         />
 </LinearLayout>

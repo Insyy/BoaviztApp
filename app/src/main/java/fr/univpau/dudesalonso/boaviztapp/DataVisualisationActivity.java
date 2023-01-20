@@ -1,18 +1,14 @@
 package fr.univpau.dudesalonso.boaviztapp;
 
-import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.appcompat.app.AppCompatDelegate;
 import androidx.appcompat.widget.Toolbar;
 
-import android.content.DialogInterface;
+import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.content.res.Configuration;
 import android.graphics.Color;
 import android.net.Uri;
 import android.os.Bundle;
-import android.os.Handler;
-import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 
@@ -24,26 +20,20 @@ import com.github.mikephil.charting.data.BarData;
 import com.github.mikephil.charting.data.BarDataSet;
 import com.github.mikephil.charting.data.BarEntry;
 import com.google.android.material.appbar.MaterialToolbar;
-import com.google.android.material.bottomnavigation.BottomNavigationItemView;
-import com.google.android.material.bottomnavigation.BottomNavigationView;
-import com.google.android.material.dialog.MaterialAlertDialogBuilder;
-import com.google.android.material.imageview.ShapeableImageView;
+import com.google.android.material.color.MaterialColors;
 import com.google.android.material.progressindicator.LinearProgressIndicator;
 import com.google.android.material.snackbar.Snackbar;
 
-import java.net.InetAddress;
-import java.net.UnknownHostException;
 import java.util.ArrayList;
 import java.util.List;
 
-import fr.univpau.dudesalonso.boaviztapp.ImpactVisualizer.CustomMarkerView;
-import fr.univpau.dudesalonso.boaviztapp.ImpactVisualizer.DialogGrapheManager;
-import fr.univpau.dudesalonso.boaviztapp.ImpactVisualizer.GrapheDataSet;
-import fr.univpau.dudesalonso.boaviztapp.ImpactVisualizer.PostServerRequest;
-import fr.univpau.dudesalonso.boaviztapp.formulary.ComponentManager;
-import fr.univpau.dudesalonso.boaviztapp.formulary.serverconfig.ServerConfiguration;
+import fr.univpau.dudesalonso.boaviztapp.dataVisualisation.CustomMarkerView;
+import fr.univpau.dudesalonso.boaviztapp.dataVisualisation.DialogGrapheManager;
+import fr.univpau.dudesalonso.boaviztapp.dataVisualisation.GrapheDataSet;
+import fr.univpau.dudesalonso.boaviztapp.dataVisualisation.PostServerRequest;
+import fr.univpau.dudesalonso.boaviztapp.formulary.serverConfig.ServerConfiguration;
 
-public class Graphe extends AppCompatActivity {
+public class DataVisualisationActivity extends AppCompatActivity {
 
     ArrayList<BarChart> barChartList = new ArrayList<>();
     ServerConfiguration config;
@@ -112,12 +102,18 @@ public class Graphe extends AppCompatActivity {
         });
 
         topAppBar.setOnMenuItemClickListener(new Toolbar.OnMenuItemClickListener() {
+            @SuppressLint("NonConstantResourceId")
             @Override
             public boolean onMenuItemClick(MenuItem item) {
-                if (item.getItemId() == R.id.boazvitapp_logo_toolbar) {
-                    visitMainPage();
-                    return true;
+                switch (item.getItemId()) {
+                    case R.id.boazvitapp_logo_toolbar:
+                        visitMainPage();
+                        return true;
+                    case R.id.download_icon:
+                        downloadCharts();
+                        return true;
                 }
+
                 return false;
             }
         });
@@ -204,7 +200,7 @@ public class Graphe extends AppCompatActivity {
         barChart.setScaleEnabled(true);
         barChart.setDoubleTapToZoomEnabled(true);
 
-        barChart.getLegend().setTextColor(getLegendColor());
+        barChart.getLegend().setTextColor(MaterialColors.getColor(barChart, com.google.android.material.R.attr.colorOnBackground));
 
         //refresh
         barChart.invalidate();
@@ -220,13 +216,11 @@ public class Graphe extends AppCompatActivity {
         String[] label_bottom_bar = getResources().getStringArray(R.array.label_bottom_bar);
         String[] label_top_bar = getResources().getStringArray(R.array.label_top_bar);
 
-        int colorLegend;
-
         legend.setXEntrySpace(10f);
         legend.setYEntrySpace(4f);
         legend.setWordWrapEnabled(true);
 
-        colorLegend = getLegendColor();
+
 
         for (LegendEntry legendEntry : legends) {
             if (legendEntry.label != null && !legendEntry.label.isEmpty() && !legendEntry.label.equals("none")) {
@@ -280,24 +274,15 @@ public class Graphe extends AppCompatActivity {
         progressIndicator.setVisibility(View.INVISIBLE);
     }
 
-    public boolean isInternetAvailable() {
-        try {
-            InetAddress address = InetAddress.getByName("www.google.com");
-            return !address.equals("");
-        } catch (UnknownHostException e) {
-            showNetworkErrorToast(R.string.internet_connection_not_available);
-        }
-        return false;
-    }
 
     private void showNetworkErrorToast(int resString){
         Snackbar.make(this.findViewById(R.id.root), getString(resString), Snackbar.LENGTH_SHORT)
-                .setAction(R.string.toast_action_retry,  view -> psr.sendRequestServer(config))
+                .setAction(R.string.toast_action_retry, view -> psr.sendRequestServer(config))
                 .show();
     }
 
     public void handleErrorRequest(){
-        Snackbar.make(findViewById(R.id.rootVisu),R.string.internet_connection_not_available,Snackbar.LENGTH_SHORT)
+        Snackbar.make(findViewById(R.id.rootVisu), R.string.internet_connection_not_available,Snackbar.LENGTH_SHORT)
                 .setAction(R.string.toast_action_retry, view -> psr.sendRequestServer(config))
                 .setAnchorView(R.id.rootVisu)
                 .show();
@@ -308,24 +293,9 @@ public class Graphe extends AppCompatActivity {
         startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse(getString(R.string.url_boavizta))));
     }
 
-    public void setOnlineIcon() {
-        MaterialToolbar topAppBar = findViewById(R.id.topAppBar);
-        for (int i = 0; i < topAppBar.getMenu().size(); i++) {
-            MenuItem item = topAppBar.getMenu().getItem(i);
-            if (item.getItemId() == R.id.boazvitapp_logo_toolbar)
-                continue;
-            item.setVisible(item.getItemId() == R.id.online_icon);
-        }
-    }
 
-    public void setOfflineIcon() {
-        MaterialToolbar topAppBar = findViewById(R.id.topAppBar);
-        for (int i = 0; i < topAppBar.getMenu().size(); i++) {
-            MenuItem item = topAppBar.getMenu().getItem(i);
-            if (item.getItemId() == R.id.boazvitapp_logo_toolbar)
-                continue;
-            item.setVisible(item.getItemId() == R.id.offline_icon);
-        }
+    private void downloadCharts(){
+        //TODO
     }
 
 }

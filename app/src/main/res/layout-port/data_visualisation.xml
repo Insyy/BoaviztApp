@@ -27,7 +27,7 @@
                 android:layout_height="?attr/actionBarSize"
 
                 app:layout_scrollFlags="scroll|enterAlways|snap"
-                app:menu="@menu/top_app_bar"
+                app:menu="@menu/top_app_bar_data_visualisation"
 
                 app:navigationIcon="@drawable/arrow_back_icon"
                 app:subtitle="@string/server_impact_title"

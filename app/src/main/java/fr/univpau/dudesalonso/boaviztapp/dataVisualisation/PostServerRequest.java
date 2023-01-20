@@ -1,14 +1,9 @@
-package fr.univpau.dudesalonso.boaviztapp.ImpactVisualizer;
-
-import android.app.Activity;
-import android.content.Context;
-import android.util.Log;
+package fr.univpau.dudesalonso.boaviztapp.dataVisualisation;
 
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.Volley;
-import com.github.mikephil.charting.charts.BarChart;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -16,17 +11,17 @@ import org.json.JSONObject;
 import java.util.ArrayList;
 import java.util.List;
 
-import fr.univpau.dudesalonso.boaviztapp.Graphe;
-import fr.univpau.dudesalonso.boaviztapp.formulary.serverconfig.ServerConfiguration;
+import fr.univpau.dudesalonso.boaviztapp.DataVisualisationActivity;
+import fr.univpau.dudesalonso.boaviztapp.formulary.serverConfig.ServerConfiguration;
 
 public class PostServerRequest {
 
     RequestQueue queue;
-    Graphe _c;
+    DataVisualisationActivity _c;
     String url = "https://uppa.api.boavizta.org/v1/server/?verbose=true&allocation=TOTAL";
 
 
-    public PostServerRequest(Graphe c) {
+    public PostServerRequest(DataVisualisationActivity c) {
         queue = Volley.newRequestQueue(c);
         _c =c;
     }
@@ -49,20 +44,16 @@ public class PostServerRequest {
                             _c.initCharts(listGds);
 
                         } catch (JSONException e) {
-                            _c.setOfflineIcon();
                             e.printStackTrace();
                         }
-                        _c.setOnlineIcon();
                         _c.stopProgressIndicator();
                     },
                     error -> {
-                        _c.setOfflineIcon();
                         _c.stopProgressIndicator();
                         _c.handleErrorRequest();
                     }));
         } catch (JSONException e) {
             _c.stopProgressIndicator();
-            _c.setOfflineIcon();
             e.printStackTrace();
         }
 

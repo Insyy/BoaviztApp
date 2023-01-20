@@ -1,4 +1,4 @@
-package fr.univpau.dudesalonso.boaviztapp.formulary.serverconfig.model;
+package fr.univpau.dudesalonso.boaviztapp.formulary.serverConfig.model;
 
 import java.io.Serializable;
 

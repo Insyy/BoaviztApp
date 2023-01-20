@@ -1,6 +1,4 @@
-package fr.univpau.dudesalonso.boaviztapp.ImpactVisualizer;
-
-import android.util.Log;
+package fr.univpau.dudesalonso.boaviztapp.dataVisualisation;
 
 import org.json.JSONException;
 import org.json.JSONObject;

@@ -8,13 +8,13 @@ import java.util.Objects;
 
 import fr.univpau.dudesalonso.boaviztapp.FormularyActivity;
 import fr.univpau.dudesalonso.boaviztapp.R;
-import fr.univpau.dudesalonso.boaviztapp.formulary.serverconfig.ServerConfiguration;
-import fr.univpau.dudesalonso.boaviztapp.formulary.serverconfig.configuration.Configuration;
-import fr.univpau.dudesalonso.boaviztapp.formulary.serverconfig.configuration.components.Cpu;
-import fr.univpau.dudesalonso.boaviztapp.formulary.serverconfig.configuration.components.Disk;
-import fr.univpau.dudesalonso.boaviztapp.formulary.serverconfig.configuration.components.Ram;
-import fr.univpau.dudesalonso.boaviztapp.formulary.serverconfig.model.Model;
-import fr.univpau.dudesalonso.boaviztapp.formulary.serverconfig.usage.Usage;
+import fr.univpau.dudesalonso.boaviztapp.formulary.serverConfig.ServerConfiguration;
+import fr.univpau.dudesalonso.boaviztapp.formulary.serverConfig.configuration.Configuration;
+import fr.univpau.dudesalonso.boaviztapp.formulary.serverConfig.configuration.components.Cpu;
+import fr.univpau.dudesalonso.boaviztapp.formulary.serverConfig.configuration.components.Disk;
+import fr.univpau.dudesalonso.boaviztapp.formulary.serverConfig.configuration.components.Ram;
+import fr.univpau.dudesalonso.boaviztapp.formulary.serverConfig.model.Model;
+import fr.univpau.dudesalonso.boaviztapp.formulary.serverConfig.usage.Usage;
 
 public class FieldDataRetriever {
     FormularyActivity formularyActivity;

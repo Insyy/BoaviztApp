@@ -3,8 +3,6 @@ package fr.univpau.dudesalonso.boaviztapp.formulary;
 import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.content.res.ColorStateList;
-import android.graphics.ColorFilter;
-import android.graphics.PorterDuff;
 import android.net.Uri;
 import android.util.Log;
 import android.view.MenuItem;
@@ -30,7 +28,7 @@ import java.util.Map;
 import java.util.Objects;
 
 import fr.univpau.dudesalonso.boaviztapp.FormularyActivity;
-import fr.univpau.dudesalonso.boaviztapp.Graphe;
+import fr.univpau.dudesalonso.boaviztapp.DataVisualisationActivity;
 import fr.univpau.dudesalonso.boaviztapp.R;
 
 public class ComponentManager {
@@ -192,7 +190,6 @@ public class ComponentManager {
                 if (hasFocus) {
                     //textView.showDropDown();
                     if (textView.getText().length() > 0) textView.getText().clear();
-
                 }
             }
         });
@@ -239,7 +236,7 @@ public class ComponentManager {
         if (requestManager.isNotConnected()) {
             return;
         }
-        Intent formularyIntent = new Intent(formularyActivity.getApplicationContext(), Graphe.class);
+        Intent formularyIntent = new Intent(formularyActivity.getApplicationContext(), DataVisualisationActivity.class);
         Log.d("SERVER CONFIG", fieldDataRetriever.collectServerConfiguration().toString());
         formularyIntent.putExtra("serverConfiguration", fieldDataRetriever.collectServerConfiguration());
         formularyActivity.startActivity(formularyIntent);
