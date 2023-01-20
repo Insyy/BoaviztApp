@@ -8,29 +8,32 @@ import java.util.List;
 
 public class GrapheDataSet {
 
-    private List<Float> _topDataSet = new ArrayList<>();
-    private List<Float> _bottomDataSet = new ArrayList<>();;
+    private List<String> _topDataSet = new ArrayList<>();
+    private List<String> _bottomDataSet = new ArrayList<>();;
 
     private String _grapheName;
-    private Float _usage;
-    private Float _manufacturing;
-    private Float _mRAM;
-    private Float _mCPU;
-    private Float _mSDD;
-    private Float _mHDD;
-    private Float _mOther;
+    private String _usage;
+    private String _manufacturing;
+    private String _mRAM;
+    private String _mCPU;
+    private String _mSDD;
+    private String _mHDD;
+    private String _mOther;
 
     public GrapheDataSet(JSONObject impacts, JSONObject verbose, String grapheName) throws JSONException {
         _grapheName = grapheName;
-        _usage = Float.parseFloat(impacts.getJSONObject(_grapheName).get("use").toString());
-        _manufacturing = Float.parseFloat(impacts.getJSONObject(_grapheName).get("manufacture").toString());
+
+        _usage = valueAssigmentTopSet(impacts,"use");
+        _manufacturing = valueAssigmentTopSet(impacts,"manufacture");
         _topDataSet.add(_usage);
         _topDataSet.add(_manufacturing);
-        _mRAM = Float.parseFloat(verbose.getJSONObject("RAM-1").getJSONObject("manufacture_impacts").getJSONObject(_grapheName).get("value").toString());
-        _mCPU = Float.parseFloat(verbose.getJSONObject("CPU-1").getJSONObject("manufacture_impacts").getJSONObject(_grapheName).get("value").toString());
-        _mSDD = Float.parseFloat(verbose.getJSONObject("SSD-1").getJSONObject("manufacture_impacts").getJSONObject(_grapheName).get("value").toString());
-        _mHDD =Float.parseFloat(verbose.getJSONObject("CASE-1").getJSONObject("manufacture_impacts").getJSONObject(_grapheName).get("value").toString());
-        _mOther = get_manufacturing() - (get_mRAM() + get_mCPU() + get_mSDD() + get_mHDD());
+
+        //_mRAM = Float.parseFloat(verbose.getJSONObject("RAM-1").getJSONObject("manufacture_impacts").getJSONObject(_grapheName).get("value").toString());
+        _mRAM = valueAssigmentBottomSet(verbose,"RAM-1","manufacture_impacts");
+        _mCPU = valueAssigmentBottomSet(verbose,"CPU-1","manufacture_impacts");
+        _mSDD = valueAssigmentBottomSet(verbose,"SSD-1","manufacture_impacts");
+        _mHDD = valueAssigmentBottomSet(verbose,"CASE-1","manufacture_impacts");
+        _mOther = String.valueOf(Float.parseFloat(get_manufacturing()) - Float.parseFloat(get_mRAM()) - Float.parseFloat(get_mCPU()) - Float.parseFloat(get_mSDD())- Float.parseFloat(get_mHDD()));
 
         _bottomDataSet.add(_mRAM);
         _bottomDataSet.add(_mCPU);
@@ -40,51 +43,65 @@ public class GrapheDataSet {
 
     }
 
+    public String valueAssigmentTopSet(JSONObject impacts, String gwpType) throws JSONException {
+        String value = impacts.getJSONObject(_grapheName).get(gwpType).toString();
+        if(value.equals("not implemented"))
+            return "0.0";
+        return value;
+    }
+
+    public String valueAssigmentBottomSet(JSONObject verbose, String stringObject1, String stringObject2) throws JSONException {
+        String value = verbose.getJSONObject(stringObject1).getJSONObject(stringObject2).getJSONObject(_grapheName).get("value").toString();
+        if(value.equals("not implemented"))
+            return "0.0";
+        return value;
+    }
+
     public String get_grapheName() {
         return _grapheName;
     }
 
-    public Float get_usage() {
+    public String get_usage() {
         return _usage;
     }
 
-    public Float get_manufacturing() {
+    public String get_manufacturing() {
         return _manufacturing;
     }
 
-    public Float get_mRAM() {
+    public String get_mRAM() {
         return _mRAM;
     }
 
-    public Float get_mCPU() {
+    public String get_mCPU() {
         return _mCPU;
     }
 
-    public Float get_mSDD() {
+    public String get_mSDD() {
         return _mSDD;
     }
 
-    public Float get_mHDD() {
+    public String get_mHDD() {
         return _mHDD;
     }
 
-    public Float get_mOther() {
+    public String get_mOther() {
         return _mOther;
     }
 
-    public List<Float> get_topDataSet() {
+    public List<String> get_topDataSet() {
         return _topDataSet;
     }
 
-    public void set_topDataSet(List<Float> _topDataSet) {
+    public void set_topDataSet(List<String> _topDataSet) {
         this._topDataSet = _topDataSet;
     }
 
-    public List<Float> get_bottomDataSet() {
+    public List<String> get_bottomDataSet() {
         return _bottomDataSet;
     }
 
-    public void set_bottomDataSet(List<Float> _bottomDataSet) {
+    public void set_bottomDataSet(List<String> _bottomDataSet) {
         this._bottomDataSet = _bottomDataSet;
     }
 

@@ -77,7 +77,7 @@ public class DataVisualisationActivity extends AppCompatActivity {
         mv = new CustomMarkerView(this, R.layout.tv_content);
 
         config = (ServerConfiguration) getIntent().getSerializableExtra("serverConfiguration");
-
+        Log.d("configDebug", config.toString());
         psr = new PostServerRequest(this);
         psr.sendRequestServer(config);
 
@@ -227,13 +227,15 @@ public class DataVisualisationActivity extends AppCompatActivity {
                 nonEmptyLegend.add(legendEntry);
             }
         }
-
+        List<String> topDataSet = listGds.get(index).get_topDataSet();
         for (int i = 0; i < label_top_bar.length; i++) {
-                nonEmptyLegend.get(i).label =  label_top_bar[i] + " " + listGds.get(index).get_topDataSet().get(i);
+            if(topDataSet.get(i).equals("0.0")) nonEmptyLegend.get(i).label = label_top_bar[i] + " " + "no data";
+            else nonEmptyLegend.get(i).label =  label_top_bar[i] + " " + topDataSet.get(i);
         }
-
+        List<String> bottomDataSet = listGds.get(index).get_bottomDataSet();
         for (int i = 0; i < label_bottom_bar.length - 1; i++) {
-            nonEmptyLegend.get(i + 2).label =  label_bottom_bar[i + 1] + " " +listGds.get(index).get_bottomDataSet().get(i);
+            if(bottomDataSet.get(i).equals("0.0")) nonEmptyLegend.get(i).label = label_bottom_bar[i + 1] + " " + "no data";
+            else nonEmptyLegend.get(i + 2).label =  label_bottom_bar[i + 1] + " " + bottomDataSet.get(i);
         }
 
         legend.setCustom(nonEmptyLegend);
@@ -253,13 +255,13 @@ public class DataVisualisationActivity extends AppCompatActivity {
 
     private ArrayList<BarEntry> dataValuesUp(GrapheDataSet gds){
         ArrayList<BarEntry> dataVals = new ArrayList<>();
-        dataVals.add(new BarEntry(4.95F , new float[]{gds.get_usage(),gds.get_manufacturing()}));
+        dataVals.add(new BarEntry(4.95F , new float[]{Float.parseFloat(gds.get_usage()), Float.parseFloat(gds.get_manufacturing())}));
         return dataVals;
     }
 
     private ArrayList<BarEntry> dataValuesDown(GrapheDataSet gds){
         ArrayList<BarEntry> dataVals = new ArrayList<>();
-        dataVals.add(new BarEntry(0f , new float[]{gds.get_usage(),gds.get_mRAM(),gds.get_mCPU(),gds.get_mSDD(),gds.get_mHDD(),gds.get_mOther()}));
+        dataVals.add(new BarEntry(0f , new float[]{Float.parseFloat(gds.get_usage()), Float.parseFloat(gds.get_mRAM()), Float.parseFloat(gds.get_mCPU()), Float.parseFloat(gds.get_mSDD()), Float.parseFloat(gds.get_mHDD()), Float.parseFloat(gds.get_mOther())}));
         return dataVals;
     }
 
