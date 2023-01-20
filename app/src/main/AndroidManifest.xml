@@ -30,7 +30,7 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".Graphe"
+            android:name=".DataVisualisationActivity"
             android:configChanges="uiMode"
             android:exported="false">
             <meta-data

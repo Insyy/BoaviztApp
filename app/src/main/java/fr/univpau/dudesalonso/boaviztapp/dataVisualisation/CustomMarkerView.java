@@ -1,7 +1,6 @@
-package fr.univpau.dudesalonso.boaviztapp.ImpactVisualizer;
+package fr.univpau.dudesalonso.boaviztapp.dataVisualisation;
 
 import android.content.Context;
-import android.util.Log;
 import android.widget.TextView;
 
 import com.github.mikephil.charting.components.MarkerView;

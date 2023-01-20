@@ -1,4 +1,4 @@
-package fr.univpau.dudesalonso.boaviztapp.ImpactVisualizer;
+package fr.univpau.dudesalonso.boaviztapp.dataVisualisation;
 
 import android.content.Context;
 

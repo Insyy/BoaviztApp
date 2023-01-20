@@ -1,0 +1,18 @@
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+
+    <item
+        android:id="@+id/download_icon"
+        android:icon="@drawable/ic_baseline_download_for_offline_24"
+        app:showAsAction="ifRoom"
+        android:title="@string/download_icon_title"
+        />
+
+    <item
+        android:id="@+id/boazvitapp_logo_toolbar"
+        android:icon="@mipmap/ic_launcher_foreground"
+        app:showAsAction="always"
+        android:title="@string/boavizta_title"
+        />
+</menu>
