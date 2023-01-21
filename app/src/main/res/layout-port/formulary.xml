@@ -166,6 +166,7 @@
                                     android:layout_width="match_parent"
                                     android:layout_height="match_parent"
                                     android:inputType="textNoSuggestions"
+                                    android:focusedByDefault="false"
                                     android:completionThreshold="@integer/completionThreshHoldForAutocomplete">
 
                                 </com.google.android.material.textfield.MaterialAutoCompleteTextView>
@@ -218,7 +219,8 @@
                                     android:hint="@string/usage_location_label"
                                     android:paddingHorizontal="@dimen/input_element_horizontal_padding"
                                     android:paddingVertical="@dimen/input_element_vertical_padding"
-                                    app:endIconMode="clear_text">
+                                    app:endIconMode="clear_text"
+                                    >
 
                                     <com.google.android.material.textfield.MaterialAutoCompleteTextView
                                         android:id="@+id/usage_location_input"
