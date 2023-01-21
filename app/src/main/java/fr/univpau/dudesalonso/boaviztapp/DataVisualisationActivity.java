@@ -10,6 +10,7 @@ import android.graphics.Bitmap;
 import android.graphics.Color;
 import android.net.Uri;
 import android.os.Bundle;
+
 import android.os.Environment;
 import android.provider.MediaStore;
 import android.util.Log;
@@ -372,22 +373,25 @@ public class DataVisualisationActivity extends AppCompatActivity {
      /*  Date now = new Date();
         android.text.format.DateFormat.format("yyyy-MM-dd_hh:mm:ss", now);
         try {
-            createImage(R.id.barchart1, now.toString());
-            createImage(R.id.barchart2, now.toString());
-            createImage(R.id.barchart3, now.toString());
-            DialogGrapheManager.successfulDownload(/*findViewById(R.id.rootVisu) this);
-       /* } catch (Throwable e) {
+            createImage(R.id.global_warming, now.toString());
+            createImage(R.id.primary_energy, now.toString());
+            createImage(R.id.ressource_exhausted, now.toString());
+            DialogGrapheManager.successfulDownload(/*findViewById(R.id.rootVisu)*/ this);
+        } catch (Throwable e) {
             DialogGrapheManager.failureDownload(this);
             e.printStackTrace();
         }*/
     }
 
+
     private void createImage(Integer chartId,String fileName)
     {
-        View v1 = getWindow().getDecorView().getRootView().findViewById(chartId);
-        v1.setDrawingCacheEnabled(true);
-        Bitmap bitmap = Bitmap.createBitmap(v1.getDrawingCache());
-        v1.setDrawingCacheEnabled(false);
+
+        BarChart barchart = findViewById(chartId);
+
+        barchart.getLegend().setTextColor(Color.BLACK);
+        barchart.invalidate();
+        Bitmap bitmap = barchart.getChartBitmap();
         String mPath = MediaStore.Images.Media.insertImage( getContentResolver(),
                 bitmap,
                 fileName.toString(),
