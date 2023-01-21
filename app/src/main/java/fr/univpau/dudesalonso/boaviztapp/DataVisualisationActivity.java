@@ -6,9 +6,13 @@ import androidx.appcompat.widget.Toolbar;
 import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.content.res.Configuration;
+import android.graphics.Bitmap;
 import android.graphics.Color;
 import android.net.Uri;
 import android.os.Bundle;
+import android.os.Environment;
+import android.provider.MediaStore;
+import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 
@@ -24,7 +28,10 @@ import com.google.android.material.color.MaterialColors;
 import com.google.android.material.progressindicator.LinearProgressIndicator;
 import com.google.android.material.snackbar.Snackbar;
 
+import java.io.File;
+import java.io.FileOutputStream;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import fr.univpau.dudesalonso.boaviztapp.dataVisualisation.CustomMarkerView;
@@ -77,7 +84,6 @@ public class DataVisualisationActivity extends AppCompatActivity {
         mv = new CustomMarkerView(this, R.layout.tv_content);
 
         config = (ServerConfiguration) getIntent().getSerializableExtra("serverConfiguration");
-        Log.d("configDebug", config.toString());
         psr = new PostServerRequest(this);
         psr.sendRequestServer(config);
 
@@ -288,8 +294,9 @@ public class DataVisualisationActivity extends AppCompatActivity {
                 .setAction(R.string.toast_action_retry, view -> psr.sendRequestServer(config))
                 .setAnchorView(R.id.rootVisu)
                 .show();
-
     }
+
+
 
     private void visitMainPage() {
         startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse(getString(R.string.url_boavizta))));
@@ -297,7 +304,29 @@ public class DataVisualisationActivity extends AppCompatActivity {
 
 
     private void downloadCharts(){
-        //TODO
+        Date now = new Date();
+        android.text.format.DateFormat.format("yyyy-MM-dd_hh:mm:ss", now);
+        try {
+            createImage(R.id.barchart1, now.toString());
+            createImage(R.id.barchart2, now.toString());
+            createImage(R.id.barchart3, now.toString());
+            DialogGrapheManager.successfulDownload(/*findViewById(R.id.rootVisu)*/ this);
+        } catch (Throwable e) {
+            DialogGrapheManager.failureDownload(this);
+            e.printStackTrace();
+        }
+    }
+
+    private void createImage(Integer chartId,String fileName)
+    {
+        View v1 = getWindow().getDecorView().getRootView().findViewById(chartId);
+        v1.setDrawingCacheEnabled(true);
+        Bitmap bitmap = Bitmap.createBitmap(v1.getDrawingCache());
+        v1.setDrawingCacheEnabled(false);
+        String mPath = MediaStore.Images.Media.insertImage( getContentResolver(),
+                bitmap,
+                fileName.toString(),
+                "") + "/" + fileName;
     }
 
 }

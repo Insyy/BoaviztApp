@@ -1,5 +1,7 @@
 package fr.univpau.dudesalonso.boaviztapp.dataVisualisation;
 
+import android.util.Log;
+
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.toolbox.JsonObjectRequest;
@@ -33,7 +35,6 @@ public class PostServerRequest {
                     Request.Method.POST, url, jsonObject,
                     response -> {
                         try {
-                            Log.d("sendRequestServer", response.toString());
                             JSONObject impacts = response.getJSONObject("impacts");
                             JSONObject verbose = response.getJSONObject("verbose");
                             List<GrapheDataSet> listGds = new ArrayList<>();
