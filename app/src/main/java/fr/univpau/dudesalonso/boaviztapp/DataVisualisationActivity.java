@@ -27,9 +27,18 @@ import com.google.android.material.appbar.MaterialToolbar;
 import com.google.android.material.color.MaterialColors;
 import com.google.android.material.progressindicator.LinearProgressIndicator;
 import com.google.android.material.snackbar.Snackbar;
+import com.tom_roush.pdfbox.android.PDFBoxResourceLoader;
+import com.tom_roush.pdfbox.pdmodel.PDDocument;
+import com.tom_roush.pdfbox.pdmodel.PDPage;
+import com.tom_roush.pdfbox.pdmodel.PDPageContentStream;
+import com.tom_roush.pdfbox.pdmodel.font.PDFont;
+import com.tom_roush.pdfbox.pdmodel.font.PDType1Font;
+import com.tom_roush.pdfbox.pdmodel.graphics.image.LosslessFactory;
+import com.tom_roush.pdfbox.pdmodel.graphics.image.PDImageXObject;
 
 import java.io.File;
 import java.io.FileOutputStream;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -46,6 +55,11 @@ public class DataVisualisationActivity extends AppCompatActivity {
     ServerConfiguration config;
     CustomMarkerView mv;
     PostServerRequest psr;
+    File root;
+
+    BarChart chartGlobalWarning;
+    BarChart chartPrimaryEnergy;
+    BarChart chartRessExhausted;
 
     int[] colorClassArray1 = new int[]{
             Color.rgb(1,139,140),
@@ -66,29 +80,16 @@ public class DataVisualisationActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.data_visualisation);
 
+        setupCharts();
+        setupPdf();
+
         //Barre de chargement
         startProgressIndicator();
-
         setTopAppBarListeners();
-
-        //Initialisation des graphiques
-        BarChart layoutGlobalWarming = findViewById(R.id.global_warming);
-        BarChart layoutPrimaryEnergy = findViewById(R.id.primary_energy);
-        BarChart layoutRessExhausted = findViewById(R.id.ressource_exhausted);
-
-        //Ajout des graphiques à la liste
-        barChartList.add(layoutGlobalWarming);
-        barChartList.add(layoutPrimaryEnergy);
-        barChartList.add(layoutRessExhausted);
-
-        mv = new CustomMarkerView(this, R.layout.tv_content);
 
         config = (ServerConfiguration) getIntent().getSerializableExtra("serverConfiguration");
         psr = new PostServerRequest(this);
         psr.sendRequestServer(config);
-
-        setCustomMarker(barChartList, mv);
-        animateCharts(barChartList);
 
         if(!DialogGrapheManager.dialogZoom) return;
 
@@ -135,6 +136,30 @@ public class DataVisualisationActivity extends AppCompatActivity {
         super.onPause();
         //POUR DES TRANSITIONS CLEAN
         overridePendingTransition(0, 0);
+    }
+
+    private void setupCharts(){
+        //Initialisation des graphiques
+        chartGlobalWarning = findViewById(R.id.global_warming);
+        chartPrimaryEnergy = findViewById(R.id.primary_energy);
+        chartRessExhausted = findViewById(R.id.ressource_exhausted);
+
+        //Ajout des graphiques à la liste
+        barChartList.add(chartGlobalWarning);
+        barChartList.add(chartPrimaryEnergy);
+        barChartList.add(chartRessExhausted);
+
+        mv = new CustomMarkerView(this, R.layout.tv_content);
+
+        setCustomMarker(barChartList, mv);
+        animateCharts(barChartList);
+
+    }
+
+    private void setupPdf(){
+        //Init PDF
+        PDFBoxResourceLoader.init(getApplicationContext());
+        root = getApplicationContext().getCacheDir();
     }
 
 
@@ -304,17 +329,57 @@ public class DataVisualisationActivity extends AppCompatActivity {
 
 
     private void downloadCharts(){
-        Date now = new Date();
+        PDDocument document = new PDDocument();
+        PDPage page = new PDPage();
+        document.addPage(page);
+
+        // Create a new font object selecting one of the PDF base fonts
+        PDFont font = PDType1Font.HELVETICA;
+        PDPageContentStream contentStream;
+        try {
+            // Define a content stream for adding to the PDF
+            contentStream = new PDPageContentStream(document, page);
+
+            // Write Hello World in blue text
+            contentStream.beginText();
+            //contentStream.setNonStrokingColor(15, 38, 192);
+            contentStream.setFont(font, 12);
+            contentStream.newLineAtOffset(100, 700);
+            contentStream.showText("Hello World");
+            contentStream.endText();
+
+            // Draw a green rectangle
+            contentStream.addRect(5, 500, 100, 100);
+            //contentStream.setNonStrokingColor(0, 255, 125);
+            contentStream.fill();
+            // Draw the red overlay image
+          /*  chartGlobalWarning.buildDrawingCache();
+            Bitmap alphaImage = chartGlobalWarning.getDrawingCache();
+            PDImageXObject cgwXimage = LosslessFactory.createFromImage(document, alphaImage);
+            contentStream.drawImage(cgwXimage, 200, 200 );*/
+
+            // Make sure that the content stream is closed:
+            contentStream.close();
+
+            // Save the final pdf document to a file
+            String path = root.getAbsolutePath() + "/Created.pdf";
+            document.save(path);
+            document.close();
+            DialogGrapheManager.successfulDownload(/*findViewById(R.id.rootVisu) */this);
+        } catch (IOException e) {
+            Log.d("PdfBox-Android-Sample", "Exception thrown while creating PDF", e);
+        }
+     /*  Date now = new Date();
         android.text.format.DateFormat.format("yyyy-MM-dd_hh:mm:ss", now);
         try {
             createImage(R.id.barchart1, now.toString());
             createImage(R.id.barchart2, now.toString());
             createImage(R.id.barchart3, now.toString());
-            DialogGrapheManager.successfulDownload(/*findViewById(R.id.rootVisu)*/ this);
-        } catch (Throwable e) {
+            DialogGrapheManager.successfulDownload(/*findViewById(R.id.rootVisu) this);
+       /* } catch (Throwable e) {
             DialogGrapheManager.failureDownload(this);
             e.printStackTrace();
-        }
+        }*/
     }
 
     private void createImage(Integer chartId,String fileName)
