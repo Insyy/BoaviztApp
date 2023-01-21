@@ -78,6 +78,7 @@
 
                     <com.google.android.material.card.MaterialCardView
                         style="?attr/materialCardViewElevatedStyle"
+                        android:id="@+id/barchart1"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_margin="@dimen/card_margin"
@@ -122,6 +123,7 @@
                         style="?attr/materialCardViewElevatedStyle"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
+                        android:id="@+id/barchart2"
                         android:layout_margin="@dimen/card_margin"
                         app:cardElevation="@dimen/card_elevation"
                         app:contentPadding="@dimen/card_padding">
@@ -164,6 +166,7 @@
 
                     <com.google.android.material.card.MaterialCardView
                         style="?attr/materialCardViewElevatedStyle"
+                        android:id="@+id/barchart3"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_margin="@dimen/card_margin"

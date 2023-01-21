@@ -19,7 +19,6 @@
     <string name="fieldset_title_2">To go further</string>
     <string name="fieldset_text_2">This page uses the BoaviztAPI. An open-source API that uses open data and methods to assess the environmental impacts of digital equipment.</string>
 
-
     <string-array name="label_top_bar">
         <item>Usage :</item>
         <item>Manufacturing  :</item>
