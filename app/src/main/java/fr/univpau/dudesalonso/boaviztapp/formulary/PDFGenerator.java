@@ -141,12 +141,12 @@ public class PDFGenerator {
            createSubTitleSection(document, "Abiotic Depletion Potential (kgSbeq) - Total : 0.141528");
            createBodyText(document,"Evaluates the use of minerals and fossil ressources");
            chartToPDF(document, chartRessExhausted);
-
            document.close();
 
-           DialogGrapheManager.successfulDownload(/*findViewById(R.id.rootVisu) */_c);
+           DialogGrapheManager.successfulDownload(_c);
        } catch (IOException e) {
            Log.d("PdfBox-Android-Sample", "Exception thrown while creating PDF", e);
+           DialogGrapheManager.failureDownload(_c);
        } catch (DocumentException e) {
            e.printStackTrace();
        }

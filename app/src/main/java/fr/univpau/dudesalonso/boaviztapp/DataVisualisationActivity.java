@@ -322,7 +322,7 @@ public class DataVisualisationActivity extends AppCompatActivity {
     private void downloadCharts() {
         //create a new document
         new PDFGenerator(root, barChartList,this);
-
+        DialogGrapheManager.successfulDownload(this);
     }
 
 }
