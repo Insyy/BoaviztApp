@@ -17,7 +17,6 @@ import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 
-
 import com.github.mikephil.charting.charts.BarChart;
 import com.github.mikephil.charting.components.Legend;
 import com.github.mikephil.charting.components.LegendEntry;
@@ -29,25 +28,15 @@ import com.google.android.material.color.MaterialColors;
 import com.google.android.material.progressindicator.LinearProgressIndicator;
 import com.google.android.material.snackbar.Snackbar;
 import com.tom_roush.pdfbox.android.PDFBoxResourceLoader;
-import com.tom_roush.pdfbox.pdmodel.PDDocument;
-import com.tom_roush.pdfbox.pdmodel.PDPage;
-import com.tom_roush.pdfbox.pdmodel.PDPageContentStream;
-import com.tom_roush.pdfbox.pdmodel.font.PDFont;
-import com.tom_roush.pdfbox.pdmodel.font.PDType1Font;
-import com.tom_roush.pdfbox.pdmodel.graphics.image.LosslessFactory;
-import com.tom_roush.pdfbox.pdmodel.graphics.image.PDImageXObject;
-
 import java.io.File;
-import java.io.FileOutputStream;
-import java.io.IOException;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 
 import fr.univpau.dudesalonso.boaviztapp.dataVisualisation.CustomMarkerView;
 import fr.univpau.dudesalonso.boaviztapp.dataVisualisation.DialogGrapheManager;
 import fr.univpau.dudesalonso.boaviztapp.dataVisualisation.GrapheDataSet;
 import fr.univpau.dudesalonso.boaviztapp.dataVisualisation.PostServerRequest;
+import fr.univpau.dudesalonso.boaviztapp.formulary.PDFGenerator;
 import fr.univpau.dudesalonso.boaviztapp.formulary.serverConfig.ServerConfiguration;
 
 public class DataVisualisationActivity extends AppCompatActivity {
@@ -160,7 +149,8 @@ public class DataVisualisationActivity extends AppCompatActivity {
     private void setupPdf(){
         //Init PDF
         PDFBoxResourceLoader.init(getApplicationContext());
-        root = getApplicationContext().getCacheDir();
+        root = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS);
+       // root = getApplicationContext().getCacheDir();
     }
 
 
@@ -329,73 +319,10 @@ public class DataVisualisationActivity extends AppCompatActivity {
     }
 
 
-    private void downloadCharts(){
-        PDDocument document = new PDDocument();
-        PDPage page = new PDPage();
-        document.addPage(page);
+    private void downloadCharts() {
+        //create a new document
+        new PDFGenerator(root, barChartList,this);
 
-        // Create a new font object selecting one of the PDF base fonts
-        PDFont font = PDType1Font.HELVETICA;
-        PDPageContentStream contentStream;
-        try {
-            // Define a content stream for adding to the PDF
-            contentStream = new PDPageContentStream(document, page);
-
-            // Write Hello World in blue text
-            contentStream.beginText();
-            //contentStream.setNonStrokingColor(15, 38, 192);
-            contentStream.setFont(font, 12);
-            contentStream.newLineAtOffset(100, 700);
-            contentStream.showText("Hello World");
-            contentStream.endText();
-
-            // Draw a green rectangle
-            contentStream.addRect(5, 500, 100, 100);
-            //contentStream.setNonStrokingColor(0, 255, 125);
-            contentStream.fill();
-            // Draw the red overlay image
-          /*  chartGlobalWarning.buildDrawingCache();
-            Bitmap alphaImage = chartGlobalWarning.getDrawingCache();
-            PDImageXObject cgwXimage = LosslessFactory.createFromImage(document, alphaImage);
-            contentStream.drawImage(cgwXimage, 200, 200 );*/
-
-            // Make sure that the content stream is closed:
-            contentStream.close();
-
-            // Save the final pdf document to a file
-            String path = root.getAbsolutePath() + "/Created.pdf";
-            document.save(path);
-            document.close();
-            DialogGrapheManager.successfulDownload(/*findViewById(R.id.rootVisu) */this);
-        } catch (IOException e) {
-            Log.d("PdfBox-Android-Sample", "Exception thrown while creating PDF", e);
-        }
-     /*  Date now = new Date();
-        android.text.format.DateFormat.format("yyyy-MM-dd_hh:mm:ss", now);
-        try {
-            createImage(R.id.global_warming, now.toString());
-            createImage(R.id.primary_energy, now.toString());
-            createImage(R.id.ressource_exhausted, now.toString());
-            DialogGrapheManager.successfulDownload(/*findViewById(R.id.rootVisu)*/ this);
-        } catch (Throwable e) {
-            DialogGrapheManager.failureDownload(this);
-            e.printStackTrace();
-        }*/
-    }
-
-
-    private void createImage(Integer chartId,String fileName)
-    {
-
-        BarChart barchart = findViewById(chartId);
-
-        barchart.getLegend().setTextColor(Color.BLACK);
-        barchart.invalidate();
-        Bitmap bitmap = barchart.getChartBitmap();
-        String mPath = MediaStore.Images.Media.insertImage( getContentResolver(),
-                bitmap,
-                fileName.toString(),
-                "") + "/" + fileName;
     }
 
 }
