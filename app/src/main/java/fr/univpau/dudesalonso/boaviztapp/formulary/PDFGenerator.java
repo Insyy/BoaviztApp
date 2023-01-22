@@ -143,9 +143,8 @@ public class PDFGenerator {
 
            document.newPage();
 
-           createTitleSection(document, _c.getText(R.string.title_global_warming) + " " + _listGds.get(0).get_mTotal());
-
-           createSubTitleSection(document, "Global Warming Potential (kgCO2eq)  - Total : 3153.8");
+           createTitleSection(document, "Multicritera impacts during lifespan");
+           createSubTitleSection(document, _c.getText(R.string.title_global_warming) + " " + _listGds.get(0).get_mTotal());
            createBodyText(document,"Evaluates the effect on global warming");
            chartToPDF(document, chartGlobalWarning);
 
