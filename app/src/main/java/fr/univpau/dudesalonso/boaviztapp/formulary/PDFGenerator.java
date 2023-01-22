@@ -153,7 +153,7 @@ public class PDFGenerator {
            createBodyText(document,"Consumption of energy resources");
            chartToPDF(document, chartPrimaryEnergy);
 
-           createSubTitleSection(document, _c.getText(R.string.title_ressource_exhausted)  + " " + _listGds.get(0).get_mTotal());
+           createSubTitleSection(document, _c.getText(R.string.title_ressource_exhausted)  + " " + _listGds.get(2).get_mTotal());
            createBodyText(document,"Evaluates the use of minerals and fossil ressources");
            chartToPDF(document, chartRessExhausted);
            document.close();
