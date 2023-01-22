@@ -27,6 +27,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 
 import fr.univpau.dudesalonso.boaviztapp.dataVisualisation.DialogGrapheManager;
+import fr.univpau.dudesalonso.boaviztapp.formulary.serverConfig.ServerConfiguration;
 
 public class PDFGenerator {
 
@@ -35,17 +36,19 @@ public class PDFGenerator {
     BarChart chartRessExhausted;
 
     File _root;
-
     BaseFont bfBold;
-
+    ServerConfiguration _config;
     Context _c;
 
-    public PDFGenerator(File root, ArrayList<BarChart> barChartList, Context c){
+    public PDFGenerator(File root, ArrayList<BarChart> barChartList, ServerConfiguration config, Context c){
         _root = root;
         chartGlobalWarning = barChartList.get(0);
         chartPrimaryEnergy = barChartList.get(1);
         chartRessExhausted = barChartList.get(2);
+        _config = config;
         _c = c;
+        Log.d("PDFGenerator", String.valueOf(_config.configuration.disk.get(1)));
+        generatePDF();
     }
 
    public void generatePDF(){
@@ -70,10 +73,10 @@ public class PDFGenerator {
            cpu_table.addCell("Core units");
            cpu_table.addCell("TDP (Watt)");
            cpu_table.addCell("Architecture");
-           cpu_table.addCell("2");
-           cpu_table.addCell("16");
-           cpu_table.addCell("150");
-           cpu_table.addCell("skylake");
+           cpu_table.addCell(String.valueOf(_config.configuration.cpu.units));
+           cpu_table.addCell(String.valueOf(_config.configuration.cpu.core_units));
+           cpu_table.addCell(String.valueOf(_config.configuration.cpu.tdp));
+           cpu_table.addCell(String.valueOf(_config.configuration.cpu.family));
            document.add(cpu_table);
 
            createTitleTable(document, "RAM");
@@ -82,9 +85,9 @@ public class PDFGenerator {
            ram_table.addCell("Quantity");
            ram_table.addCell("Capacity (GB)");
            ram_table.addCell("Manufacturer");
-           ram_table.addCell("4");
-           ram_table.addCell("32");
-           ram_table.addCell("Samsung");
+           ram_table.addCell(String.valueOf(_config.configuration.ram.get(0).units));
+           ram_table.addCell(String.valueOf(_config.configuration.ram.get(0).capacity));
+           ram_table.addCell(String.valueOf(_config.configuration.ram.get(0).manufacturer));
            document.add(ram_table);
 
            createTitleTable(document, "SSD");
@@ -93,9 +96,9 @@ public class PDFGenerator {
            ssd_table.addCell("Quantity");
            ssd_table.addCell("Capacity (GB)");
            ssd_table.addCell("Manufacturer");
-           ssd_table.addCell("4");
-           ssd_table.addCell("32");
-           ssd_table.addCell("Micron");
+           ssd_table.addCell(String.valueOf(_config.configuration.disk.get(0).units));
+           ssd_table.addCell(String.valueOf(_config.configuration.disk.get(0).capacity));
+           ssd_table.addCell(String.valueOf(_config.configuration.disk.get(0).manufacturer));
            document.add(ssd_table);
 
            createTitleTable(document, "OTHERS");
@@ -104,9 +107,9 @@ public class PDFGenerator {
            others_table.addCell("HDD quantity");
            others_table.addCell("Server type");
            others_table.addCell("PSU quantity");
-           others_table.addCell("4");
-           others_table.addCell("Rack");
-           others_table.addCell("Micron");
+           others_table.addCell(String.valueOf(_config.configuration.disk.get(1).units));
+           others_table.addCell(String.valueOf(_config.configuration.disk.get(1).capacity));
+           others_table.addCell(String.valueOf(_config.model.type));
            document.add(others_table);
 
            createTitleSection(document,"Usage");
@@ -115,15 +118,15 @@ public class PDFGenerator {
            usage_table1.setSpacingAfter(10);
            usage_table1.addCell("Localisation");
            usage_table1.addCell("Lifespan (year)");
-           usage_table1.addCell("0_Global");
-           usage_table1.addCell("4");
+           usage_table1.addCell(String.valueOf(_config.usage.usage_location));
+           usage_table1.addCell(String.valueOf(_config.usage.years_use_time));
            document.add(usage_table1);
            PdfPTable usage_table2 = new PdfPTable(2);
            usage_table2.setSpacingAfter(10);
            usage_table2.addCell("Method");
            usage_table2.addCell("Average consumption (W)");
-           usage_table2.addCell("Electricity");
-           usage_table2.addCell("150");
+           usage_table2.addCell("/");
+           usage_table2.addCell(String.valueOf(_config.usage.hours_electrical_consumption));
            document.add(usage_table2);
 
            document.newPage();
@@ -143,7 +146,7 @@ public class PDFGenerator {
            chartToPDF(document, chartRessExhausted);
            document.close();
 
-           DialogGrapheManager.successfulDownload(_c);
+          // DialogGrapheManager.successfulDownload(_c);
        } catch (IOException e) {
            Log.d("PdfBox-Android-Sample", "Exception thrown while creating PDF", e);
            DialogGrapheManager.failureDownload(_c);
@@ -229,6 +232,10 @@ public class PDFGenerator {
 
     private void chartToPDF(Document document, BarChart chart) throws DocumentException, IOException {
         ByteArrayOutputStream stream = new ByteArrayOutputStream();
+        //todo Verif le theme
+
+        convertLegendToBlack(chart);
+
         Bitmap scaledBitmap = chart.getChartBitmap();
         scaledBitmap.compress(Bitmap.CompressFormat.PNG, 100, stream);
         byte[] byteArray = stream.toByteArray();
@@ -236,6 +243,16 @@ public class PDFGenerator {
         image.scaleToFit(600,300);
         image.setAlignment(Element.ALIGN_CENTER);
         document.add(image);
+
+        convertLegendToWhite(chart);
+    }
+
+    private void convertLegendToBlack(BarChart chart){
+        chart.getLegend().setTextColor(Color.BLACK);
+    }
+
+    private void convertLegendToWhite(BarChart chart){
+        chart.getLegend().setTextColor(Color.WHITE);
     }
 
     private void initializeFonts(){

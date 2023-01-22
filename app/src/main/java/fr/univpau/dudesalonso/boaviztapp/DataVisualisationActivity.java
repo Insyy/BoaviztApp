@@ -150,7 +150,6 @@ public class DataVisualisationActivity extends AppCompatActivity {
         //Init PDF
         PDFBoxResourceLoader.init(getApplicationContext());
         root = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS);
-       // root = getApplicationContext().getCacheDir();
     }
 
 
@@ -321,8 +320,8 @@ public class DataVisualisationActivity extends AppCompatActivity {
 
     private void downloadCharts() {
         //create a new document
-        new PDFGenerator(root, barChartList,this);
-        DialogGrapheManager.successfulDownload(this);
+        new PDFGenerator(root, barChartList, config,this);
+      //  DialogGrapheManager.successfulDownload(this);
     }
 
 }
