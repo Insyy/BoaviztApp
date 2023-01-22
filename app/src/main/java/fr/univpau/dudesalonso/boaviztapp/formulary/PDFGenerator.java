@@ -3,7 +3,6 @@ package fr.univpau.dudesalonso.boaviztapp.formulary;
 import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.Color;
-import android.provider.MediaStore;
 import android.util.Log;
 
 import com.github.mikephil.charting.charts.BarChart;
@@ -25,8 +24,13 @@ import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Date;
+import java.util.List;
+import java.util.UUID;
 
+import fr.univpau.dudesalonso.boaviztapp.R;
 import fr.univpau.dudesalonso.boaviztapp.dataVisualisation.DialogGrapheManager;
+import fr.univpau.dudesalonso.boaviztapp.dataVisualisation.GrapheDataSet;
 import fr.univpau.dudesalonso.boaviztapp.formulary.serverConfig.ServerConfiguration;
 
 public class PDFGenerator {
@@ -34,20 +38,24 @@ public class PDFGenerator {
     BarChart chartGlobalWarning;
     BarChart chartPrimaryEnergy;
     BarChart chartRessExhausted;
+    List<GrapheDataSet> _listGds;
 
     File _root;
     BaseFont bfBold;
     ServerConfiguration _config;
     Context _c;
 
-    public PDFGenerator(File root, ArrayList<BarChart> barChartList, ServerConfiguration config, Context c){
+    public PDFGenerator(File root, ArrayList<BarChart> barChartList, List<GrapheDataSet> listGds, ServerConfiguration config, Context c){
         _root = root;
         chartGlobalWarning = barChartList.get(0);
         chartPrimaryEnergy = barChartList.get(1);
         chartRessExhausted = barChartList.get(2);
         _config = config;
         _c = c;
+        _listGds = listGds;
+
         Log.d("PDFGenerator", String.valueOf(_config.configuration.disk.get(1)));
+
         generatePDF();
     }
 
@@ -55,7 +63,11 @@ public class PDFGenerator {
        Document document = new Document();
        try {
 
-           String path = _root.getAbsolutePath() + "/Created2.pdf";
+           Date now = new Date();
+           android.text.format.DateFormat.format("yyyy-MM-dd_hh:mm:ss", now);
+
+           String path = _root.getAbsolutePath() + "/"+ UUID.randomUUID().toString()+ ".pdf";
+
            PdfWriter docWriter = PdfWriter.getInstance(document, new FileOutputStream(path));
            document.open();
 
@@ -131,22 +143,21 @@ public class PDFGenerator {
 
            document.newPage();
 
-           createTitleSection(document,"Multicritera impacts during lifespan");
+           createTitleSection(document, _c.getText(R.string.title_global_warming) + " " + _listGds.get(0).get_mTotal());
 
            createSubTitleSection(document, "Global Warming Potential (kgCO2eq)  - Total : 3153.8");
            createBodyText(document,"Evaluates the effect on global warming");
            chartToPDF(document, chartGlobalWarning);
 
-           createSubTitleSection(document, "Primary energy (MJ) - Total : 82561");
+           createSubTitleSection(document, _c.getText(R.string.title_primary_energy)  + " " + _listGds.get(1).get_mTotal());
            createBodyText(document,"Consumption of energy resources");
            chartToPDF(document, chartPrimaryEnergy);
 
-           createSubTitleSection(document, "Abiotic Depletion Potential (kgSbeq) - Total : 0.141528");
+           createSubTitleSection(document, _c.getText(R.string.title_ressource_exhausted)  + " " + _listGds.get(0).get_mTotal());
            createBodyText(document,"Evaluates the use of minerals and fossil ressources");
            chartToPDF(document, chartRessExhausted);
            document.close();
 
-          // DialogGrapheManager.successfulDownload(_c);
        } catch (IOException e) {
            Log.d("PdfBox-Android-Sample", "Exception thrown while creating PDF", e);
            DialogGrapheManager.failureDownload(_c);
@@ -154,18 +165,6 @@ public class PDFGenerator {
            e.printStackTrace();
        }
 
-       //Ancienne methode
-       /*   Date now = new Date();
-            android.text.format.DateFormat.format("yyyy-MM-dd_hh:mm:ss", now);
-            try {
-                createImage(R.id.global_warming, now.toString());
-                createImage(R.id.primary_energy, now.toString());
-                createImage(R.id.ressource_exhausted, now.toString());
-                DialogGrapheManager.successfulDownload(/*findViewById(R.id.rootVisu) this);
-          /*  } catch (Throwable e) {
-                DialogGrapheManager.failureDownload(this);
-                e.printStackTrace();
-            }*/
    }
 
     private void createTitlePDF(Document document, String text) throws DocumentException {

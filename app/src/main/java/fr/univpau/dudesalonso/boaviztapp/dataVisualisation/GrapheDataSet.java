@@ -1,5 +1,7 @@
 package fr.univpau.dudesalonso.boaviztapp.dataVisualisation;
 
+import android.util.Log;
+
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -20,6 +22,8 @@ public class GrapheDataSet {
     private String _mHDD;
     private String _mOther;
 
+    private String _mTotal;
+
     public GrapheDataSet(JSONObject impacts, JSONObject verbose, String grapheName) throws JSONException {
         _grapheName = grapheName;
 
@@ -34,6 +38,7 @@ public class GrapheDataSet {
         _mSDD = valueAssigmentBottomSet(verbose,"SSD-1","manufacture_impacts");
         _mHDD = valueAssigmentBottomSet(verbose,"CASE-1","manufacture_impacts");
         _mOther = String.valueOf(Float.parseFloat(get_manufacturing()) - Float.parseFloat(get_mRAM()) - Float.parseFloat(get_mCPU()) - Float.parseFloat(get_mSDD())- Float.parseFloat(get_mHDD()));
+        _mTotal =  String.valueOf(Float.parseFloat(_mRAM) + Float.parseFloat(_mCPU) + Float.parseFloat(_mSDD) + Float.parseFloat(_mHDD) + Float.parseFloat(_mOther) + Float.parseFloat(_usage) + Float.parseFloat(_manufacturing));
 
         _bottomDataSet.add(_mRAM);
         _bottomDataSet.add(_mCPU);
@@ -87,6 +92,10 @@ public class GrapheDataSet {
 
     public String get_mOther() {
         return _mOther;
+    }
+
+    public String get_mTotal() {
+        return _mTotal;
     }
 
     public List<String> get_topDataSet() {

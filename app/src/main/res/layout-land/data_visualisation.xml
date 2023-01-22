@@ -91,7 +91,7 @@
                             android:padding="@dimen/padding_inside_cards">
 
                             <com.google.android.material.textview.MaterialTextView
-                                android:id="@+id/textView2"
+                                android:id="@+id/multicriteria_title_1"
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
                                 android:justificationMode="inter_word"
@@ -133,7 +133,7 @@
                             android:padding="@dimen/padding_inside_cards">
 
                             <com.google.android.material.textview.MaterialTextView
-                                android:id="@+id/textView4"
+                                android:id="@+id/multicriteria_title_2"
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
                                 android:layout_margin="@dimen/card_margin"
@@ -177,7 +177,7 @@
                             android:padding="@dimen/padding_inside_cards">
 
                             <com.google.android.material.textview.MaterialTextView
-                                android:id="@+id/textView6"
+                                android:id="@+id/multicriteria_title_3"
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
                                 android:layout_margin="@dimen/card_margin"

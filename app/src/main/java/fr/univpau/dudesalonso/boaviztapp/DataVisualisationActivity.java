@@ -6,14 +6,11 @@ import androidx.appcompat.widget.Toolbar;
 import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.content.res.Configuration;
-import android.graphics.Bitmap;
 import android.graphics.Color;
 import android.net.Uri;
 import android.os.Bundle;
 
 import android.os.Environment;
-import android.provider.MediaStore;
-import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 
@@ -27,6 +24,7 @@ import com.google.android.material.appbar.MaterialToolbar;
 import com.google.android.material.color.MaterialColors;
 import com.google.android.material.progressindicator.LinearProgressIndicator;
 import com.google.android.material.snackbar.Snackbar;
+import com.google.android.material.textview.MaterialTextView;
 import com.tom_roush.pdfbox.android.PDFBoxResourceLoader;
 import java.io.File;
 import java.util.ArrayList;
@@ -51,6 +49,8 @@ public class DataVisualisationActivity extends AppCompatActivity {
     BarChart chartPrimaryEnergy;
     BarChart chartRessExhausted;
 
+    List<GrapheDataSet> _listGds;
+
     int[] colorClassArray1 = new int[]{
             Color.rgb(1,139,140),
             Color.rgb(203,230,255)};
@@ -62,8 +62,6 @@ public class DataVisualisationActivity extends AppCompatActivity {
             Color.rgb(246,211,72),
             Color.rgb(203,163,124),
             Color.rgb(157,181,183)};
-
-     boolean dialogZoom;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -91,28 +89,19 @@ public class DataVisualisationActivity extends AppCompatActivity {
     private void setTopAppBarListeners() {
         MaterialToolbar topAppBar = findViewById(R.id.topAppBar);
 
-        topAppBar.setNavigationOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                finish();
-            }
-        });
+        topAppBar.setNavigationOnClickListener(view -> finish());
 
-        topAppBar.setOnMenuItemClickListener(new Toolbar.OnMenuItemClickListener() {
-            @SuppressLint("NonConstantResourceId")
-            @Override
-            public boolean onMenuItemClick(MenuItem item) {
-                switch (item.getItemId()) {
-                    case R.id.boazvitapp_logo_toolbar:
-                        visitMainPage();
-                        return true;
-                    case R.id.download_icon:
-                        downloadCharts();
-                        return true;
-                }
-
-                return false;
+        topAppBar.setOnMenuItemClickListener(item -> {
+            switch (item.getItemId()) {
+                case R.id.boazvitapp_logo_toolbar:
+                    visitMainPage();
+                    return true;
+                case R.id.download_icon:
+                    downloadCharts();
+                    return true;
             }
+
+            return false;
         });
     }
 
@@ -154,11 +143,14 @@ public class DataVisualisationActivity extends AppCompatActivity {
 
 
     public void initCharts(List<GrapheDataSet> listGds) {
-        initLayoutChart(createBarData(listGds.get(0)), barChartList.get(0));
-        initLayoutChart(createBarData(listGds.get(1)), barChartList.get(1));
+
+        _listGds = listGds;
+
+        initLayoutChart(createBarData(_listGds.get(0)), barChartList.get(0));
+        initLayoutChart(createBarData(_listGds.get(1)), barChartList.get(1));
         initLayoutChart(createBarData(listGds.get(2)), barChartList.get(2));
         for (int i = 0; i < barChartList.size(); i ++) {
-            initLayoutLegend(listGds, barChartList.get(i),i);
+            initLayoutLegend(barChartList.get(i),i);
             barChartList.get(i).notifyDataSetChanged();
         }
 
@@ -228,7 +220,7 @@ public class DataVisualisationActivity extends AppCompatActivity {
 
     }
 
-    private void initLayoutLegend(List<GrapheDataSet> listGds, BarChart barChart, int index){
+    private void initLayoutLegend(BarChart barChart, int index){
 
         Legend legend = barChart.getLegend();
         LegendEntry[] legends = barChart.getLegend().getEntries();
@@ -248,19 +240,27 @@ public class DataVisualisationActivity extends AppCompatActivity {
                 nonEmptyLegend.add(legendEntry);
             }
         }
-        List<String> topDataSet = listGds.get(index).get_topDataSet();
+        List<String> topDataSet = _listGds.get(index).get_topDataSet();
         for (int i = 0; i < label_top_bar.length; i++) {
             if(topDataSet.get(i).equals("0.0")) nonEmptyLegend.get(i).label = label_top_bar[i] + " " + "no data";
             else nonEmptyLegend.get(i).label =  label_top_bar[i] + " " + topDataSet.get(i);
         }
-        List<String> bottomDataSet = listGds.get(index).get_bottomDataSet();
+        List<String> bottomDataSet = _listGds.get(index).get_bottomDataSet();
         for (int i = 0; i < label_bottom_bar.length - 1; i++) {
             if(bottomDataSet.get(i).equals("0.0")) nonEmptyLegend.get(i).label = label_bottom_bar[i + 1] + " " + "no data";
             else nonEmptyLegend.get(i + 2).label =  label_bottom_bar[i + 1] + " " + bottomDataSet.get(i);
         }
 
-        legend.setCustom(nonEmptyLegend);
+        MaterialTextView tv1 = findViewById(R.id.multicriteria_title_1);
+        tv1.setText(getText(R.string.title_global_warming) + " " +  _listGds.get(0).get_mTotal());
 
+        MaterialTextView tv2 = findViewById(R.id.multicriteria_title_2);
+        tv2.setText(getText(R.string.title_global_warming) + " " +  _listGds.get(1).get_mTotal());
+
+        MaterialTextView tv3 = findViewById(R.id.multicriteria_title_3);
+        tv3.setText(getText(R.string.title_global_warming) + " " +  _listGds.get(2).get_mTotal());
+
+        legend.setCustom(nonEmptyLegend);
     }
 
     private int getLegendColor(){
@@ -320,8 +320,8 @@ public class DataVisualisationActivity extends AppCompatActivity {
 
     private void downloadCharts() {
         //create a new document
-        new PDFGenerator(root, barChartList, config,this);
-      //  DialogGrapheManager.successfulDownload(this);
+        new PDFGenerator(root, barChartList,_listGds,  config,this);
+        DialogGrapheManager.successfulDownload(this);
     }
 
 }
