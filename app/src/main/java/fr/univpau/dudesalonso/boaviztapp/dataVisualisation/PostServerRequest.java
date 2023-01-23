@@ -47,14 +47,14 @@ public class PostServerRequest {
                         } catch (JSONException e) {
                             e.printStackTrace();
                         }
-                        _c.stopProgressIndicator();
+                        DialogGrapheManager.stopProgressIndicator();
                     },
                     error -> {
-                        _c.stopProgressIndicator();
+                        DialogGrapheManager.stopProgressIndicator();
                         _c.handleErrorRequest();
                     }));
         } catch (JSONException e) {
-            _c.stopProgressIndicator();
+            DialogGrapheManager.stopProgressIndicator();
             e.printStackTrace();
         }
 

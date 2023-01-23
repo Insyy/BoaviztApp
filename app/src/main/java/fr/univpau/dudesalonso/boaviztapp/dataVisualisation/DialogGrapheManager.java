@@ -4,6 +4,7 @@ import android.content.Context;
 import android.view.View;
 
 import com.google.android.material.dialog.MaterialAlertDialogBuilder;
+import com.google.android.material.progressindicator.LinearProgressIndicator;
 import com.google.android.material.snackbar.Snackbar;
 
 import fr.univpau.dudesalonso.boaviztapp.DataVisualisationActivity;
@@ -12,6 +13,7 @@ import fr.univpau.dudesalonso.boaviztapp.R;
 public class DialogGrapheManager {
 
     public static boolean dialogZoom = true;
+    public static View view;
 
     public static void showDialogZoom(Context c){
 
@@ -22,10 +24,7 @@ public class DialogGrapheManager {
                 .show();
     }
 
-    public static /*<DataVisualisationActivity extends View>*/ void successfulDownload(/*DataVisualisationActivity viewById*/ Context c){
-       /* Snackbar.make(viewById, R.string.successfullTitleDownload,Snackbar.LENGTH_SHORT)
-                .setAnchorView(R.id.rootVisu)
-                .show();*/
+    public static void successfulDownload(Context c){
         new MaterialAlertDialogBuilder(c)
                 .setTitle(c.getString(R.string.successfullTitleDownload))
                 .setMessage(c.getString(R.string.successfullMainDownload))
@@ -40,5 +39,17 @@ public class DialogGrapheManager {
                 .setNeutralButton(c.getString(R.string.neutral_action), (dialogInterface, i) -> {})
                 .show();
         }
+
+    public static void startProgressIndicator() {
+
+        LinearProgressIndicator progressIndicator = view.findViewById(R.id.progress_indicator);
+        progressIndicator.setVisibility(View.VISIBLE);
+
+    }
+
+    public static void stopProgressIndicator() {
+        LinearProgressIndicator progressIndicator = view.findViewById(R.id.progress_indicator);
+        progressIndicator.setVisibility(View.INVISIBLE);
+    }
 
 }

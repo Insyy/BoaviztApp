@@ -1,8 +1,9 @@
-package fr.univpau.dudesalonso.boaviztapp.formulary;
+package fr.univpau.dudesalonso.boaviztapp.dataVisualisation;
 
 import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.Color;
+import android.os.Environment;
 import android.util.Log;
 
 import com.github.mikephil.charting.charts.BarChart;
@@ -45,7 +46,7 @@ public class PDFGenerator {
     ServerConfiguration _config;
     Context _c;
 
-    public PDFGenerator(File root, ArrayList<BarChart> barChartList, List<GrapheDataSet> listGds, ServerConfiguration config, Context c){
+    public PDFGenerator(File root,ArrayList<BarChart> barChartList, List<GrapheDataSet> listGds, ServerConfiguration config, Context c){
         _root = root;
         chartGlobalWarning = barChartList.get(0);
         chartPrimaryEnergy = barChartList.get(1);
@@ -54,9 +55,11 @@ public class PDFGenerator {
         _c = c;
         _listGds = listGds;
 
-        Log.d("PDFGenerator", String.valueOf(_config.configuration.disk.get(1)));
-
         generatePDF();
+    }
+
+    public void initRoot(){
+
     }
 
    public void generatePDF(){
@@ -74,7 +77,7 @@ public class PDFGenerator {
            PdfContentByte cb = docWriter.getDirectContent();
            //initialize fonts for text printing
            initializeFonts();
-
+           Log.d("generatePDF",_config.toString());
            createTitlePDF(document,"Multicritera server impacts");
            createTitleSection(document,"Server configuration");
            createTitleTable(document,"CPU");

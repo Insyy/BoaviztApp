@@ -1,9 +1,9 @@
 package fr.univpau.dudesalonso.boaviztapp;
 
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.appcompat.widget.Toolbar;
 
-import android.annotation.SuppressLint;
+import android.app.Activity;
+import android.app.Application;
 import android.content.Intent;
 import android.content.res.Configuration;
 import android.graphics.Color;
@@ -11,8 +11,8 @@ import android.net.Uri;
 import android.os.Bundle;
 
 import android.os.Environment;
-import android.view.MenuItem;
-import android.view.View;
+import android.util.Log;
+import android.view.LayoutInflater;
 
 import com.github.mikephil.charting.charts.BarChart;
 import com.github.mikephil.charting.components.Legend;
@@ -22,7 +22,6 @@ import com.github.mikephil.charting.data.BarDataSet;
 import com.github.mikephil.charting.data.BarEntry;
 import com.google.android.material.appbar.MaterialToolbar;
 import com.google.android.material.color.MaterialColors;
-import com.google.android.material.progressindicator.LinearProgressIndicator;
 import com.google.android.material.snackbar.Snackbar;
 import com.google.android.material.textview.MaterialTextView;
 import com.tom_roush.pdfbox.android.PDFBoxResourceLoader;
@@ -34,7 +33,7 @@ import fr.univpau.dudesalonso.boaviztapp.dataVisualisation.CustomMarkerView;
 import fr.univpau.dudesalonso.boaviztapp.dataVisualisation.DialogGrapheManager;
 import fr.univpau.dudesalonso.boaviztapp.dataVisualisation.GrapheDataSet;
 import fr.univpau.dudesalonso.boaviztapp.dataVisualisation.PostServerRequest;
-import fr.univpau.dudesalonso.boaviztapp.formulary.PDFGenerator;
+import fr.univpau.dudesalonso.boaviztapp.dataVisualisation.PDFGenerator;
 import fr.univpau.dudesalonso.boaviztapp.formulary.serverConfig.ServerConfiguration;
 
 public class DataVisualisationActivity extends AppCompatActivity {
@@ -43,7 +42,7 @@ public class DataVisualisationActivity extends AppCompatActivity {
     ServerConfiguration config;
     CustomMarkerView mv;
     PostServerRequest psr;
-    File root;
+    PDFGenerator pdf;
 
     BarChart chartGlobalWarning;
     BarChart chartPrimaryEnergy;
@@ -69,15 +68,12 @@ public class DataVisualisationActivity extends AppCompatActivity {
         setContentView(R.layout.data_visualisation);
 
         setupCharts();
-        setupPdf();
-
-        //Barre de chargement
-        startProgressIndicator();
-        setTopAppBarListeners();
 
         config = (ServerConfiguration) getIntent().getSerializableExtra("serverConfiguration");
         psr = new PostServerRequest(this);
         psr.sendRequestServer(config);
+
+        setupPdf();
 
         if(!DialogGrapheManager.dialogZoom) return;
 
@@ -118,6 +114,12 @@ public class DataVisualisationActivity extends AppCompatActivity {
     }
 
     private void setupCharts(){
+
+        //setup dialog
+        DialogGrapheManager.view = findViewById(R.id.progress_indicator);
+        DialogGrapheManager.startProgressIndicator();
+        setTopAppBarListeners();
+
         //Initialisation des graphiques
         chartGlobalWarning = findViewById(R.id.global_warming);
         chartPrimaryEnergy = findViewById(R.id.primary_energy);
@@ -136,14 +138,14 @@ public class DataVisualisationActivity extends AppCompatActivity {
     }
 
     private void setupPdf(){
-        //Init PDF
         PDFBoxResourceLoader.init(getApplicationContext());
-        root = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS);
+        Log.d("setupPdf", config.toString());
+
+       // pdf.initRoot();
     }
 
 
     public void initCharts(List<GrapheDataSet> listGds) {
-
         _listGds = listGds;
 
         initLayoutChart(createBarData(_listGds.get(0)), barChartList.get(0));
@@ -153,7 +155,6 @@ public class DataVisualisationActivity extends AppCompatActivity {
             initLayoutLegend(barChartList.get(i),i);
             barChartList.get(i).notifyDataSetChanged();
         }
-
     }
 
     public void animateCharts(List<BarChart> barChart){
@@ -185,7 +186,6 @@ public class DataVisualisationActivity extends AppCompatActivity {
         BarData barData = new BarData(barDataUp,barDataDown);
         barData.setBarWidth(5.0f);
         barData.setDrawValues(false);
-
 
         return barData;
     }
@@ -232,8 +232,6 @@ public class DataVisualisationActivity extends AppCompatActivity {
         legend.setXEntrySpace(10f);
         legend.setYEntrySpace(4f);
         legend.setWordWrapEnabled(true);
-
-
 
         for (LegendEntry legendEntry : legends) {
             if (legendEntry.label != null && !legendEntry.label.isEmpty() && !legendEntry.label.equals("none")) {
@@ -286,18 +284,6 @@ public class DataVisualisationActivity extends AppCompatActivity {
         return dataVals;
     }
 
-    public void startProgressIndicator() {
-        LinearProgressIndicator progressIndicator = findViewById(R.id.progress_indicator);
-        progressIndicator.setVisibility(View.VISIBLE);
-
-    }
-
-    public void stopProgressIndicator() {
-        LinearProgressIndicator progressIndicator = findViewById(R.id.progress_indicator);
-        progressIndicator.setVisibility(View.INVISIBLE);
-    }
-
-
     private void showNetworkErrorToast(int resString){
         Snackbar.make(this.findViewById(R.id.root), getString(resString), Snackbar.LENGTH_SHORT)
                 .setAction(R.string.toast_action_retry, view -> psr.sendRequestServer(config))
@@ -319,8 +305,8 @@ public class DataVisualisationActivity extends AppCompatActivity {
 
 
     private void downloadCharts() {
-        //create a new document
-        new PDFGenerator(root, barChartList,_listGds,  config,this);
+        File root = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS);
+        new PDFGenerator(root, barChartList, _listGds,  config,this);
         DialogGrapheManager.successfulDownload(this);
     }
 
