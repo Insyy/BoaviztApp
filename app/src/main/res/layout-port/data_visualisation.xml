@@ -77,8 +77,8 @@
 
 
                     <com.google.android.material.card.MaterialCardView
-                        style="?attr/materialCardViewElevatedStyle"
                         android:id="@+id/barchart1"
+                        style="?attr/materialCardViewElevatedStyle"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_margin="@dimen/card_margin"
@@ -87,7 +87,7 @@
 
                         <LinearLayout
                             android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
+                            android:layout_height="match_parent"
                             android:orientation="vertical"
                             android:padding="@dimen/padding_inside_cards">
 
@@ -95,8 +95,19 @@
                                 android:id="@+id/multicriteria_title_1"
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
+                                android:layout_margin="@dimen/card_margin"
                                 android:justificationMode="inter_word"
                                 android:text="@string/title_global_warming"
+                                android:textAppearance="?attr/textAppearanceBodyLarge"
+                                android:textStyle="bold" />
+
+                            <com.google.android.material.textview.MaterialTextView
+                                android:id="@+id/value_graph_1"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_margin="@dimen/card_margin"
+                                android:justificationMode="inter_word"
+                                android:text="Total :"
                                 android:textAppearance="?attr/textAppearanceBodyLarge"
                                 android:textStyle="bold" />
 
@@ -120,10 +131,10 @@
                     </com.google.android.material.card.MaterialCardView>
 
                     <com.google.android.material.card.MaterialCardView
+                        android:id="@+id/barchart2"
                         style="?attr/materialCardViewElevatedStyle"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:id="@+id/barchart2"
                         android:layout_margin="@dimen/card_margin"
                         app:cardElevation="@dimen/card_elevation"
                         app:contentPadding="@dimen/card_padding">
@@ -141,6 +152,16 @@
                                 android:layout_margin="@dimen/card_margin"
                                 android:justificationMode="inter_word"
                                 android:text="@string/title_primary_energy"
+                                android:textAppearance="?attr/textAppearanceBodyLarge"
+                                android:textStyle="bold" />
+
+                            <com.google.android.material.textview.MaterialTextView
+                                android:id="@+id/value_graph_2"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_margin="@dimen/card_margin"
+                                android:justificationMode="inter_word"
+                                android:text="Total :"
                                 android:textAppearance="?attr/textAppearanceBodyLarge"
                                 android:textStyle="bold" />
 
@@ -165,8 +186,8 @@
                     </com.google.android.material.card.MaterialCardView>
 
                     <com.google.android.material.card.MaterialCardView
-                        style="?attr/materialCardViewElevatedStyle"
                         android:id="@+id/barchart3"
+                        style="?attr/materialCardViewElevatedStyle"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_margin="@dimen/card_margin"
@@ -181,11 +202,21 @@
 
                             <com.google.android.material.textview.MaterialTextView
                                 android:id="@+id/multicriteria_title_3"
-                                android:layout_width="match_parent"
+                                android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:layout_margin="@dimen/card_margin"
                                 android:justificationMode="inter_word"
                                 android:text="@string/title_ressource_exhausted"
+                                android:textAppearance="?attr/textAppearanceBodyLarge"
+                                android:textStyle="bold" />
+
+                            <com.google.android.material.textview.MaterialTextView
+                                android:id="@+id/value_graph_3"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_margin="@dimen/card_margin"
+                                android:justificationMode="inter_word"
+                                android:text="Total :"
                                 android:textAppearance="?attr/textAppearanceBodyLarge"
                                 android:textStyle="bold" />
 
@@ -223,14 +254,22 @@
                             android:orientation="vertical"
                             android:padding="@dimen/padding_inside_cards">
 
-                            <com.google.android.material.textview.MaterialTextView
-                                android:id="@+id/textView8"
+                            <LinearLayout
                                 android:layout_width="match_parent"
-                                android:layout_height="wrap_content"
-                                android:justificationMode="inter_word"
-                                android:text="@string/fielset_title_1"
-                                android:textAppearance="?attr/textAppearanceBodyMedium"
-                                android:textStyle="bold" />
+                                android:layout_height="match_parent"
+                                android:orientation="horizontal"
+                                android:padding="@dimen/padding_inside_cards">
+
+                                <com.google.android.material.textview.MaterialTextView
+                                    android:id="@+id/textView8"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:justificationMode="inter_word"
+                                    android:text="@string/fielset_title_1"
+                                    android:textAppearance="?attr/textAppearanceBodyMedium"
+                                    android:textStyle="bold" />
+
+                            </LinearLayout>
 
                             <com.google.android.material.textview.MaterialTextView
                                 android:id="@+id/textView9"

@@ -3,7 +3,6 @@ package fr.univpau.dudesalonso.boaviztapp.dataVisualisation;
 import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.Color;
-import android.os.Environment;
 import android.util.Log;
 
 import com.github.mikephil.charting.charts.BarChart;
@@ -30,18 +29,20 @@ import java.util.List;
 import java.util.UUID;
 
 import fr.univpau.dudesalonso.boaviztapp.R;
-import fr.univpau.dudesalonso.boaviztapp.dataVisualisation.DialogGrapheManager;
-import fr.univpau.dudesalonso.boaviztapp.dataVisualisation.GrapheDataSet;
 import fr.univpau.dudesalonso.boaviztapp.formulary.serverConfig.ServerConfiguration;
 
 public class PDFGenerator {
 
-    BarChart chartGlobalWarning;
-    BarChart chartPrimaryEnergy;
-    BarChart chartRessExhausted;
-    List<GrapheDataSet> _listGds;
 
-    File _root;
+     String path;
+     String name;
+
+     BarChart chartGlobalWarning;
+     BarChart chartPrimaryEnergy;
+     BarChart chartRessExhausted;
+     List<GrapheDataSet> _listGds;
+
+    public File _root;
     BaseFont bfBold;
     ServerConfiguration _config;
     Context _c;
@@ -58,18 +59,20 @@ public class PDFGenerator {
         generatePDF();
     }
 
-    public void initRoot(){
-
+    public File getFile(){
+        return new File(_root.getAbsolutePath() + "/"+ name + ".pdf");
     }
+
 
    public void generatePDF(){
        Document document = new Document();
        try {
 
            Date now = new Date();
+           name = UUID.randomUUID().toString();
            android.text.format.DateFormat.format("yyyy-MM-dd_hh:mm:ss", now);
 
-           String path = _root.getAbsolutePath() + "/"+ UUID.randomUUID().toString()+ ".pdf";
+           path = _root.getAbsolutePath() + "/"+ name + ".pdf";
 
            PdfWriter docWriter = PdfWriter.getInstance(document, new FileOutputStream(path));
            document.open();

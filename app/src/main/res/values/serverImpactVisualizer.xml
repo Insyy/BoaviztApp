@@ -3,13 +3,13 @@
 
     <string name="server_impact_title">Server impact</string>
 
-    <string name="title_global_warming">Global Warming Potential (kgCO2eq) - Total : </string>
+    <string name="title_global_warming">Global Warming Potential (kgCO2eq)</string>
     <string name="description_global_warming">Evaluates the effect on global warming</string>
 
-    <string name="title_primary_energy">Primary energy (MJ) - Total : </string>
+    <string name="title_primary_energy">Primary energy (MJ)</string>
     <string name="description_primary_energy">Consumption of energy resources</string>
 
-    <string name="title_ressource_exhausted">Abiotic Depletion Potential (kgSbeq) - Total : </string>
+    <string name="title_ressource_exhausted">Abiotic Depletion Potential (kgSbeq)</string>
     <string name="description_ressource_exhausted">Evaluates the use of minerals and fossil ressources</string>
 
     <string name="fielset_title_1">How are the impacts assessed?</string>

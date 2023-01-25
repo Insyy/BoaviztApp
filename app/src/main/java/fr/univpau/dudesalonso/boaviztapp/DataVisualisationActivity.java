@@ -1,13 +1,16 @@
 package fr.univpau.dudesalonso.boaviztapp;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.content.FileProvider;
 
 import android.app.Activity;
 import android.app.Application;
+import android.content.ActivityNotFoundException;
 import android.content.Intent;
 import android.content.res.Configuration;
 import android.graphics.Color;
 import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
 
 import android.os.Environment;
@@ -28,6 +31,7 @@ import com.tom_roush.pdfbox.android.PDFBoxResourceLoader;
 import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.UUID;
 
 import fr.univpau.dudesalonso.boaviztapp.dataVisualisation.CustomMarkerView;
 import fr.univpau.dudesalonso.boaviztapp.dataVisualisation.DialogGrapheManager;
@@ -155,6 +159,15 @@ public class DataVisualisationActivity extends AppCompatActivity {
             initLayoutLegend(barChartList.get(i),i);
             barChartList.get(i).notifyDataSetChanged();
         }
+
+        MaterialTextView tv1 = findViewById(R.id.value_graph_1);
+        tv1.setText(tv1.getText() + " " + _listGds.get(0).get_mTotal());
+
+        MaterialTextView tv2 = findViewById(R.id.value_graph_2);
+        tv2.setText(tv2.getText() + " " +  _listGds.get(1).get_mTotal());
+
+        MaterialTextView tv3 = findViewById(R.id.value_graph_3);
+        tv3.setText(tv3.getText()  + " " +  _listGds.get(2).get_mTotal());
     }
 
     public void animateCharts(List<BarChart> barChart){
@@ -249,15 +262,6 @@ public class DataVisualisationActivity extends AppCompatActivity {
             else nonEmptyLegend.get(i + 2).label =  label_bottom_bar[i + 1] + " " + bottomDataSet.get(i);
         }
 
-        MaterialTextView tv1 = findViewById(R.id.multicriteria_title_1);
-        tv1.setText(getText(R.string.title_global_warming) + " " +  _listGds.get(0).get_mTotal());
-
-        MaterialTextView tv2 = findViewById(R.id.multicriteria_title_2);
-        tv2.setText(getText(R.string.title_global_warming) + " " +  _listGds.get(1).get_mTotal());
-
-        MaterialTextView tv3 = findViewById(R.id.multicriteria_title_3);
-        tv3.setText(getText(R.string.title_global_warming) + " " +  _listGds.get(2).get_mTotal());
-
         legend.setCustom(nonEmptyLegend);
     }
 
@@ -306,8 +310,22 @@ public class DataVisualisationActivity extends AppCompatActivity {
 
     private void downloadCharts() {
         File root = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS);
-        new PDFGenerator(root, barChartList, _listGds,  config,this);
-        DialogGrapheManager.successfulDownload(this);
+        PDFGenerator pdf =  new PDFGenerator(root, barChartList, _listGds,  config,this);
+          try {
+              File file = pdf.getFile();
+              Intent intent = new Intent(Intent.ACTION_VIEW);
+              intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
+              if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
+                  Uri apkURI = FileProvider.getUriForFile(getApplicationContext(), getPackageName() + ".provider", file);
+                  intent.setDataAndType(apkURI, "application/pdf");
+                  intent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
+              } else {
+                  intent.setDataAndType(Uri.fromFile(file), "application/pdf");
+              }
+              startActivity(intent);
+          } catch (ActivityNotFoundException e) {
+              DialogGrapheManager.failureDownload(this);
+        }
     }
 
 }
