@@ -14,7 +14,7 @@
     <androidx.coordinatorlayout.widget.CoordinatorLayout
 
     android:layout_width="match_parent"
-    android:layout_height="0dp"
+        android:layout_height="0dp"
         android:layout_weight="1"
         >
 
@@ -30,6 +30,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:indeterminate="true"
+            app:layout_scrollFlags="scroll|enterAlways|snap"
             android:layout_marginHorizontal="@dimen/progress_bar_margin"
             />
 
@@ -51,6 +52,8 @@
 
             app:navigationIcon="@drawable/ic_round_info_24"
             />
+
+
     </com.google.android.material.appbar.AppBarLayout>
 
     <!-- Note: A RecyclerView can also be used -->
@@ -65,13 +68,20 @@
 
         <!--Necessary for scrollview-->
 
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:isScrollContainer="true">
+
+
+
         <LinearLayout
             android:id="@+id/config_list"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical"
+
             android:padding="@dimen/global_padding"
-            android:isScrollContainer="true"
             >
 
             <com.google.android.material.card.MaterialCardView
@@ -617,8 +627,8 @@
                         </TableRow>
                 </LinearLayout>
             </com.google.android.material.card.MaterialCardView>
-
         </LinearLayout>
+        </RelativeLayout>
     </androidx.core.widget.NestedScrollView>
 </androidx.coordinatorlayout.widget.CoordinatorLayout>
 

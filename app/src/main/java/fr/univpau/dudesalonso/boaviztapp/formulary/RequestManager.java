@@ -26,7 +26,7 @@ public class RequestManager {
 
     FormularyActivity formularyActivity;
 
-    Integer responsesReceived;
+    Integer responsesReceived = 0;
     int responsesNeeded = 5;
     RequestQueue queue;
 
