@@ -4,12 +4,8 @@ import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.content.res.ColorStateList;
 import android.net.Uri;
-import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.AdapterView;
-
-import androidx.appcompat.widget.Toolbar;
 
 import com.google.android.material.appbar.MaterialToolbar;
 import com.google.android.material.bottomnavigation.BottomNavigationItemView;
@@ -74,14 +70,11 @@ public class ComponentManager {
 
     private void setClearInputOnClick(int inputId, int defaultValue) {
         TextInputEditText inputView = formularyActivity.findViewById(inputId);
-        inputView.setOnFocusChangeListener(new View.OnFocusChangeListener() {
-            @Override
-            public void onFocusChange(View view, boolean b) {
-                if (b && Objects.requireNonNull(inputView.getText()).length() > 0)
-                    inputView.getText().clear();
-                else if (Objects.requireNonNull(inputView.getText()).length() == 0) {
-                    inputView.setText(defaultValue);
-                }
+        inputView.setOnFocusChangeListener((view, b) -> {
+            if (b && Objects.requireNonNull(inputView.getText()).length() > 0)
+                inputView.getText().clear();
+            else if (Objects.requireNonNull(inputView.getText()).length() == 0) {
+                inputView.setText(defaultValue);
             }
         });
     }
@@ -97,24 +90,21 @@ public class ComponentManager {
     private void setTopAppBarListeners() {
         MaterialToolbar topAppBar = formularyActivity.findViewById(R.id.topAppBar);
 
-        topAppBar.setNavigationOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                new MaterialAlertDialogBuilder(formularyActivity).setTitle(formularyActivity.getString(R.string.credits_title)).setMessage(formularyActivity.getString(R.string.credits)).setNeutralButton(formularyActivity.getString(R.string.ok_message), null).setPositiveButton(formularyActivity.getString(R.string.learn_more_message), (dialogInterface, i) -> {
-                    visitGithubPage();
-                }).show();
-            }
-        });
+        topAppBar.setNavigationOnClickListener(view ->
+                new MaterialAlertDialogBuilder(formularyActivity)
+                        .setTitle(formularyActivity.getString(R.string.credits_title))
+                        .setMessage(formularyActivity.getString(R.string.credits))
+                        .setNeutralButton(formularyActivity.getString(R.string.ok_message), null)
+                        .setPositiveButton(formularyActivity.getString(R.string.learn_more_message),
+                                (dialogInterface, i) ->
+                                        visitGithubPage()).show());
 
-        topAppBar.setOnMenuItemClickListener(new Toolbar.OnMenuItemClickListener() {
-            @Override
-            public boolean onMenuItemClick(MenuItem item) {
-                if (item.getItemId() == R.id.boazvitapp_logo_toolbar) {
-                    visitMainPage();
-                    return true;
-                }
-                return false;
+        topAppBar.setOnMenuItemClickListener(item -> {
+            if (item.getItemId() == R.id.boazvitapp_logo_toolbar) {
+                visitMainPage();
+                return true;
             }
+            return false;
         });
     }
 
@@ -145,6 +135,7 @@ public class ComponentManager {
     }
 
     public void populate() {
+        requestManager.responsesReceived = 0;
 
         requestManager.sendGetArrayRequestAndPopulate(formularyActivity.getString(R.string.url_cpu_architectures), R.id.cpu_architecture_input);
         requestManager.sendGetArrayRequestAndPopulate(formularyActivity.getString(R.string.url_ssd_manufacturers), R.id.ssd_manufacturer_input);
@@ -174,33 +165,18 @@ public class ComponentManager {
 
     private void setUsageMethodContents() {
         MaterialAutoCompleteTextView methodInput = formularyActivity.findViewById(R.id.usage_method_input);
-        methodInput.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-                updateMethodDetailContainer((String) adapterView.getItemAtPosition((int) l));
-            }
-        });
+        methodInput.setOnItemClickListener((adapterView, view, i, l) -> updateMethodDetailContainer((String) adapterView.getItemAtPosition((int) l)));
     }
 
     private void setShowDropDownOnFocusAndClick(int autoCompleteTextView) {
         MaterialAutoCompleteTextView textView = formularyActivity.findViewById(autoCompleteTextView);
-        textView.setOnFocusChangeListener(new View.OnFocusChangeListener() {
-            @Override
-            public void onFocusChange(View view, boolean hasFocus) {
-                if (hasFocus) {
-                    //textView.showDropDown();
-                    if (textView.getText().length() > 0) textView.getText().clear();
-                }
+        textView.setOnFocusChangeListener((view, hasFocus) -> {
+            if (hasFocus) {
+                //textView.showDropDown();
+                if (textView.getText().length() > 0) textView.getText().clear();
             }
         });
-        textView.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                textView.showDropDown();
-            }
-        });
-
-
+        textView.setOnClickListener(view -> textView.showDropDown());
     }
 
     private void updateMethodDetailContainer(String newMethodString) {
@@ -224,20 +200,19 @@ public class ComponentManager {
 
         BottomNavigationItemView assessServerImpactMenuBtn = formularyActivity.findViewById(R.id.impact_visualisation_menu_button);
 
-        assessServerImpactMenuBtn.setOnClickListener(new View.OnClickListener()     {
-            @Override
-            public void onClick(View view) {
-                new Thread(() -> launchImpactAssessmentActivity()).start();
-            }
-        });
+        assessServerImpactMenuBtn.setOnClickListener(view -> new Thread(this::launchImpactAssessmentActivity).start());
     }
 
     public void launchImpactAssessmentActivity() {
         if (requestManager.isNotConnected()) {
             return;
         }
+        if (requestManager.responsesReceived != requestManager.responsesNeeded){
+            requestManager.populateIfInternetAvailable();
+            return;
+        }
+
         Intent formularyIntent = new Intent(formularyActivity.getApplicationContext(), DataVisualisationActivity.class);
-        Log.d("SERVER CONFIG", fieldDataRetriever.collectServerConfiguration().toString());
         formularyIntent.putExtra("serverConfiguration", fieldDataRetriever.collectServerConfiguration());
         formularyActivity.startActivity(formularyIntent);
     }
@@ -257,20 +232,18 @@ public class ComponentManager {
     @SuppressLint("RestrictedApi")
     public void refreshConnectionStatusLayout(boolean networkActive) {
         BottomNavigationView bottom = formularyActivity.findViewById(R.id.bottom_navigation);
-        BottomNavigationItemView bottomNavigationItemView = bottom.findViewById(R.id.impact_visualisation_menu_button);
 
         formularyActivity.runOnUiThread(() -> {
             if (networkActive) {
                 setOnlineIcon();
                 bottom.setItemIconTintList(null);
                 bottom.setItemIconTintList(ColorStateList.valueOf(MaterialColors.getColor(bottom, androidx.appcompat.R.attr.colorPrimary)));
-                //bottomNavigationItemView.setEnabled(true);
+
                 return;
             }
             setOfflineIcon();
             bottom.setItemIconTintList(null);
             bottom.setItemIconTintList(ColorStateList.valueOf(MaterialColors.getColor(bottom, androidx.appcompat.R.attr.colorError)));
-            //bottomNavigationItemView.setEnabled(false);
             showNoInternetErrorToast();
         });
 
@@ -279,17 +252,20 @@ public class ComponentManager {
 
     void showNetworkErrorToast() {
 
-        Snackbar.make(formularyActivity.findViewById(R.id.root), formularyActivity.getString(R.string.network_error_message), Snackbar.LENGTH_INDEFINITE).setAction(R.string.toast_action_retry, view -> {
-            requestManager.populateIfInternetAvailable();
-        }).setAnchorView(R.id.bottom_navigation).show();
+        Snackbar.make(
+                formularyActivity.findViewById(R.id.root),
+                        formularyActivity.getString(R.string.request_error_message), Snackbar.LENGTH_INDEFINITE)
+                .setAction(R.string.toast_action_retry, view -> requestManager.populateIfInternetAvailable())
+                .setAnchorView(R.id.bottom_navigation)
+                .show();
     }
 
     void showNoInternetErrorToast() {
 
-        Snackbar.make(formularyActivity.findViewById(R.id.root), formularyActivity.getString(R.string.internet_connection_not_available), Snackbar.LENGTH_INDEFINITE).setAction(R.string.toast_action_retry, view -> {
-            new Thread(requestManager::isNotConnected).start();
-
-
-        }).setAnchorView(R.id.bottom_navigation).show();
+        Snackbar.make(formularyActivity.findViewById(R.id.root),
+                formularyActivity.getString(R.string.internet_connection_not_available), Snackbar.LENGTH_INDEFINITE)
+                .setAction(R.string.toast_action_retry, view -> new Thread(requestManager::isNotConnected).start())
+                .setAnchorView(R.id.bottom_navigation)
+                .show();
     }
 }
