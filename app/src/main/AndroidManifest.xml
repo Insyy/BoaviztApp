@@ -33,7 +33,6 @@
         </activity>
         <activity
             android:name=".DataVisualisationActivity"
-            android:configChanges="uiMode"
             android:exported="false">
             <meta-data
                 android:name="android.app.lib_name"

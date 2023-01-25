@@ -21,6 +21,14 @@
             android:fitsSystemWindows="true"
             app:liftOnScroll="true">
 
+            <!-- Linear progress indicator -->
+            <com.google.android.material.progressindicator.LinearProgressIndicator
+                android:id="@+id/progress_indicator"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="@dimen/progress_bar_margin"
+                android:indeterminate="true" />
+
             <com.google.android.material.appbar.MaterialToolbar
                 android:id="@+id/topAppBar"
                 android:layout_width="match_parent"
@@ -41,13 +49,7 @@
 
                 />
 
-            <!-- Linear progress indicator -->
-            <com.google.android.material.progressindicator.LinearProgressIndicator
-                android:id="@+id/progress_indicator"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginHorizontal="@dimen/progress_bar_margin"
-                android:indeterminate="true" />
+
         </com.google.android.material.appbar.AppBarLayout>
 
         <!-- Note: A RecyclerView can also be used -->

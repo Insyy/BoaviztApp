@@ -25,6 +25,9 @@ import fr.univpau.dudesalonso.boaviztapp.R;
 public class RequestManager {
 
     FormularyActivity formularyActivity;
+
+    Integer responsesReceived;
+    int responsesNeeded = 5;
     RequestQueue queue;
 
     public RequestManager(FormularyActivity formularyActivity) {
@@ -97,6 +100,7 @@ public class RequestManager {
                                         public void run() {
                                             formularyActivity.componentManager.populateAutocompleteDropdownValues(materialAutoCompleteId, values);
                                             formularyActivity.componentManager.stopProgressIndicator();
+                                            responsesReceived ++;
                                         }
                                     });
                                 },
@@ -106,6 +110,7 @@ public class RequestManager {
                                         public void run() {
                                             formularyActivity.componentManager.showNetworkErrorToast();
                                             formularyActivity.componentManager.stopProgressIndicator();
+
                                         }
                                     });
                                 })
@@ -143,6 +148,7 @@ public class RequestManager {
                                         public void run() {
                                             formularyActivity.componentManager.populateAutocompleteDropdownValues(materialAutocompleteId, new ArrayList<>(values.keySet()));
                                             formularyActivity.componentManager.stopProgressIndicator();
+                                            responsesReceived ++;
                                         }
                                     });
                                 },

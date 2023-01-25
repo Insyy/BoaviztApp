@@ -145,6 +145,7 @@ public class ComponentManager {
     }
 
     public void populate() {
+        requestManager.responsesReceived = 0;
 
         requestManager.sendGetArrayRequestAndPopulate(formularyActivity.getString(R.string.url_cpu_architectures), R.id.cpu_architecture_input);
         requestManager.sendGetArrayRequestAndPopulate(formularyActivity.getString(R.string.url_ssd_manufacturers), R.id.ssd_manufacturer_input);
@@ -199,8 +200,6 @@ public class ComponentManager {
                 textView.showDropDown();
             }
         });
-
-
     }
 
     private void updateMethodDetailContainer(String newMethodString) {
@@ -233,11 +232,10 @@ public class ComponentManager {
     }
 
     public void launchImpactAssessmentActivity() {
-        if (requestManager.isNotConnected()) {
+        if (requestManager.isNotConnected() || requestManager.responsesReceived != requestManager.responsesNeeded) {
             return;
         }
         Intent formularyIntent = new Intent(formularyActivity.getApplicationContext(), DataVisualisationActivity.class);
-        Log.d("SERVER CONFIG", fieldDataRetriever.collectServerConfiguration().toString());
         formularyIntent.putExtra("serverConfiguration", fieldDataRetriever.collectServerConfiguration());
         formularyActivity.startActivity(formularyIntent);
     }
