@@ -267,6 +267,7 @@ public class DataVisualisationActivity extends AppCompatActivity {
             else nonEmptyLegend.get(i + 2).label =  label_bottom_bar[i + 1] + " " + bottomDataSet.get(i);
         }
 
+        legend.setTextColor(MaterialColors.getColor(this, com.google.android.material.R.attr.colorOnBackground,Color.BLACK));
         legend.setCustom(nonEmptyLegend);
     }
 

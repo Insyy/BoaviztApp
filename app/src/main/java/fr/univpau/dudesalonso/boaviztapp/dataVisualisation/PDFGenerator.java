@@ -252,11 +252,11 @@ public class PDFGenerator {
     }
 
     private void convertLegendToBlack(BarChart chart){
-        chart.getLegend().setTextColor(Color.BLACK);
+       // chart.getLegend().setTextColor(Color.BLACK);
     }
 
     private void convertLegendToWhite(BarChart chart){
-        chart.getLegend().setTextColor(Color.WHITE);
+       // chart.getLegend().setTextColor(Color.WHITE);
     }
 
     private void initializeFonts(){
