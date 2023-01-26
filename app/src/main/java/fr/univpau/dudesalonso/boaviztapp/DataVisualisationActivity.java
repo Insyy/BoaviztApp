@@ -1,12 +1,15 @@
 package fr.univpau.dudesalonso.boaviztapp;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.app.ActivityCompat;
 import androidx.core.content.FileProvider;
 
+import android.Manifest;
 import android.app.Activity;
 import android.app.Application;
 import android.content.ActivityNotFoundException;
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.content.res.Configuration;
 import android.graphics.Color;
 import android.net.Uri;
@@ -16,6 +19,8 @@ import android.os.Bundle;
 import android.os.Environment;
 import android.util.Log;
 import android.view.LayoutInflater;
+import android.view.MenuItem;
+import android.widget.Toast;
 
 import com.github.mikephil.charting.charts.BarChart;
 import com.github.mikephil.charting.components.Legend;
@@ -25,6 +30,7 @@ import com.github.mikephil.charting.data.BarDataSet;
 import com.github.mikephil.charting.data.BarEntry;
 import com.google.android.material.appbar.MaterialToolbar;
 import com.google.android.material.color.MaterialColors;
+import com.google.android.material.dialog.MaterialAlertDialogBuilder;
 import com.google.android.material.snackbar.Snackbar;
 import com.google.android.material.textview.MaterialTextView;
 import com.tom_roush.pdfbox.android.PDFBoxResourceLoader;
@@ -88,9 +94,7 @@ public class DataVisualisationActivity extends AppCompatActivity {
 
     private void setTopAppBarListeners() {
         MaterialToolbar topAppBar = findViewById(R.id.topAppBar);
-
         topAppBar.setNavigationOnClickListener(view -> finish());
-
         topAppBar.setOnMenuItemClickListener(item -> {
             switch (item.getItemId()) {
                 case R.id.boazvitapp_logo_toolbar:
@@ -109,6 +113,7 @@ public class DataVisualisationActivity extends AppCompatActivity {
     public void onStart() {
         super.onStart();
     }
+
 
     @Override
     public void onPause() {
@@ -307,15 +312,45 @@ public class DataVisualisationActivity extends AppCompatActivity {
         startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse(getString(R.string.url_boavizta))));
     }
 
+    public boolean checkPerm(){
+        String requiredPermission = Manifest.permission.WRITE_EXTERNAL_STORAGE;
+        int checkVal =  this.checkCallingOrSelfPermission(requiredPermission);
+        return (checkVal == PackageManager.PERMISSION_GRANTED);
+    }
+    @Override
+    public void onRequestPermissionsResult(int requestCode, String permissions[], int[] grantResults) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+        switch (requestCode) {
+            case 1: {
+                if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                    downloadCharts();
+                } else {
+                    new MaterialAlertDialogBuilder(this)
+                            .setTitle("Permission refused !")
+                            .setMessage("To download the summary please accept permissions")
+                            .setNeutralButton(this.getString(R.string.neutral_action), (dialogInterface, i) -> {
+                            })
+                            .show();
+                }
+                return;
+            }
+        }
+    }
 
     private void downloadCharts() {
+        if (!checkPerm()){
+            DialogGrapheManager.askForPerms(this);
+            return;
+        }
+
         File root = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS);
         PDFGenerator pdf =  new PDFGenerator(root, barChartList, _listGds,  config,this);
           try {
               File file = pdf.getFile();
               Intent intent = new Intent(Intent.ACTION_VIEW);
               intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
-              if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
+
+             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
                   Uri apkURI = FileProvider.getUriForFile(getApplicationContext(), getPackageName() + ".provider", file);
                   intent.setDataAndType(apkURI, "application/pdf");
                   intent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);

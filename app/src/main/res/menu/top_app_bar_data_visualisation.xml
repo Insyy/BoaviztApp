@@ -4,7 +4,7 @@
 
     <item
         android:id="@+id/download_icon"
-        android:icon="@drawable/ic_baseline_download_for_offline_24"
+        android:icon="@drawable/ic_baseline_download_for_online_24"
         app:showAsAction="ifRoom"
         android:title="@string/download_icon_title"
         />

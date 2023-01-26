@@ -1,7 +1,9 @@
 package fr.univpau.dudesalonso.boaviztapp;
 
+import android.Manifest;
 import android.app.ActionBar;
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.content.res.Configuration;
 import android.net.Uri;
 import android.os.Bundle;
@@ -16,9 +18,12 @@ import android.widget.LinearLayout;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.app.AppCompatDelegate;
+import androidx.core.app.ActivityCompat;
 
 import com.google.android.material.appbar.MaterialToolbar;
+import com.google.android.material.dialog.MaterialAlertDialogBuilder;
 
+import fr.univpau.dudesalonso.boaviztapp.dataVisualisation.DialogGrapheManager;
 import fr.univpau.dudesalonso.boaviztapp.formulary.ComponentManager;
 
 public class FormularyActivity extends AppCompatActivity {
@@ -55,4 +60,5 @@ public class FormularyActivity extends AppCompatActivity {
         super.onPause();
         overridePendingTransition(0, 0);
     }
+
 }

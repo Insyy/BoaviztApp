@@ -1,7 +1,12 @@
 package fr.univpau.dudesalonso.boaviztapp.dataVisualisation;
 
+import android.Manifest;
+import android.app.Activity;
 import android.content.Context;
+import android.content.pm.PackageManager;
 import android.view.View;
+
+import androidx.core.app.ActivityCompat;
 
 import com.google.android.material.dialog.MaterialAlertDialogBuilder;
 import com.google.android.material.progressindicator.LinearProgressIndicator;
@@ -51,5 +56,15 @@ public class DialogGrapheManager {
         LinearProgressIndicator progressIndicator = view.findViewById(R.id.progress_indicator);
         progressIndicator.setVisibility(View.INVISIBLE);
     }
+    public static void askForPerms(Context c){
+      /*  String requiredPermission = android.Manifest.permission.MANAGE_EXTERNAL_STORAGE;
+        int checkVal =  c.checkCallingOrSelfPermission(requiredPermission);
+        if (checkVal == PackageManager.PERMISSION_GRANTED) return;*/
+
+        ActivityCompat.requestPermissions((Activity) c,
+                new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE,Manifest.permission.MANAGE_EXTERNAL_STORAGE},
+                1);
+    }
+
 
 }

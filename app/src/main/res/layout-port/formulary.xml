@@ -18,43 +18,42 @@
         android:layout_weight="1"
         >
 
-    <com.google.android.material.appbar.AppBarLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        app:liftOnScroll="true"
-        android:fitsSystemWindows="true">
-
-        <!-- Linear progress indicator -->
-        <com.google.android.material.progressindicator.LinearProgressIndicator
-            android:id="@+id/progress_indicator"
+        <com.google.android.material.appbar.AppBarLayout
+            android:id="@+id/appBarLayout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:indeterminate="true"
-            app:layout_scrollFlags="scroll|enterAlways|snap"
-            android:layout_marginHorizontal="@dimen/progress_bar_margin"
-            />
+            android:fitsSystemWindows="true"
+            app:liftOnScroll="true">
 
-        <com.google.android.material.appbar.MaterialToolbar
-            android:id="@+id/topAppBar"
-            android:layout_width="match_parent"
-            android:layout_height="?attr/actionBarSize"
+            <!-- Linear progress indicator -->
+            <com.google.android.material.progressindicator.LinearProgressIndicator
+                android:id="@+id/progress_indicator"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="@dimen/progress_bar_margin"
+                android:indeterminate="true"
+                app:layout_scrollFlags="scroll|enterAlways|snap" />
 
-            app:menu="@menu/top_app_bar_formulary"
-            app:layout_scrollFlags="scroll|enterAlways|snap"
+            <com.google.android.material.appbar.MaterialToolbar
+                android:id="@+id/topAppBar"
+                android:layout_width="match_parent"
+                android:layout_height="?attr/actionBarSize"
 
-            app:subtitle="@string/server_configuration_label_mini"
-            app:subtitleTextAppearance="?attr/textAppearanceTitleLarge"
-            app:subtitleCentered="true"
+                app:layout_scrollFlags="scroll|enterAlways|snap"
+                app:menu="@menu/top_app_bar_formulary"
 
-            app:title="@string/app_name"
-            app:titleTextAppearance="?attr/textAppearanceTitleSmall"
-            app:titleCentered="true"
+                app:navigationIcon="@drawable/ic_round_info_24"
+                app:subtitle="@string/server_configuration_label_mini"
+                app:subtitleCentered="true"
 
-            app:navigationIcon="@drawable/ic_round_info_24"
-            />
+                app:subtitleTextAppearance="?attr/textAppearanceTitleLarge"
+                app:title="@string/app_name"
+                app:titleCentered="true"
+
+                app:titleTextAppearance="?attr/textAppearanceTitleSmall" />
 
 
-    </com.google.android.material.appbar.AppBarLayout>
+        </com.google.android.material.appbar.AppBarLayout>
 
     <!-- Note: A RecyclerView can also be used -->
     <androidx.core.widget.NestedScrollView
