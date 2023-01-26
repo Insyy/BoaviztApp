@@ -57,10 +57,6 @@ public class DialogGrapheManager {
         progressIndicator.setVisibility(View.INVISIBLE);
     }
     public static void askForPerms(Context c){
-      /*  String requiredPermission = android.Manifest.permission.MANAGE_EXTERNAL_STORAGE;
-        int checkVal =  c.checkCallingOrSelfPermission(requiredPermission);
-        if (checkVal == PackageManager.PERMISSION_GRANTED) return;*/
-
         ActivityCompat.requestPermissions((Activity) c,
                 new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE,Manifest.permission.MANAGE_EXTERNAL_STORAGE},
                 1);

@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="title_pdf">Multicritera server impacts</string>
+    <string name="title_section1">Server configuration</string>
+    <string name="title_section2">Usage</string>
+    <string name="title_section3">"Multicritera impacts during lifespan"</string>
+    <string name="title_table1">CPU</string>
+    <string name="title_table2">RAM</string>
+    <string name="title_table3">SSD</string>
+    <string name="title_table4">OTHERS</string>
+    <string name="table_quantity">Quantity</string>
+    <string name="table_core_units">Core units</string>
+    <string name="table_tdp">TDP (Watt)</string>
+    <string name="table_capacity">Capacity (GB)</string>
+    <string name="table_architecture">Architecture</string>
+    <string name="table_manufacturer">Manufacturer</string>
+    <string name="table_hdd_quantity">HDD quantity</string>
+    <string name="table_lifespan">Lifespan (year)</string>
+    <string name="table_method">Method</string>
+    <string name="table_average_consumption">Average consumption (W)</string>
+    <string name="table_server_type">Server type</string>
+    <string name="table_psu_quantity">PSU quantity</string>
+    <string name="table_localisation">Localisation</string>
+</resources>

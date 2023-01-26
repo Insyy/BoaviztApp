@@ -17,9 +17,11 @@ import android.os.Build;
 import android.os.Bundle;
 
 import android.os.Environment;
+import android.text.method.LinkMovementMethod;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.github.mikephil.charting.charts.BarChart;
@@ -78,6 +80,7 @@ public class DataVisualisationActivity extends AppCompatActivity {
         setContentView(R.layout.data_visualisation);
 
         setupCharts();
+        setupHyperlink();
 
         config = (ServerConfiguration) getIntent().getSerializableExtra("serverConfiguration");
         psr = new PostServerRequest(this);
@@ -91,6 +94,14 @@ public class DataVisualisationActivity extends AppCompatActivity {
         DialogGrapheManager.showDialogZoom(this);
 
     }
+    private void setupHyperlink() {
+        MaterialTextView tv1 = findViewById(R.id.textView9);
+        tv1.setMovementMethod(LinkMovementMethod.getInstance());
+
+        MaterialTextView tv2 = findViewById(R.id.textView11);
+        tv2.setMovementMethod(LinkMovementMethod.getInstance());
+    }
+
 
     private void setTopAppBarListeners() {
         MaterialToolbar topAppBar = findViewById(R.id.topAppBar);

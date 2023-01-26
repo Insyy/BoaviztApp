@@ -28,8 +28,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginHorizontal="@dimen/progress_bar_margin"
                 android:indeterminate="true"
-                app:layout_scrollFlags="scroll|enterAlways|snap"
-                />
+                app:layout_scrollFlags="scroll|enterAlways|snap" />
 
             <com.google.android.material.appbar.MaterialToolbar
                 android:id="@+id/topAppBar"
@@ -258,22 +257,17 @@
                             android:orientation="vertical"
                             android:padding="@dimen/padding_inside_cards">
 
-                            <LinearLayout
+
+                            <com.google.android.material.textview.MaterialTextView
+                                android:id="@+id/textView8"
                                 android:layout_width="match_parent"
-                                android:layout_height="match_parent"
-                                android:orientation="horizontal"
-                                android:padding="@dimen/padding_inside_cards">
+                                android:layout_height="wrap_content"
+                                android:justificationMode="inter_word"
+                                android:layout_margin="@dimen/card_margin"
+                                android:text="@string/fielset_title_1"
+                                android:textAppearance="?attr/textAppearanceBodyMedium"
+                                android:textStyle="bold" />
 
-                                <com.google.android.material.textview.MaterialTextView
-                                    android:id="@+id/textView8"
-                                    android:layout_width="match_parent"
-                                    android:layout_height="wrap_content"
-                                    android:justificationMode="inter_word"
-                                    android:text="@string/fielset_title_1"
-                                    android:textAppearance="?attr/textAppearanceBodyMedium"
-                                    android:textStyle="bold" />
-
-                            </LinearLayout>
 
                             <com.google.android.material.textview.MaterialTextView
                                 android:id="@+id/textView9"
@@ -289,6 +283,7 @@
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
                                 android:justificationMode="inter_word"
+                                android:layout_margin="@dimen/card_margin"
                                 android:text="@string/fieldset_title_2"
                                 android:textAppearance="?attr/textAppearanceBodyMedium"
                                 android:textStyle="bold" />
