@@ -251,7 +251,6 @@ public class ComponentManager {
 
 
     void showNetworkErrorToast() {
-
         Snackbar.make(
                 formularyActivity.findViewById(R.id.root),
                         formularyActivity.getString(R.string.request_error_message), Snackbar.LENGTH_INDEFINITE)
