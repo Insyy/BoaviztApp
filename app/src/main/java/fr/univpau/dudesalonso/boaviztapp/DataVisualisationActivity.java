@@ -345,7 +345,6 @@ public class DataVisualisationActivity extends AppCompatActivity {
             File file = pdf.getFile();
             Intent intent = new Intent(Intent.ACTION_VIEW);
             intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
-
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
                 Uri apkURI = FileProvider.getUriForFile(getApplicationContext(), getPackageName() + ".provider", file);
                 intent.setDataAndType(apkURI, "application/pdf");

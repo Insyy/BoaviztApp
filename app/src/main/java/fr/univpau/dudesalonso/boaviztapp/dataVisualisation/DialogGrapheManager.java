@@ -47,7 +47,9 @@ public class DialogGrapheManager {
     }
 
     public static void askForPerms(Context c) {
-        ActivityCompat.requestPermissions((Activity) c, new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE, Manifest.permission.MANAGE_EXTERNAL_STORAGE}, 1);
+        ActivityCompat.requestPermissions((Activity) c, new String[]{
+                Manifest.permission.WRITE_EXTERNAL_STORAGE,
+                Manifest.permission.MANAGE_EXTERNAL_STORAGE}, 1);
     }
 
     public static void showNetworkErrorToast(Activity activity, PostServerRequest psr) {
