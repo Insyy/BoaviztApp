@@ -240,6 +240,7 @@ public class PDFGenerator {
     private void chartToPDF(Document document, BarChart chart) throws DocumentException, IOException {
         ByteArrayOutputStream stream = new ByteArrayOutputStream();
         convertLegendToBlack(chart);
+        chart.invalidate();
         Bitmap scaledBitmap = chart.getChartBitmap();
         scaledBitmap.compress(Bitmap.CompressFormat.PNG, 100, stream);
         byte[] byteArray = stream.toByteArray();
