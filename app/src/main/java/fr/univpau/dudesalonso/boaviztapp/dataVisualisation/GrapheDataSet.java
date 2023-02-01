@@ -56,10 +56,12 @@ public class GrapheDataSet {
     }
 
     public String valueAssigmentBottomSet(JSONObject verbose, String stringObject1, String stringObject2) throws JSONException {
-        String value = verbose.getJSONObject(stringObject1).getJSONObject(stringObject2).getJSONObject(_grapheName).get("value").toString();
+        String value = verbose.getJSONObject(stringObject1).getJSONObject(stringObject2).getJSONObject(_grapheName).get("value").toString(); //99
+        String units = verbose.getJSONObject(stringObject1).getString("units");
+        Log.d("valueAssigmentBottomSet", stringObject1 + " : " + units + " * " + value );
         if(value.equals("not implemented"))
             return "0.0";
-        return value;
+        return String.valueOf(Float.valueOf(value) * Float.valueOf(units));
     }
 
     public String get_grapheName() {
