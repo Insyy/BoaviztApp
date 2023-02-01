@@ -358,6 +358,7 @@ public class ComponentManager {
         Snackbar.make(
                         formularyActivity.findViewById(R.id.root),
                         formularyActivity.getString(R.string.invalid_input_error), Snackbar.LENGTH_SHORT)
+                .setAction(R.string.toast_action_reset_values, view -> formularyActivity.restartActivity())
                 .setAnchorView(R.id.bottom_navigation)
                 .show();
     }

@@ -6,6 +6,7 @@ import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.content.res.Configuration;
 import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.Menu;
@@ -59,6 +60,11 @@ public class FormularyActivity extends AppCompatActivity {
     public void onPause() {
         super.onPause();
         overridePendingTransition(0, 0);
+    }
+
+    public void restartActivity(){
+            finish();
+            startActivity(getIntent().setFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION | Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK));
     }
 
 }

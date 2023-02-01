@@ -30,4 +30,5 @@
     <string name="download_icon_title">Save charts to phone memory</string>
     <string name="invalid_input_error">Provided data is not valid, please verify that your inputs are valid integer numbers.</string>
     <string name="error_content_description">Provided input is not a valid integer</string>
+    <string name="toast_action_reset_values">Reset default values</string>
 </resources>
