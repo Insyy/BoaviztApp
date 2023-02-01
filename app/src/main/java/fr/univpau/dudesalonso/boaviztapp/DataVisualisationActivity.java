@@ -16,6 +16,7 @@ import android.os.Bundle;
 import android.os.Environment;
 import android.text.method.LinkMovementMethod;
 import android.util.Log;
+import android.widget.Button;
 
 import com.github.mikephil.charting.charts.BarChart;
 import com.github.mikephil.charting.components.Legend;
@@ -91,7 +92,6 @@ public class DataVisualisationActivity extends AppCompatActivity {
     private void setupHyperlink() {
         MaterialTextView tv1 = findViewById(R.id.textView9);
         tv1.setMovementMethod(LinkMovementMethod.getInstance());
-
         MaterialTextView tv2 = findViewById(R.id.textView11);
         tv2.setMovementMethod(LinkMovementMethod.getInstance());
     }
@@ -154,8 +154,6 @@ public class DataVisualisationActivity extends AppCompatActivity {
     private void setupPdf() {
         PDFBoxResourceLoader.init(getApplicationContext());
         Log.d("setupPdf", config.toString());
-
-        // pdf.initRoot();
     }
 
 
@@ -334,11 +332,11 @@ public class DataVisualisationActivity extends AppCompatActivity {
     }
 
     private void downloadCharts() {
+        if(!DialogGrapheManager.internetAvailable) return;
         if (!checkPerm()) {
             DialogGrapheManager.askForPerms(this);
             return;
         }
-
         File root = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS);
         PDFGenerator pdf = new PDFGenerator(root, barChartList, _listGds, config, this);
         try {

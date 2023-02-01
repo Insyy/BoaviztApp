@@ -3,6 +3,7 @@ package fr.univpau.dudesalonso.boaviztapp.dataVisualisation;
 import android.Manifest;
 import android.app.Activity;
 import android.content.Context;
+import android.util.Log;
 import android.view.View;
 
 import androidx.core.app.ActivityCompat;
@@ -16,6 +17,7 @@ import fr.univpau.dudesalonso.boaviztapp.R;
 public class DialogGrapheManager {
 
     public static boolean dialogZoom = true;
+    public static boolean internetAvailable = true;
     public static View view;
 
     public static void showDialogZoom(Context c) {
@@ -53,7 +55,13 @@ public class DialogGrapheManager {
     }
 
     public static void showNetworkErrorToast(Activity activity, PostServerRequest psr) {
-        Snackbar.make(activity.getWindow().findViewById(R.id.rootVisu), activity.getString(R.string.request_error_message), Snackbar.LENGTH_INDEFINITE).setAction(R.string.toast_action_retry, v -> psr.sendRequestServer()).setAnchorView(R.id.bottom_navigation).show();
+        Snackbar.make(activity.getWindow().findViewById(R.id.rootVisu),activity.getString(R.string.request_error_message),
+                Snackbar.LENGTH_INDEFINITE).setAction(
+                        R.string.toast_action_retry,
+                        v -> psr.sendRequestServer()
+                ).setAnchorView(
+                    activity.getWindow().findViewById(R.id.bottom_navigation)
+                ).show();
     }
 
 

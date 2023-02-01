@@ -39,7 +39,8 @@ public class PostServerRequest {
                     Request.Method.POST, url, jsonObject,
                     response -> {
                         try {
-                            Log.d("sendRequestServer", response.toString());
+                            if(!DialogGrapheManager.internetAvailable) DialogGrapheManager.internetAvailable = true;
+                            Log.d("a", response.toString());
                             JSONObject impacts = response.getJSONObject("impacts");
                             JSONObject verbose = response.getJSONObject("verbose");
                             List<GrapheDataSet> listGds = new ArrayList<>();
@@ -55,10 +56,12 @@ public class PostServerRequest {
                         DialogGrapheManager.stopProgressIndicator();
                     },
                     error -> {
+                        DialogGrapheManager.internetAvailable = false;
                         DialogGrapheManager.stopProgressIndicator();
                         DialogGrapheManager.showNetworkErrorToast((Activity) _c, this);
                     }));
         } catch (JSONException e) {
+            DialogGrapheManager.internetAvailable = false;
             DialogGrapheManager.stopProgressIndicator();
             DialogGrapheManager.showNetworkErrorToast((Activity) _c, this);
             e.printStackTrace();
