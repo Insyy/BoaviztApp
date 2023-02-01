@@ -19,39 +19,40 @@
         >
 
         <com.google.android.material.appbar.AppBarLayout
+            android:id="@+id/appBarLayout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            app:liftOnScroll="true"
-            android:fitsSystemWindows="true">
-
-            <com.google.android.material.appbar.MaterialToolbar
-                android:id="@+id/topAppBar"
-                android:layout_width="match_parent"
-                android:layout_height="?attr/actionBarSize"
-
-                app:menu="@menu/top_app_bar_formulary"
-                app:layout_scrollFlags="scroll|enterAlways|snap"
-
-                app:subtitle="@string/server_configuration_label_mini"
-                app:subtitleTextAppearance="?attr/textAppearanceTitleLarge"
-                app:subtitleCentered="true"
-
-                app:title="@string/app_name"
-                app:titleTextAppearance="?attr/textAppearanceTitleSmall"
-                app:titleCentered="true"
-
-                app:navigationIcon="@drawable/ic_round_info_24"
-                />
-            <!--            app:navigationIcon="@drawable/arrow_back_icon" -->
+            android:fitsSystemWindows="true"
+            app:liftOnScroll="true">
 
             <!-- Linear progress indicator -->
             <com.google.android.material.progressindicator.LinearProgressIndicator
                 android:id="@+id/progress_indicator"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:indeterminate="true"
                 android:layout_marginHorizontal="@dimen/progress_bar_margin"
-                />
+                android:indeterminate="true"
+                app:layout_scrollFlags="scroll|enterAlways|snap" />
+
+            <com.google.android.material.appbar.MaterialToolbar
+                android:id="@+id/topAppBar"
+                android:layout_width="match_parent"
+                android:layout_height="?attr/actionBarSize"
+
+                app:layout_scrollFlags="scroll|enterAlways|snap"
+                app:menu="@menu/top_app_bar_formulary"
+
+                app:navigationIcon="@drawable/ic_round_info_24"
+                app:subtitle="@string/server_configuration_label_mini"
+                app:subtitleCentered="true"
+
+                app:subtitleTextAppearance="?attr/textAppearanceTitleLarge"
+                app:title="@string/app_name"
+                app:titleCentered="true"
+
+                app:titleTextAppearance="?attr/textAppearanceTitleSmall" />
+
+
         </com.google.android.material.appbar.AppBarLayout>
 
         <!-- Note: A RecyclerView can also be used -->
@@ -65,17 +66,21 @@
 
 
             <!--Necessary for scrollview-->
+
             <RelativeLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:isScrollContainer="true"
-                android:padding="@dimen/global_padding">
+                android:isScrollContainer="true">
+
+
 
                 <LinearLayout
                     android:id="@+id/config_list"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:orientation="vertical"
+
+                    android:padding="@dimen/global_padding"
                     >
 
                     <com.google.android.material.card.MaterialCardView
@@ -109,8 +114,13 @@
                                 android:orientation="horizontal"
                                 android:weightSum="@dimen/storage_layout_weight_sum">
 
-
                                 <com.google.android.material.textfield.TextInputLayout
+                                    android:id="@+id/hdd_quantity_layout"
+
+                                    app:errorTextAppearance="@style/myErrorTextAppearance"
+
+                                    app:errorContentDescription="@string/error_content_description"
+
                                     android:layout_width="0dp"
                                     android:layout_height="wrap_content"
                                     android:layout_weight="@dimen/storage_layout_quantity_weight"
@@ -131,6 +141,10 @@
 
 
                                 <com.google.android.material.textfield.TextInputLayout
+                                    android:id="@+id/hdd_capacity_layout"
+                                    app:errorTextAppearance="@style/myErrorTextAppearance"
+
+                                    app:errorContentDescription="@string/error_content_description"
                                     android:layout_width="0dp"
                                     android:layout_height="wrap_content"
                                     android:layout_weight="@dimen/storage_layout_capacity_weight"
@@ -166,6 +180,7 @@
                                         android:layout_width="match_parent"
                                         android:layout_height="match_parent"
                                         android:inputType="textNoSuggestions"
+                                        android:focusedByDefault="false"
                                         android:completionThreshold="@integer/completionThreshHoldForAutocomplete">
 
                                     </com.google.android.material.textfield.MaterialAutoCompleteTextView>
@@ -174,263 +189,7 @@
                         </LinearLayout>
                     </com.google.android.material.card.MaterialCardView>
 
-                    <com.google.android.material.card.MaterialCardView
-                        style="?attr/materialCardViewElevatedStyle"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginStart="@dimen/card_margin"
-                        android:layout_marginTop="@dimen/card_margin"
-                        android:layout_marginEnd="@dimen/card_margin"
-                        android:layout_marginBottom="@dimen/card_margin"
-                        app:cardElevation="@dimen/card_elevation"
-                        app:contentPadding="@dimen/card_padding">
 
-
-                        <LinearLayout
-                            android:id="@+id/usage_configuration"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:orientation="vertical"
-                            android:padding="@dimen/padding_inside_cards">
-
-                            <TextView
-                                android:id="@+id/usage_label"
-                                android:layout_width="match_parent"
-                                android:layout_height="wrap_content"
-                                android:text="@string/usage_label"
-                                android:textAppearance="?attr/textAppearanceTitleLarge" />
-
-                            <TableLayout
-                                android:layout_width="match_parent"
-                                android:layout_height="wrap_content">
-
-                                <TableRow
-                                    android:layout_width="match_parent"
-                                    android:layout_height="match_parent"
-                                    android:orientation="horizontal"
-                                    android:weightSum="2">
-
-                                    <com.google.android.material.textfield.TextInputLayout
-                                        style="?attr/textInputOutlinedExposedDropdownMenuStyle"
-                                        android:layout_width="0dp"
-                                        android:layout_height="match_parent"
-                                        android:layout_weight="1"
-                                        android:hint="@string/usage_location_label"
-                                        android:paddingHorizontal="@dimen/input_element_horizontal_padding"
-                                        android:paddingVertical="@dimen/input_element_vertical_padding"
-                                        app:endIconMode="clear_text">
-
-                                        <com.google.android.material.textfield.MaterialAutoCompleteTextView
-                                            android:id="@+id/usage_location_input"
-                                            android:layout_width="match_parent"
-                                            android:layout_height="match_parent"
-                                            android:completionThreshold="@integer/completionThreshHoldForAutocomplete"
-                                            android:inputType="textNoSuggestions">
-
-                                        </com.google.android.material.textfield.MaterialAutoCompleteTextView>
-                                    </com.google.android.material.textfield.TextInputLayout>
-
-                                    <com.google.android.material.textfield.TextInputLayout
-                                        android:layout_width="0dp"
-                                        android:layout_height="wrap_content"
-                                        android:layout_weight="1"
-                                        android:hint="@string/usage_lifespan_label"
-                                        android:paddingHorizontal="@dimen/input_element_horizontal_padding"
-                                        android:paddingVertical="@dimen/input_element_vertical_padding"
-
-                                        app:suffixText="@string/usage_lifespan_helper">
-
-                                        <com.google.android.material.textfield.TextInputEditText
-                                            android:id="@+id/usage_lifespan_input"
-                                            android:layout_width="match_parent"
-                                            android:layout_height="match_parent"
-                                            android:text="@string/usage_lifespan_placeholder">
-
-                                        </com.google.android.material.textfield.TextInputEditText>
-                                    </com.google.android.material.textfield.TextInputLayout>
-
-                                </TableRow>
-
-                                <TableRow
-                                    android:layout_width="match_parent"
-                                    android:layout_height="match_parent"
-                                    android:orientation="horizontal"
-                                    android:weightSum="2">
-
-                                    <com.google.android.material.textfield.TextInputLayout
-                                        android:id="@+id/usage_method_layout"
-                                        style="?attr/textInputOutlinedExposedDropdownMenuStyle"
-                                        android:layout_width="0dp"
-                                        android:layout_height="wrap_content"
-                                        android:layout_weight="1"
-                                        android:hint="@string/usage_method_label"
-                                        android:paddingHorizontal="@dimen/input_element_horizontal_padding"
-                                        android:paddingVertical="@dimen/input_element_vertical_padding"
-                                        app:endIconMode="clear_text">
-
-                                        <com.google.android.material.textfield.MaterialAutoCompleteTextView
-                                            android:id="@+id/usage_method_input"
-                                            android:layout_width="match_parent"
-                                            android:layout_height="match_parent"
-                                            android:completionThreshold="@integer/completionThreshHoldForAutocomplete"
-                                            android:inputType="textNoSuggestions"
-                                            android:text="@string/usage_method_placeholder"
-                                            app:simpleItems="@array/method_options">
-
-                                        </com.google.android.material.textfield.MaterialAutoCompleteTextView>
-                                    </com.google.android.material.textfield.TextInputLayout>
-
-                                    <com.google.android.material.textfield.TextInputLayout
-                                        android:id="@+id/usage_method_details_layout"
-                                        android:layout_width="0dp"
-                                        android:layout_height="wrap_content"
-                                        android:layout_weight="1"
-                                        android:paddingHorizontal="@dimen/input_element_horizontal_padding"
-                                        android:paddingVertical="@dimen/input_element_vertical_padding">
-
-                                        <com.google.android.material.textfield.TextInputEditText
-                                            android:id="@+id/usage_method_details_input"
-
-                                            android:layout_width="match_parent"
-                                            android:layout_height="match_parent">
-
-                                        </com.google.android.material.textfield.TextInputEditText>
-                                    </com.google.android.material.textfield.TextInputLayout>
-                                </TableRow>
-                            </TableLayout>
-                        </LinearLayout>
-                    </com.google.android.material.card.MaterialCardView>
-
-                    <com.google.android.material.card.MaterialCardView
-                        style="?attr/materialCardViewElevatedStyle"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginStart="@dimen/card_margin"
-                        android:layout_marginTop="@dimen/card_margin"
-                        android:layout_marginEnd="@dimen/card_margin"
-                        android:layout_marginBottom="@dimen/card_margin"
-                        app:cardElevation="@dimen/card_elevation"
-                        app:contentPadding="@dimen/card_padding">
-
-
-                        <LinearLayout
-                            android:id="@+id/cpu_configuration"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:orientation="vertical"
-                            android:padding="@dimen/padding_inside_cards">
-
-                            <com.google.android.material.textview.MaterialTextView
-                                android:id="@+id/cpu_label"
-                                android:layout_width="match_parent"
-                                android:layout_height="wrap_content"
-                                android:text="@string/cpu_label"
-                                android:textAppearance="?attr/textAppearanceTitleLarge" />
-
-                            <TableRow
-                                android:layout_width="match_parent"
-                                android:layout_height="match_parent"
-                                android:orientation="horizontal"
-                                android:weightSum="1">
-
-                                <com.google.android.material.textfield.TextInputLayout
-                                    android:layout_width="match_parent"
-                                    android:layout_height="wrap_content"
-
-                                    android:layout_weight=".5"
-
-                                    android:enabled="true"
-                                    android:hint="@string/cpu_quantity_label"
-                                    android:paddingHorizontal="@dimen/input_element_horizontal_padding"
-                                    android:paddingVertical="@dimen/input_element_vertical_padding">
-
-                                    <com.google.android.material.textfield.TextInputEditText
-                                        android:id="@+id/cpu_quantity_input"
-                                        android:layout_width="match_parent"
-                                        android:layout_height="wrap_content"
-                                        android:inputType="number"
-                                        android:text="@string/cpu_quantity_placeholder"
-                                        tools:ignore="TooDeepLayout">
-
-                                    </com.google.android.material.textfield.TextInputEditText>
-                                </com.google.android.material.textfield.TextInputLayout>
-
-                                <com.google.android.material.textfield.TextInputLayout
-                                    android:layout_width="match_parent"
-                                    android:layout_height="wrap_content"
-
-                                    android:layout_weight=".5"
-
-                                    android:hint="@string/cpu_tdp_label"
-                                    android:paddingHorizontal="@dimen/input_element_horizontal_padding"
-                                    android:paddingVertical="@dimen/input_element_vertical_padding"
-
-
-                                    app:suffixText="@string/cpu_tdp_helper">
-
-                                    <com.google.android.material.textfield.TextInputEditText
-                                        android:id="@+id/cpu_tdp_input"
-                                        android:layout_width="match_parent"
-                                        android:layout_height="wrap_content"
-                                        android:inputType="number"
-                                        android:text="@string/cpu_tdp_placeholder">
-
-                                    </com.google.android.material.textfield.TextInputEditText>
-                                </com.google.android.material.textfield.TextInputLayout>
-
-                            </TableRow>
-
-                            <TableRow
-                                android:layout_width="match_parent"
-                                android:layout_height="match_parent"
-                                android:orientation="horizontal"
-                                android:weightSum="1">
-
-                                <com.google.android.material.textfield.TextInputLayout
-                                    android:layout_width="match_parent"
-                                    android:layout_height="wrap_content"
-
-                                    android:layout_weight=".5"
-
-                                    android:hint="@string/cpu_core_units_label"
-                                    android:paddingHorizontal="@dimen/input_element_horizontal_padding"
-                                    android:paddingVertical="@dimen/input_element_vertical_padding">
-
-                                    <com.google.android.material.textfield.TextInputEditText
-                                        android:id="@+id/cpu_core_units_input"
-                                        android:layout_width="match_parent"
-                                        android:layout_height="wrap_content"
-                                        android:inputType="number"
-                                        android:text="@string/cpu_core_units_placeholder">
-
-                                    </com.google.android.material.textfield.TextInputEditText>
-                                </com.google.android.material.textfield.TextInputLayout>
-
-                                <com.google.android.material.textfield.TextInputLayout
-                                    style="?attr/textInputOutlinedExposedDropdownMenuStyle"
-                                    android:layout_width="match_parent"
-
-                                    android:layout_height="match_parent"
-                                    android:layout_weight=".5"
-                                    android:hint="@string/cpu_architecture_label"
-                                    android:paddingHorizontal="@dimen/input_element_horizontal_padding"
-                                    android:paddingVertical="@dimen/input_element_vertical_padding"
-                                    app:endIconMode="clear_text">
-
-                                    <com.google.android.material.textfield.MaterialAutoCompleteTextView
-                                        android:id="@+id/cpu_architecture_input"
-                                        android:layout_width="match_parent"
-                                        android:layout_height="match_parent"
-                                        android:completionThreshold="@integer/completionThreshHoldForAutocomplete"
-                                        android:inputType="textNoSuggestions">
-
-                                    </com.google.android.material.textfield.MaterialAutoCompleteTextView>
-                                </com.google.android.material.textfield.TextInputLayout>
-                            </TableRow>
-
-
-                        </LinearLayout>
-                    </com.google.android.material.card.MaterialCardView>
 
                     <com.google.android.material.card.MaterialCardView
                         style="?attr/materialCardViewElevatedStyle"
@@ -464,6 +223,10 @@
                                 android:weightSum="@dimen/storage_layout_weight_sum">
 
                                 <com.google.android.material.textfield.TextInputLayout
+                                    android:id="@+id/ram_quantity_layout"
+                                    app:errorTextAppearance="@style/myErrorTextAppearance"
+
+                                    app:errorContentDescription="@string/error_content_description"
                                     android:layout_width="0dp"
                                     android:layout_height="wrap_content"
                                     android:layout_weight="@dimen/storage_layout_quantity_weight"
@@ -483,6 +246,10 @@
                                 </com.google.android.material.textfield.TextInputLayout>
 
                                 <com.google.android.material.textfield.TextInputLayout
+                                    android:id="@+id/ram_capacity_layout"
+                                    app:errorTextAppearance="@style/myErrorTextAppearance"
+
+                                    app:errorContentDescription="@string/error_content_description"
                                     android:layout_width="0dp"
                                     android:layout_height="wrap_content"
                                     android:layout_weight="@dimen/storage_layout_capacity_weight"
@@ -558,6 +325,10 @@
                                 android:weightSum="@dimen/storage_layout_weight_sum">
 
                                 <com.google.android.material.textfield.TextInputLayout
+                                    android:id="@+id/ssd_quantity_layout"
+                                    app:errorTextAppearance="@style/myErrorTextAppearance"
+
+                                    app:errorContentDescription="@string/error_content_description"
                                     android:layout_width="0dp"
                                     android:layout_height="wrap_content"
                                     android:layout_weight="@dimen/storage_layout_quantity_weight"
@@ -577,6 +348,10 @@
                                 </com.google.android.material.textfield.TextInputLayout>
 
                                 <com.google.android.material.textfield.TextInputLayout
+                                    android:id="@+id/ssd_capacity_layout"
+                                    app:errorTextAppearance="@style/myErrorTextAppearance"
+
+                                    app:errorContentDescription="@string/error_content_description"
                                     android:layout_width="0dp"
                                     android:layout_height="wrap_content"
                                     android:layout_weight="@dimen/storage_layout_capacity_weight"
@@ -615,6 +390,285 @@
                                         android:inputType="textNoSuggestions">
 
                                     </com.google.android.material.textfield.MaterialAutoCompleteTextView>
+                                </com.google.android.material.textfield.TextInputLayout>
+                            </TableRow>
+                        </LinearLayout>
+                    </com.google.android.material.card.MaterialCardView>
+
+                    <com.google.android.material.card.MaterialCardView
+                        style="?attr/materialCardViewElevatedStyle"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="@dimen/card_margin"
+                        android:layout_marginTop="@dimen/card_margin"
+                        android:layout_marginEnd="@dimen/card_margin"
+                        android:layout_marginBottom="@dimen/card_margin"
+                        app:cardElevation="@dimen/card_elevation"
+                        app:contentPadding="@dimen/card_padding">
+
+
+                        <LinearLayout
+                            android:id="@+id/cpu_configuration"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:orientation="vertical"
+                            android:padding="@dimen/padding_inside_cards">
+
+                            <com.google.android.material.textview.MaterialTextView
+                                android:id="@+id/cpu_label"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:text="@string/cpu_label"
+                                android:textAppearance="?attr/textAppearanceTitleLarge" />
+
+                            <TableRow
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent"
+                                android:orientation="horizontal"
+                                android:weightSum="1">
+
+                                <com.google.android.material.textfield.TextInputLayout
+                                    android:id="@+id/cpu_quantity_layout"
+                                    app:errorTextAppearance="@style/myErrorTextAppearance"
+
+                                    app:errorContentDescription="@string/error_content_description"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+
+                                    android:layout_weight=".5"
+
+                                    android:enabled="true"
+                                    android:hint="@string/cpu_quantity_label"
+                                    android:paddingHorizontal="@dimen/input_element_horizontal_padding"
+                                    android:paddingVertical="@dimen/input_element_vertical_padding">
+
+                                    <com.google.android.material.textfield.TextInputEditText
+                                        android:id="@+id/cpu_quantity_input"
+                                        android:layout_width="match_parent"
+                                        android:layout_height="wrap_content"
+                                        android:inputType="number"
+                                        android:text="@string/cpu_quantity_placeholder"
+                                        tools:ignore="TooDeepLayout">
+
+                                    </com.google.android.material.textfield.TextInputEditText>
+                                </com.google.android.material.textfield.TextInputLayout>
+
+                                <com.google.android.material.textfield.TextInputLayout
+                                    android:id="@+id/cpu_tdp_layout"
+                                    app:errorTextAppearance="@style/myErrorTextAppearance"
+
+                                    app:errorContentDescription="@string/error_content_description"
+
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+
+                                    android:layout_weight=".5"
+
+                                    android:hint="@string/cpu_tdp_label"
+                                    android:paddingHorizontal="@dimen/input_element_horizontal_padding"
+                                    android:paddingVertical="@dimen/input_element_vertical_padding"
+
+
+                                    app:suffixText="@string/cpu_tdp_helper">
+
+                                    <com.google.android.material.textfield.TextInputEditText
+                                        android:id="@+id/cpu_tdp_input"
+                                        android:layout_width="match_parent"
+                                        android:layout_height="wrap_content"
+                                        android:inputType="number"
+                                        android:text="@string/cpu_tdp_placeholder">
+
+                                    </com.google.android.material.textfield.TextInputEditText>
+                                </com.google.android.material.textfield.TextInputLayout>
+
+                            </TableRow>
+
+                            <TableRow
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent"
+                                android:orientation="horizontal"
+                                android:weightSum="1">
+
+                                <com.google.android.material.textfield.TextInputLayout
+                                    android:id="@+id/cpu_core_units_layout"
+                                    app:errorTextAppearance="@style/myErrorTextAppearance"
+
+                                    app:errorContentDescription="@string/error_content_description"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+
+                                    android:layout_weight=".5"
+
+                                    android:hint="@string/cpu_core_units_label"
+                                    android:paddingHorizontal="@dimen/input_element_horizontal_padding"
+                                    android:paddingVertical="@dimen/input_element_vertical_padding">
+
+                                    <com.google.android.material.textfield.TextInputEditText
+                                        android:id="@+id/cpu_core_units_input"
+                                        android:layout_width="match_parent"
+                                        android:layout_height="wrap_content"
+                                        android:inputType="number"
+                                        android:text="@string/cpu_core_units_placeholder">
+
+                                    </com.google.android.material.textfield.TextInputEditText>
+                                </com.google.android.material.textfield.TextInputLayout>
+
+                                <com.google.android.material.textfield.TextInputLayout
+                                    style="?attr/textInputOutlinedExposedDropdownMenuStyle"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="match_parent"
+                                    android:layout_weight=".5"
+                                    android:hint="@string/cpu_architecture_label"
+                                    android:paddingHorizontal="@dimen/input_element_horizontal_padding"
+                                    android:paddingVertical="@dimen/input_element_vertical_padding"
+                                    app:endIconMode="clear_text">
+
+                                    <com.google.android.material.textfield.MaterialAutoCompleteTextView
+                                        android:id="@+id/cpu_architecture_input"
+                                        android:layout_width="match_parent"
+                                        android:layout_height="match_parent"
+                                        android:completionThreshold="@integer/completionThreshHoldForAutocomplete"
+                                        android:inputType="textNoSuggestions">
+
+                                    </com.google.android.material.textfield.MaterialAutoCompleteTextView>
+                                </com.google.android.material.textfield.TextInputLayout>
+                            </TableRow>
+
+
+                        </LinearLayout>
+                    </com.google.android.material.card.MaterialCardView>
+
+
+                    <com.google.android.material.card.MaterialCardView
+                        style="?attr/materialCardViewElevatedStyle"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="@dimen/card_margin"
+                        android:layout_marginTop="@dimen/card_margin"
+                        android:layout_marginEnd="@dimen/card_margin"
+                        android:layout_marginBottom="@dimen/card_margin"
+                        app:cardElevation="@dimen/card_elevation"
+                        app:contentPadding="@dimen/card_padding">
+
+
+                        <LinearLayout
+                            android:id="@+id/usage_configuration"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:orientation="vertical"
+                            android:padding="@dimen/padding_inside_cards">
+
+                            <com.google.android.material.textview.MaterialTextView
+                                android:id="@+id/usage_label"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:text="@string/usage_label"
+                                android:textAppearance="?attr/textAppearanceTitleLarge" />
+
+                            <TableRow
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent"
+                                android:orientation="horizontal"
+                                android:weightSum="2">
+
+                                <com.google.android.material.textfield.TextInputLayout
+                                    style="?attr/textInputOutlinedExposedDropdownMenuStyle"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="match_parent"
+                                    android:layout_weight="1"
+                                    android:hint="@string/usage_location_label"
+                                    android:paddingHorizontal="@dimen/input_element_horizontal_padding"
+                                    android:paddingVertical="@dimen/input_element_vertical_padding"
+                                    app:endIconMode="clear_text"
+                                    >
+
+                                    <com.google.android.material.textfield.MaterialAutoCompleteTextView
+                                        android:id="@+id/usage_location_input"
+                                        android:layout_width="match_parent"
+                                        android:layout_height="match_parent"
+                                        android:completionThreshold="@integer/completionThreshHoldForAutocomplete"
+                                        android:inputType="textNoSuggestions">
+
+                                    </com.google.android.material.textfield.MaterialAutoCompleteTextView>
+                                </com.google.android.material.textfield.TextInputLayout>
+
+                                <com.google.android.material.textfield.TextInputLayout
+                                    android:id="@+id/usage_lifespan_layout"
+                                    app:errorTextAppearance="@style/myErrorTextAppearance"
+
+                                    app:errorContentDescription="@string/error_content_description"
+
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:layout_weight="1"
+                                    android:hint="@string/usage_lifespan_label"
+                                    android:paddingHorizontal="@dimen/input_element_horizontal_padding"
+                                    android:paddingVertical="@dimen/input_element_vertical_padding"
+
+                                    app:suffixText="@string/usage_lifespan_helper">
+
+                                    <com.google.android.material.textfield.TextInputEditText
+                                        android:id="@+id/usage_lifespan_input"
+                                        android:layout_width="match_parent"
+                                        android:layout_height="wrap_content"
+                                        android:inputType="number"
+                                        android:text="@string/usage_lifespan_placeholder">
+
+                                    </com.google.android.material.textfield.TextInputEditText>
+                                </com.google.android.material.textfield.TextInputLayout>
+
+                            </TableRow>
+
+                            <TableRow
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent"
+                                android:orientation="horizontal"
+                                android:weightSum="2">
+
+                                <com.google.android.material.textfield.TextInputLayout
+                                    android:id="@+id/usage_method_layout"
+                                    style="?attr/textInputOutlinedExposedDropdownMenuStyle"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="match_parent"
+                                    android:layout_weight="1"
+                                    android:hint="@string/usage_method_label"
+                                    android:paddingHorizontal="@dimen/input_element_horizontal_padding"
+                                    android:paddingVertical="@dimen/input_element_vertical_padding"
+                                    app:endIconMode="clear_text">
+
+                                    <com.google.android.material.textfield.MaterialAutoCompleteTextView
+                                        android:id="@+id/usage_method_input"
+                                        android:layout_width="match_parent"
+                                        android:layout_height="match_parent"
+                                        android:completionThreshold="@integer/completionThreshHoldForAutocomplete"
+                                        android:inputType="textNoSuggestions"
+                                        android:text="@string/usage_method_placeholder"
+                                        app:simpleItems="@array/method_options">
+
+                                    </com.google.android.material.textfield.MaterialAutoCompleteTextView>
+                                </com.google.android.material.textfield.TextInputLayout>
+
+                                <com.google.android.material.textfield.TextInputLayout
+                                    android:id="@+id/usage_method_details_layout"
+                                    app:errorTextAppearance="@style/myErrorTextAppearance"
+
+                                    app:errorContentDescription="@string/error_content_description"
+
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:layout_weight="1"
+                                    android:paddingHorizontal="@dimen/input_element_horizontal_padding"
+                                    android:paddingVertical="@dimen/input_element_vertical_padding">
+
+                                    <com.google.android.material.textfield.TextInputEditText
+                                        android:id="@+id/usage_method_details_input"
+
+                                        android:layout_width="match_parent"
+                                        android:layout_height="wrap_content"
+
+                                        android:inputType="number">
+
+                                    </com.google.android.material.textfield.TextInputEditText>
                                 </com.google.android.material.textfield.TextInputLayout>
                             </TableRow>
                         </LinearLayout>
