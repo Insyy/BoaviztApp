@@ -13,6 +13,9 @@ public class Disk implements Serializable {
         this.type = type;
         this.capacity = capacity;
         this.manufacturer = manufacturer;
+
+        if (type.equals("ssd"))
+            this.capacity *= 1000;
     }
 
     public Disk(int units, String type, int capacity) {
