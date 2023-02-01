@@ -35,12 +35,13 @@ public class PostServerRequest {
     public void sendRequestServer() {
         try {
             JSONObject jsonObject = new JSONObject(_config.getAsJson());
+            Log.d("sendRequestServer", _config.toString());
             queue.add(new JsonObjectRequest(
                     Request.Method.POST, url, jsonObject,
                     response -> {
                         try {
                             if(!DialogGrapheManager.internetAvailable) DialogGrapheManager.internetAvailable = true;
-                            Log.d("a", response.toString());
+                            Log.d("sendRequestServer", response.toString());
                             JSONObject impacts = response.getJSONObject("impacts");
                             JSONObject verbose = response.getJSONObject("verbose");
                             List<GrapheDataSet> listGds = new ArrayList<>();

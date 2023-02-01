@@ -36,7 +36,7 @@ public class GrapheDataSet {
         _mRAM = valueAssigmentBottomSet(verbose,"RAM-1","manufacture_impacts");
         _mCPU = valueAssigmentBottomSet(verbose,"CPU-1","manufacture_impacts");
         _mSDD = valueAssigmentBottomSet(verbose,"SSD-1","manufacture_impacts");
-        _mHDD = valueAssigmentBottomSet(verbose,"CASE-1","manufacture_impacts");
+        _mHDD = valueAssigmentBottomSet(verbose,"HDD-1","manufacture_impacts");
         _mOther = String.valueOf(Float.parseFloat(get_manufacturing()) - Float.parseFloat(get_mRAM()) - Float.parseFloat(get_mCPU()) - Float.parseFloat(get_mSDD())- Float.parseFloat(get_mHDD()));
         _mTotal =  String.valueOf(Float.parseFloat(_mRAM) + Float.parseFloat(_mCPU) + Float.parseFloat(_mSDD) + Float.parseFloat(_mHDD) + Float.parseFloat(_mOther) + Float.parseFloat(_usage) + Float.parseFloat(_manufacturing));
 
