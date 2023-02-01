@@ -6,5 +6,5 @@
     <string name="failureTitleDownload">Download failed</string>
     <string name="failureMainDownload">Try to activate the permissions in the application options</string>
     <string name="successfullTitleDownload">Successful download</string>
-    <string name="successfullMainDownload">Check your doawnload folder</string>
+    <string name="successfullMainDownload">Check your download folder</string>
 </resources>

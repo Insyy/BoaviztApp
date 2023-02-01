@@ -80,8 +80,16 @@ public class FieldDataRetriever {
 
     int getNumberFromAutocompleteTextInput(int input_id, int placeholder_value) {
         TextInputEditText input = formularyActivity.findViewById(input_id);
+
         if (Objects.requireNonNull(input.getText()).toString().equals(""))
-            return Integer.parseInt(formularyActivity.getString(placeholder_value));
-        return Integer.parseInt(input.getText().toString());
+            return Integer.parseUnsignedInt(formularyActivity.getString(placeholder_value));
+        int numberResult;
+
+        try {
+            numberResult = Integer.parseUnsignedInt(input.getText().toString());
+        } catch (NumberFormatException numberFormatException){
+            return Integer.parseUnsignedInt(formularyActivity.getString(placeholder_value));
+        }
+         return numberResult;
     }
 }

@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="title_pdf">Multicritera server impacts</string>
+    <string name="title_pdf">Multi criteria server impacts</string>
     <string name="title_section1">Server configuration</string>
     <string name="title_section2">Usage</string>
-    <string name="title_section3">"Multicritera impacts during lifespan"</string>
+    <string name="title_section3">"Multi criteria impacts during lifespan"</string>
     <string name="title_table1">CPU</string>
     <string name="title_table2">RAM</string>
     <string name="title_table3">SSD</string>

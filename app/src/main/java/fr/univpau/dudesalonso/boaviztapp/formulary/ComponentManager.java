@@ -6,6 +6,7 @@ import android.content.res.ColorStateList;
 import android.net.Uri;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.LinearLayout;
 
 import com.google.android.material.appbar.MaterialToolbar;
 import com.google.android.material.bottomnavigation.BottomNavigationItemView;
@@ -19,6 +20,7 @@ import com.google.android.material.textfield.TextInputEditText;
 import com.google.android.material.textfield.TextInputLayout;
 
 import java.util.Arrays;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
@@ -32,6 +34,9 @@ public class ComponentManager {
     public FormularyActivity formularyActivity;
     public final RequestManager requestManager;
     private final FieldDataRetriever fieldDataRetriever;
+
+    //TODO
+    private final HashMap<Integer, Boolean> validInputsMap = new HashMap<>();
 
     Map<String, String> countriesMap = null;
 
@@ -48,33 +53,106 @@ public class ComponentManager {
         setShowDropDownOnFocusAndClick(R.id.ram_manufacturer_input);
         setShowDropDownOnFocusAndClick(R.id.usage_location_input);
         setShowDropDownOnFocusAndClick(R.id.server_type_input);
+    }
 
+    private void setFieldControlListeners(){
+        setIntegerFieldControl(R.id.hdd_capacity_input, R.id.hdd_capacity_layout);
+        setIntegerFieldControl(R.id.hdd_quantity_input, R.id.hdd_quantity_layout);
+
+        setIntegerFieldControl(R.id.ram_capacity_input, R.id.ram_capacity_layout);
+        setIntegerFieldControl(R.id.ram_quantity_input, R.id.ram_quantity_layout);
+
+        setIntegerFieldControl(R.id.ssd_capacity_input, R.id.ssd_capacity_layout);
+        setIntegerFieldControl(R.id.ssd_quantity_input, R.id.ssd_quantity_layout);
+
+        setIntegerFieldControl(R.id.cpu_quantity_input, R.id.cpu_quantity_layout);
+        setIntegerFieldControl(R.id.cpu_core_units_input, R.id.cpu_core_units_layout);
+        setIntegerFieldControl(R.id.cpu_tdp_input, R.id.cpu_tdp_layout);
+
+        setIntegerFieldControl(R.id.usage_lifespan_input, R.id.usage_lifespan_layout);
+        setIntegerFieldControl(R.id.usage_method_details_input, R.id.usage_method_details_layout);
+    }
+
+    private void setIntegerFieldControl(int inputFieldId, int inputLayoutId){
+
+        TextInputEditText inputView = formularyActivity.findViewById(inputFieldId);
+        TextInputLayout layoutView = formularyActivity.findViewById(inputLayoutId);
+
+        layoutView.setErrorIconDrawable(null);
+
+        validInputsMap.put(inputFieldId, true);
+
+        inputView.setOnKeyListener((v, keyCode, event) -> {
+            verifyValidInput(inputFieldId, inputView, layoutView);
+            return false;
+        });
+    }
+
+    private void verifyValidInput(int inputFieldId, TextInputEditText inputView, TextInputLayout layoutView) {
+        try {
+            String input = Objects.requireNonNull(inputView.getText()).toString();
+            Integer.parseUnsignedInt(input);
+
+            layoutView.setErrorEnabled(false);
+            layoutView.setError(null);
+
+            validInputsMap.put(inputFieldId, true);
+
+        } catch (NumberFormatException numberFormatException){
+
+            layoutView.setErrorEnabled(true);
+            layoutView.setError(" ");
+
+            hideUnnecessaryGeneratedViews(layoutView);
+
+            validInputsMap.put(inputFieldId, false);
+        }
+    }
+
+    private void hideUnnecessaryGeneratedViews(TextInputLayout layoutView) {
+        for (int i = 0; i < layoutView.getChildCount(); i++) {
+            View child = layoutView.getChildAt(i);
+            if (child instanceof LinearLayout) {
+                LinearLayout linearLayout = (LinearLayout) child;
+                linearLayout.setVisibility(View.GONE);
+                break;
+            }
+        }
+    }
+
+
+    private boolean inputsAreValid(){
+        return validInputsMap.values().stream().allMatch(aBoolean -> aBoolean);
     }
 
     private void setClearOnClickListeners() {
-        setClearInputOnClick(R.id.cpu_quantity_input, R.string.cpu_quantity_placeholder);
-        setClearInputOnClick(R.id.cpu_core_units_input, R.string.cpu_core_units_placeholder);
-        setClearInputOnClick(R.id.cpu_tdp_input, R.string.cpu_tdp_placeholder);
+        setClearInputOnClick(R.id.cpu_quantity_input, R.id.cpu_quantity_layout, R.string.cpu_quantity_placeholder);
+        setClearInputOnClick(R.id.cpu_core_units_input, R.id.cpu_core_units_layout, R.string.cpu_core_units_placeholder);
+        setClearInputOnClick(R.id.cpu_tdp_input, R.id.cpu_tdp_layout, R.string.cpu_tdp_placeholder);
 
-        setClearInputOnClick(R.id.ssd_capacity_input, R.string.ssd_capacity_placeholder);
-        setClearInputOnClick(R.id.ssd_quantity_input, R.string.ssd_quantity_placeholder);
+        setClearInputOnClick(R.id.ssd_capacity_input, R.id.ssd_capacity_layout, R.string.ssd_capacity_placeholder);
+        setClearInputOnClick(R.id.ssd_quantity_input, R.id.ssd_quantity_layout, R.string.ssd_quantity_placeholder);
 
-        setClearInputOnClick(R.id.hdd_capacity_input, R.string.hdd_capacity_placeholder);
-        setClearInputOnClick(R.id.hdd_quantity_input, R.string.hdd_quantity_placeholder);
+        setClearInputOnClick(R.id.hdd_capacity_input, R.id.hdd_capacity_layout, R.string.hdd_capacity_placeholder);
+        setClearInputOnClick(R.id.hdd_quantity_input,R.id.hdd_quantity_layout, R.string.hdd_quantity_placeholder);
 
-        setClearInputOnClick(R.id.ram_quantity_input, R.string.ram_quantity_placeholder);
-        setClearInputOnClick(R.id.ram_capacity_input, R.string.ram_capacity_placeholder);
+        setClearInputOnClick(R.id.ram_quantity_input, R.id.ram_quantity_layout, R.string.ram_quantity_placeholder);
+        setClearInputOnClick(R.id.ram_capacity_input, R.id.ram_capacity_layout, R.string.ram_capacity_placeholder);
 
-        setClearInputOnClick(R.id.usage_lifespan_input, R.string.usage_lifespan_placeholder);
+        setClearInputOnClick(R.id.usage_lifespan_input, R.id.usage_lifespan_layout, R.string.usage_lifespan_placeholder);
     }
 
-    private void setClearInputOnClick(int inputId, int defaultValue) {
+    private void setClearInputOnClick(int inputId, int inputLayoutId, int defaultValue) {
         TextInputEditText inputView = formularyActivity.findViewById(inputId);
         inputView.setOnFocusChangeListener((view, b) -> {
-            if (b && Objects.requireNonNull(inputView.getText()).length() > 0)
+            if (b && Objects.requireNonNull(inputView.getText()).length() > 0){
                 inputView.getText().clear();
+                verifyValidInput(inputId, inputView, formularyActivity.findViewById(inputLayoutId));
+            }
+
             else if (Objects.requireNonNull(inputView.getText()).length() == 0) {
                 inputView.setText(defaultValue);
+                verifyValidInput(inputId, inputView, formularyActivity.findViewById(inputLayoutId));
             }
         });
     }
@@ -85,6 +163,7 @@ public class ComponentManager {
         setClearOnClickListeners();
         setDropdownsListeners();
         setTopAppBarListeners();
+        setFieldControlListeners();
     }
 
     private void setTopAppBarListeners() {
@@ -186,11 +265,13 @@ public class ComponentManager {
             methodDetailsInputEditText.setText(R.string.usage_server_load_placeholder);
             methodDetailsInputLayout.setHint(formularyActivity.getString(R.string.usage_server_load_label));
             methodDetailsInputLayout.setSuffixText(formularyActivity.getString(R.string.usage_server_load_helper));
+            verifyValidInput(R.id.usage_method_details_input, methodDetailsInputEditText, methodDetailsInputLayout);
             return;
         }
         methodDetailsInputEditText.setText(R.string.usage_average_consumption_placeholder);
         methodDetailsInputLayout.setHint(formularyActivity.getString(R.string.usage_average_consumption_label));
         methodDetailsInputLayout.setSuffixText(formularyActivity.getString(R.string.usage_average_consumption_helper));
+        verifyValidInput(R.id.usage_method_details_input, methodDetailsInputEditText, methodDetailsInputLayout);
     }
 
     private void setBottomNavigationBar() {
@@ -204,6 +285,11 @@ public class ComponentManager {
     }
 
     public void launchImpactAssessmentActivity() {
+        if (!inputsAreValid()){
+            showInvalidInputErrorToast();
+            return;
+        }
+
         if (requestManager.isNotConnected()) {
             return;
         }
@@ -264,6 +350,14 @@ public class ComponentManager {
         Snackbar.make(formularyActivity.findViewById(R.id.root),
                 formularyActivity.getString(R.string.internet_connection_not_available), Snackbar.LENGTH_INDEFINITE)
                 .setAction(R.string.toast_action_retry, view -> new Thread(requestManager::isNotConnected).start())
+                .setAnchorView(R.id.bottom_navigation)
+                .show();
+    }
+
+    void showInvalidInputErrorToast() {
+        Snackbar.make(
+                        formularyActivity.findViewById(R.id.root),
+                        formularyActivity.getString(R.string.invalid_input_error), Snackbar.LENGTH_SHORT)
                 .setAnchorView(R.id.bottom_navigation)
                 .show();
     }

@@ -10,14 +10,14 @@
     <string name="description_primary_energy">Consumption of energy resources</string>
 
     <string name="title_ressource_exhausted">Abiotic Depletion Potential (kgSbeq)</string>
-    <string name="description_ressource_exhausted">Evaluates the use of minerals and fossil ressources</string>
+    <string name="description_ressource_exhausted">Evaluates the use of minerals and fossil resources</string>
 
     <string name="fielset_title_1">How are the impacts assessed?</string>
     <string name="fielset_text_1">The impacts related to manufacture are assessed using the methodology detailed by Boavizta in <a href="https://www.boavizta.org/en/blog/empreinte-de-la-fabrication-d-un-serveur">this article</a>.
         Those related to the use phase are evaluated from the average power consumption or modeled from the estimated server load.
-        The methodology is detailed here: <a href="https://doc.api.boavizta.org/">doc.api.boavizta.org.</a></string>
+        The methodology is detailed in the <a href="https://doc.api.boavizta.org/">Boavizta API documentation.</a></string>
     <string name="fieldset_title_2">To go further</string>
-    <string name="fieldset_text_2">This page uses the <a href="https://github.com/boavizta/boaviztapi/">BoaviztAPI</a>. An open-source API that uses open data and methods to assess the environmental impacts of digital equipment.</string>
+    <string name="fieldset_text_2">This application uses <a href="https://github.com/boavizta/boaviztapi/">BoaviztAPI</a>. An open-source API that uses open data and methods to assess the environmental impacts of digital equipment.</string>
 
     <string-array name="label_top_bar">
         <item>Usage :</item>
@@ -29,6 +29,6 @@
         <item>Manufacturing  CPU : </item>
         <item>Manufacturing  SSD : </item>
         <item>Manufacturing  HDD : </item>
-        <item>Manufacturing Others Autres : </item>
+        <item>Manufacturing Others : </item>
     </string-array>
 </resources>

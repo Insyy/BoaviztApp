@@ -58,8 +58,8 @@
     <string name="hdd_capacity_helper">TB</string>
     <string name="hdd_capacity_placeholder">1</string>
 
-    <string name="hdd_type_label">Type</string>
-    <string name="hdd_type_placeholder">Type</string>
+    <string name="hdd_type_label">Server type</string>
+    <string name="hdd_type_placeholder">Server type</string>
 
 
     <string name="usage_label">USAGE</string>
@@ -83,6 +83,7 @@
     <string name="usage_server_load_helper">%</string>
     <string name="usage_server_load_placeholder">50</string>
     <string name="assess_server_impact">Assess server impact</string>
+    <string name="input_error_text"> </string>
 
 
     <string-array name="method_options">

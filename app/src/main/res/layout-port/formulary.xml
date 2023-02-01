@@ -92,7 +92,7 @@
                 android:layout_marginEnd="@dimen/card_margin"
                 android:layout_marginBottom="@dimen/card_margin"
                 app:cardElevation="@dimen/card_elevation"
-                app:contentPadding="@dimen/card_padding">
+                app:contentPadding="@dimen/card_padding"> 
 
                 <LinearLayout
                     android:id="@+id/hdd_configuration"
@@ -114,8 +114,13 @@
                         android:orientation="horizontal"
                         android:weightSum="@dimen/storage_layout_weight_sum">
 
-
                         <com.google.android.material.textfield.TextInputLayout
+                            android:id="@+id/hdd_quantity_layout"
+                            
+                            app:errorTextAppearance="@style/myErrorTextAppearance"
+
+                            app:errorContentDescription="@string/error_content_description"
+
                             android:layout_width="0dp"
                             android:layout_height="wrap_content"
                             android:layout_weight="@dimen/storage_layout_quantity_weight"
@@ -136,6 +141,10 @@
 
 
                         <com.google.android.material.textfield.TextInputLayout
+                            android:id="@+id/hdd_capacity_layout"
+                            app:errorTextAppearance="@style/myErrorTextAppearance"
+
+                            app:errorContentDescription="@string/error_content_description"
                             android:layout_width="0dp"
                             android:layout_height="wrap_content"
                             android:layout_weight="@dimen/storage_layout_capacity_weight"
@@ -214,6 +223,10 @@
                         android:weightSum="@dimen/storage_layout_weight_sum">
 
                         <com.google.android.material.textfield.TextInputLayout
+                            android:id="@+id/ram_quantity_layout"
+                            app:errorTextAppearance="@style/myErrorTextAppearance"
+
+                            app:errorContentDescription="@string/error_content_description"
                             android:layout_width="0dp"
                             android:layout_height="wrap_content"
                             android:layout_weight="@dimen/storage_layout_quantity_weight"
@@ -233,6 +246,10 @@
                         </com.google.android.material.textfield.TextInputLayout>
 
                         <com.google.android.material.textfield.TextInputLayout
+                            android:id="@+id/ram_capacity_layout"
+                            app:errorTextAppearance="@style/myErrorTextAppearance"
+
+                            app:errorContentDescription="@string/error_content_description"
                             android:layout_width="0dp"
                             android:layout_height="wrap_content"
                             android:layout_weight="@dimen/storage_layout_capacity_weight"
@@ -308,6 +325,10 @@
                         android:weightSum="@dimen/storage_layout_weight_sum">
 
                         <com.google.android.material.textfield.TextInputLayout
+                            android:id="@+id/ssd_quantity_layout"
+                            app:errorTextAppearance="@style/myErrorTextAppearance"
+
+                            app:errorContentDescription="@string/error_content_description"
                             android:layout_width="0dp"
                             android:layout_height="wrap_content"
                             android:layout_weight="@dimen/storage_layout_quantity_weight"
@@ -327,6 +348,10 @@
                         </com.google.android.material.textfield.TextInputLayout>
 
                         <com.google.android.material.textfield.TextInputLayout
+                            android:id="@+id/ssd_capacity_layout"
+                            app:errorTextAppearance="@style/myErrorTextAppearance"
+
+                            app:errorContentDescription="@string/error_content_description"
                             android:layout_width="0dp"
                             android:layout_height="wrap_content"
                             android:layout_weight="@dimen/storage_layout_capacity_weight"
@@ -403,6 +428,10 @@
                         android:weightSum="1">
 
                         <com.google.android.material.textfield.TextInputLayout
+                            android:id="@+id/cpu_quantity_layout"
+                            app:errorTextAppearance="@style/myErrorTextAppearance"
+
+                            app:errorContentDescription="@string/error_content_description"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
 
@@ -425,6 +454,11 @@
                         </com.google.android.material.textfield.TextInputLayout>
 
                         <com.google.android.material.textfield.TextInputLayout
+                            android:id="@+id/cpu_tdp_layout"
+                            app:errorTextAppearance="@style/myErrorTextAppearance"
+
+                            app:errorContentDescription="@string/error_content_description"
+
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
 
@@ -456,6 +490,10 @@
                         android:weightSum="1">
 
                         <com.google.android.material.textfield.TextInputLayout
+                            android:id="@+id/cpu_core_units_layout"
+                            app:errorTextAppearance="@style/myErrorTextAppearance"
+
+                            app:errorContentDescription="@string/error_content_description"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
 
@@ -555,6 +593,11 @@
                             </com.google.android.material.textfield.TextInputLayout>
 
                             <com.google.android.material.textfield.TextInputLayout
+                                android:id="@+id/usage_lifespan_layout"
+                                app:errorTextAppearance="@style/myErrorTextAppearance"
+
+                            app:errorContentDescription="@string/error_content_description"
+
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
                                 android:layout_weight="1"
@@ -607,6 +650,10 @@
 
                             <com.google.android.material.textfield.TextInputLayout
                                 android:id="@+id/usage_method_details_layout"
+                                app:errorTextAppearance="@style/myErrorTextAppearance"
+
+                            app:errorContentDescription="@string/error_content_description"
+
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
                                 android:layout_weight="1"
