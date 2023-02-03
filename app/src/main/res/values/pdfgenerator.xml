@@ -19,6 +19,5 @@
     <string name="table_method">Method</string>
     <string name="table_average_consumption">Average consumption (W)</string>
     <string name="table_server_type">Server type</string>
-    <string name="table_psu_quantity">PSU quantity</string>
     <string name="table_localisation">Localisation</string>
 </resources>

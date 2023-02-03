@@ -121,8 +121,8 @@ public class PDFGenerator {
             PdfPTable others_table = new PdfPTable(3);
             others_table.setSpacingAfter(10);
             others_table.addCell(_c.getString(R.string.table_hdd_quantity));
+            others_table.addCell(_c.getString(R.string.table_capacity));
             others_table.addCell(_c.getString(R.string.table_server_type));
-            others_table.addCell(_c.getString(R.string.table_psu_quantity));
             others_table.addCell(String.valueOf(_config.configuration.disk.get(1).units));
             others_table.addCell(String.valueOf(_config.configuration.disk.get(1).capacity));
             others_table.addCell(String.valueOf(_config.model.type));

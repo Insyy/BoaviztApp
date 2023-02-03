@@ -1,10 +1,13 @@
 package fr.univpau.dudesalonso.boaviztapp;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.app.AppCompatDelegate;
 import androidx.core.content.FileProvider;
 
 import android.Manifest;
+import android.app.UiModeManager;
 import android.content.ActivityNotFoundException;
+import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.content.res.Configuration;
@@ -14,6 +17,8 @@ import android.os.Build;
 import android.os.Bundle;
 
 import android.os.Environment;
+import android.os.Handler;
+import android.provider.Settings;
 import android.text.method.LinkMovementMethod;
 import android.util.Log;
 import android.widget.Button;
@@ -79,7 +84,6 @@ public class DataVisualisationActivity extends AppCompatActivity {
         config = (ServerConfiguration) getIntent().getSerializableExtra("serverConfiguration");
         psr = new PostServerRequest(this, config);
         psr.sendRequestServer();
-
         setupPdf();
 
         if (!DialogGrapheManager.dialogZoom) return;
@@ -337,6 +341,11 @@ public class DataVisualisationActivity extends AppCompatActivity {
             DialogGrapheManager.askForPerms(this);
             return;
         }
+        createPDF();
+
+    }
+
+    public void createPDF(){
         File root = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS);
         PDFGenerator pdf = new PDFGenerator(root, barChartList, _listGds, config, this);
         try {
