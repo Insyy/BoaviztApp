@@ -1,6 +1,7 @@
 package fr.univpau.dudesalonso.boaviztapp;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.app.AppCompatDelegate;
 import androidx.core.content.FileProvider;
 
 import android.Manifest;
@@ -29,7 +30,6 @@ import com.google.android.material.color.MaterialColors;
 import com.google.android.material.dialog.MaterialAlertDialogBuilder;
 import com.google.android.material.snackbar.Snackbar;
 import com.google.android.material.textview.MaterialTextView;
-import com.tom_roush.pdfbox.android.PDFBoxResourceLoader;
 
 import java.io.File;
 import java.util.ArrayList;
@@ -80,8 +80,6 @@ public class DataVisualisationActivity extends AppCompatActivity {
         psr = new PostServerRequest(this, config);
         psr.sendRequestServer();
 
-        setupPdf();
-
         if (!DialogGrapheManager.dialogZoom) return;
 
         DialogGrapheManager.dialogZoom = false;
@@ -106,7 +104,10 @@ public class DataVisualisationActivity extends AppCompatActivity {
                     visitMainPage();
                     return true;
                 case R.id.download_icon:
-                    downloadCharts();
+
+
+                    runOnUiThread(this::downloadCharts);
+
                     return true;
             }
 
@@ -150,12 +151,6 @@ public class DataVisualisationActivity extends AppCompatActivity {
         animateCharts(barChartList);
 
     }
-
-    private void setupPdf() {
-        PDFBoxResourceLoader.init(getApplicationContext());
-        Log.d("setupPdf", config.toString());
-    }
-
 
     public void initCharts(List<GrapheDataSet> listGds) {
         _listGds = listGds;

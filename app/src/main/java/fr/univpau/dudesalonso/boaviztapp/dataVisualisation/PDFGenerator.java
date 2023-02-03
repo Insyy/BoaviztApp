@@ -5,6 +5,8 @@ import android.graphics.Bitmap;
 import android.graphics.Color;
 import android.util.Log;
 
+import androidx.appcompat.app.AppCompatDelegate;
+
 import com.github.mikephil.charting.charts.BarChart;
 import com.google.android.material.color.MaterialColors;
 import com.itextpdf.text.Document;
@@ -18,7 +20,6 @@ import com.itextpdf.text.pdf.BaseFont;
 import com.itextpdf.text.pdf.PdfContentByte;
 import com.itextpdf.text.pdf.PdfPTable;
 import com.itextpdf.text.pdf.PdfWriter;
-import com.tom_roush.pdfbox.pdmodel.font.PDFont;
 
 import java.io.ByteArrayOutputStream;
 import java.io.File;
@@ -239,8 +240,13 @@ public class PDFGenerator {
 
     private void chartToPDF(Document document, BarChart chart) throws DocumentException, IOException {
         ByteArrayOutputStream stream = new ByteArrayOutputStream();
-        convertLegendToBlack(chart);
+
+        AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO);
+        chart.getLegend().setTextColor(_c.getResources().getColor(android.R.color.darker_gray));
+
+        chart.notifyDataSetChanged();
         chart.invalidate();
+
         Bitmap scaledBitmap = chart.getChartBitmap();
         scaledBitmap.compress(Bitmap.CompressFormat.PNG, 100, stream);
         byte[] byteArray = stream.toByteArray();
@@ -248,11 +254,10 @@ public class PDFGenerator {
         image.scaleToFit(600, 300);
         image.setAlignment(Element.ALIGN_CENTER);
         document.add(image);
-        chart.invalidate();
-    }
 
-    private void convertLegendToBlack(BarChart chart) {
-        chart.getLegend().setTextColor(Color.BLACK);
+        AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_FOLLOW_SYSTEM);
+        chart.notifyDataSetChanged();
+        chart.invalidate();
     }
 
 
@@ -279,10 +284,6 @@ public class PDFGenerator {
         Bitmap newBitmap = Bitmap.createScaledBitmap(realImage, width,
                 height, filter);
         return newBitmap;
-    }
-
-    private float getStringWidth(PDFont font, Integer fontSize, String text) throws IOException {
-        return font.getStringWidth(text) / 1000 * fontSize;
     }
 
 
