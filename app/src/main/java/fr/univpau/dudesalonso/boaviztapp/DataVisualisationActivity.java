@@ -34,7 +34,6 @@ import com.google.android.material.color.MaterialColors;
 import com.google.android.material.dialog.MaterialAlertDialogBuilder;
 import com.google.android.material.snackbar.Snackbar;
 import com.google.android.material.textview.MaterialTextView;
-import com.tom_roush.pdfbox.android.PDFBoxResourceLoader;
 
 import java.io.File;
 import java.util.ArrayList;
@@ -84,7 +83,6 @@ public class DataVisualisationActivity extends AppCompatActivity {
         config = (ServerConfiguration) getIntent().getSerializableExtra("serverConfiguration");
         psr = new PostServerRequest(this, config);
         psr.sendRequestServer();
-        setupPdf();
 
         if (!DialogGrapheManager.dialogZoom) return;
 
@@ -110,7 +108,10 @@ public class DataVisualisationActivity extends AppCompatActivity {
                     visitMainPage();
                     return true;
                 case R.id.download_icon:
-                    downloadCharts();
+
+
+                    runOnUiThread(this::downloadCharts);
+
                     return true;
             }
 
@@ -154,12 +155,6 @@ public class DataVisualisationActivity extends AppCompatActivity {
         animateCharts(barChartList);
 
     }
-
-    private void setupPdf() {
-        PDFBoxResourceLoader.init(getApplicationContext());
-        Log.d("setupPdf", config.toString());
-    }
-
 
     public void initCharts(List<GrapheDataSet> listGds) {
         _listGds = listGds;
